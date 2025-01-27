@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media print {
+    body {
+      margin: 0;
+      padding: 0;
+    }
+    .print-container {
+      width: 190mm; /* العرض الكامل مع ترك مسافة للهامش */
+      height: auto; /* الارتفاع ديناميكي */
+      margin: 10mm auto; /* توسيط مع هوامش بسيطة */
+      padding: 5mm; /* هوامش داخلية */
+      box-sizing: border-box; /* تضمين الحواف */
+    }
+    table {
+      width: 100%; /* احتواء الجدول */
+      border-collapse: collapse; /* تقليل المسافة بين الحدود */
+      table-layout: fixed; /* تثبيت الأعمدة بالتساوي */
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 4px; /* هوامش صغيرة للخلايا */
+      word-wrap: break-word; /* كسر النص الطويل */
+      text-align: center;
+    }
+    th {
+      background-color: #f0f0f0; /* لون خلفية خفيف */
+    }
+  }
+  

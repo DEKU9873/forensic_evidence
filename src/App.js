@@ -7,6 +7,7 @@ import ProtectedRouteHook from "./hook/auth/ptotected-route-hook";
 import ProtectedRoute from "./Components/Uitily/ProtectedRoute";
 import Home from "./Components/Home/Home";
 import Profile from "./Components/Profile/Profile";
+import ReceivingDeliveringSamplesForm from "./Components/Form/ReceivingDeliveringSamplesForm";
 
 const App = () => {
   // استدعاء ProtectedRouteHook داخل المكون
@@ -15,11 +16,12 @@ const App = () => {
   return (
     <BrowserRouter>
       <div className="flex">
-        <Sidebar />
+        {/* <Sidebar /> */}
         <div className="flex-1">
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/form" element={<ReceivingDeliveringSamplesForm />} />
             <Route element={<ProtectedRoute auth={isAuthenticated} />}>
               <Route path="/map" element={<Map />} />
               <Route path="/profile" element={<Profile />} />
