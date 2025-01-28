@@ -24,7 +24,7 @@ export const createNewUser = (data) => async (dispatch) => {
 //login  user 
 export const loginUser = (data) => async (dispatch) => {
     try {
-        const response = await useInsertData(`/accont/login/`, data);
+        const response = await useInsertData(`/account/login/`, data);
         dispatch({
             type: LOGIN_USER,
             payload: response,

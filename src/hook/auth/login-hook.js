@@ -42,7 +42,7 @@ const LoginHook = () => {
     }
     setIsPress(true);
     setLoading(true);
-    await dispatch(loginUser({ username: name, password: password }));
+    await dispatch(loginUser({ email: name, password: password }));
     setLoading(false);
     setIsPress(false);
   };

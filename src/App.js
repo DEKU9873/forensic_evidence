@@ -8,6 +8,7 @@ import ProtectedRoute from "./Components/Uitily/ProtectedRoute";
 import Home from "./Components/Home/Home";
 import Profile from "./Components/Profile/Profile";
 import ReceivingDeliveringSamplesForm from "./Components/Form/ReceivingDeliveringSamplesForm";
+import CriminalEffects from "./Components/Form/CriminalEffects";
 
 const App = () => {
   // استدعاء ProtectedRouteHook داخل المكون
@@ -21,7 +22,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/form" element={<ReceivingDeliveringSamplesForm />} />
+            <Route path="/form" element={<CriminalEffects />} />
             <Route element={<ProtectedRoute auth={isAuthenticated} />}>
               <Route path="/map" element={<Map />} />
               <Route path="/profile" element={<Profile />} />

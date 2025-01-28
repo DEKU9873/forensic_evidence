@@ -3,18 +3,89 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { v4 as uuidv4 } from "uuid";
 import { Map as MapIcon, Trash2, Info } from "lucide-react";
+import {FaTree} from "react-icons/fa";
+import { GiPayMoney } from "react-icons/gi";
+import { GiPistolGun } from "react-icons/gi";
+import { GiChalkOutlineMurder } from "react-icons/gi";
+import { GiKingJuMask } from "react-icons/gi";
+import { GiNinjaMask } from "react-icons/gi";
+import { GiHeartOrgan } from "react-icons/gi";
+
 import "leaflet/dist/leaflet.css";
 
-const customIcon = new L.Icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32],
-});
+
+
+
+const baghdadMarkers = [
+  {
+    id: "1",
+    position: [33.3152, 44.3661],
+    name: "سرقة",
+    description: "تم سرقة منزل ",
+    icon: GiPayMoney,
+    color: "#4CAF50",
+  },
+  {
+    id: "2",
+    position: [33.3089, 44.3705],
+    name: "خطف",
+    description: "تم خطف طفل يبلغ من العمر 5 سنوات",
+    icon: GiNinjaMask,
+    color: "#2196F3",
+  },
+  {
+    id: "3",
+    position: [33.3147, 44.4404],
+    name: "اغتيال",
+    description: "تم اغتيال المهندس باسم في حادث غامض",
+    icon: GiPistolGun,
+    color: "#F44336",
+  },
+  {
+    id: "4",
+    position: [33.3356, 44.3959],
+    name: "التجارة بالبشر",
+    description: "القبض على شبكة اجرامية متاجة بالبشر",
+    icon: GiHeartOrgan,
+    color: "#800080",
+  },
+  {
+    id: "5",
+    position: [33.3449, 44.4009],
+    name: "ارهاب",
+    description: "القبض على عصابة ارهابية",
+    icon: GiKingJuMask,
+    color: "#000",
+  },
+  {
+    id: "6",
+    position: [33.3298, 44.3947],
+    name: "جريمة قتل",
+    description: "تم العثور على جثة",
+    icon: GiChalkOutlineMurder,
+    color: "#FFC107",
+  }
+];
+
+const createCustomIcon = (IconComponent, color) => {
+  const svgTemplate = `
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 0C12.0645 0 5.625 6.43953 5.625 14.375C5.625 25.1563 20 40 20 40C20 40 34.375 25.1563 34.375 14.375C34.375 6.43953 27.9355 0 20 0ZM20 19.375C17.2395 19.375 15 17.1355 15 14.375C15 11.6145 17.2395 9.375 20 9.375C22.7605 9.375 25 11.6145 25 14.375C25 17.1355 22.7605 19.375 20 19.375Z" fill="${color}"/>
+    </svg>
+  `;
+
+  return new L.DivIcon({
+    html: svgTemplate,
+    className: 'custom-pin-icon',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+    popupAnchor: [0, -40]
+  });
+};
 
 const Map = () => {
   const [position, setPosition] = useState([33.335821, 44.383414]);
-  const [markers, setMarkers] = useState([]);
+  const [markers, setMarkers] = useState(baghdadMarkers);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isRemoving, setIsRemoving] = useState(false);
   const mapRef = useRef(null);
@@ -27,10 +98,6 @@ const Map = () => {
         block: "start",
       });
     }
-  };
-
-  const FlyToRegion = ({ coords }) => {
-    return null;
   };
 
   const MapEvents = () => {
@@ -51,11 +118,14 @@ const Map = () => {
           position: [lat, lng],
           name: `علامة ${markers.length + 1}`,
           id: uuidv4(),
+          icon: FaTree,
+          color: "#999999",
+          description: "علامة جديدة"
         };
 
         setMarkers((prev) => [...prev, newMarker]);
         setSelectedMarker(newMarker);
-        setTimeout(scrollToInfo, 100); // بعد إضافة العلامة، قم بالتمرير
+        setTimeout(scrollToInfo, 100);
       };
 
       map.on("click", handleClick);
@@ -76,7 +146,7 @@ const Map = () => {
     if (!isRemoving) {
       setPosition(marker.position);
       setSelectedMarker(marker);
-      setTimeout(scrollToInfo, 100); // بعد اختيار العلامة، قم بالتمرير
+      setTimeout(scrollToInfo, 100);
     }
   };
 
@@ -110,6 +180,11 @@ const Map = () => {
             scroll-margin-top: 2rem;
           }
 
+          .custom-pin-icon {
+            background: none;
+            border: none;
+          }
+
           @media (min-width: 768px) {
             .info-section {
               scroll-margin-top: 4rem;
@@ -120,12 +195,12 @@ const Map = () => {
 
       <div className="flex items-center gap-2 mb-6">
         <MapIcon className="w-8 h-8 text-blue-600" />
-        <h1 className="text-3xl font-bold text-gray-800">خريطة العراق</h1>
+        <h1 className="text-3xl font-bold text-gray-800">خريطة بغداد</h1>
       </div>
 
       <div className="w-full max-w-6xl">
         <div className="map-container w-full h-[70vh] mb-6 shadow-lg">
-          <MapContainer center={position} zoom={14} className="w-full h-full">
+          <MapContainer center={position} zoom={12} className="w-full h-full">
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -134,7 +209,7 @@ const Map = () => {
               <Marker
                 key={marker.id}
                 position={marker.position}
-                icon={customIcon}
+                icon={createCustomIcon(marker.icon, marker.color)}
                 eventHandlers={{
                   click: () => handleMarkerClick(marker),
                 }}
@@ -142,6 +217,8 @@ const Map = () => {
                 <Popup>
                   <div dir="rtl" className="flex flex-col items-center p-2">
                     <p className="text-lg font-semibold mb-2">{marker.name}</p>
+                    <p className="text-sm text-gray-600 mb-2">{marker.description}</p>
+                    {/* <p className="text-sm text-gray-600 mb-2">التصنيف: {marker.category}</p> */}
                     <p className="text-sm text-gray-600 mb-3">
                       الإحداثيات: {marker.position.join(", ")}
                     </p>
@@ -157,7 +234,6 @@ const Map = () => {
               </Marker>
             ))}
             <MapEvents />
-            <FlyToRegion coords={position} />
           </MapContainer>
         </div>
 
@@ -176,9 +252,16 @@ const Map = () => {
           {selectedMarker ? (
             <div className="space-y-4">
               <div className="p-4 bg-blue-50 rounded-lg">
-                <p className="text-lg font-semibold text-blue-800 mb-2">
-                  {selectedMarker.name}
-                </p>
+                <div className="flex items-center gap-2 mb-2">
+                  <div style={{ color: selectedMarker.color }}>
+                    {React.createElement(selectedMarker.icon, { size: 24 })}
+                  </div>
+                  <p className="text-lg font-semibold text-blue-800">
+                    {selectedMarker.name}
+                  </p>
+                </div>
+                <p className="text-gray-600 mb-3">{selectedMarker.description}</p>
+                {/* <p className="text-sm text-gray-500 mb-3">التصنيف: {selectedMarker.category}</p> */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white p-3 rounded-md shadow-sm">
                     <p className="text-sm text-gray-500">خط العرض</p>

@@ -12,7 +12,7 @@ const Profile = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-300">
-      <div className="w-full max-w-7xl p-10 rounded-3xl shadow-2xl bg-white/90 backdrop-blur-sm">
+      <div className="w-full max-w-7xl p-10 rounded-xl shadow-2xl bg-white/90 backdrop-blur-sm">
         <div className="text-center">
           <div className="relative inline-block">
             <img
@@ -32,24 +32,24 @@ const Profile = () => {
           </button>
         </div>
 
-        <div className="mt-12 bg-gradient-to-br from-blue-50 to-blue-200 p-8 rounded-2xl shadow-inner">
+        <div className="mt-12 bg-blue-50 p-8 rounded-xl ">
           <h2 className="text-2xl font-bold text-gray-700 mb-6 flex items-center justify-center gap-3">
             <span>المعلومات الشخصية</span>
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { 
-                icon: <FaEnvelope size={24} className="text-blue-600" />, 
+                icon: <FaEnvelope size={20} className="text-blue-600" />, 
                 title: "البريد الإلكتروني", 
                 value: user.email
               },
               { 
-                icon: <FaPhone size={24} className="text-blue-600" />, 
+                icon: <FaPhone size={20} className="text-blue-600" />, 
                 title: "رقم الهاتف", 
                 value: user.phoneNumber 
               },
               { 
-                icon: <FaMapMarkerAlt size={24} className="text-blue-600" />, 
+                icon: <FaMapMarkerAlt size={20} className="text-blue-600" />, 
                 title: "الموقع", 
                 value: "بغداد، العراق" 
               }

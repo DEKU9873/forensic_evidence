@@ -11,7 +11,7 @@ const Sidebar = () => {
   };
 
   // إذا كان المسار الحالي هو "/"، لا تعرض السايد بار
-  if (location.pathname === "/") {
+  if (location.pathname === "/" || location.pathname === "/form/") {
     return null;
   }
 

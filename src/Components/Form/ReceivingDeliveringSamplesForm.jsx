@@ -33,7 +33,6 @@ const ReceivingDeliveringSamplesForm = () => {
     <div className="w-[210mm] h-[297mm] mx-auto bg-white p-8 shadow-lg relative">
       {/* Header with Logo and Text */}
       <div className="grid grid-cols-3 items-start mb-8">
-        {/* Right side text */}
         <div className="text-right">
           <h1 className="text-base font-bold mb-1">جمهورية العراق</h1>
           <h2 className="text-base font-bold mb-1">وزارة الداخلية</h2>
@@ -42,7 +41,6 @@ const ReceivingDeliveringSamplesForm = () => {
           <h3 className="text-base font-bold">قسم الطبعة الجرمية</h3>
         </div>
 
-        {/* Centered Logo */}
         <div className="flex justify-center">
           <div className="w-23 h-23 bg-gray-100 rounded-full flex items-center justify-center">
             <img
@@ -145,11 +143,11 @@ const ReceivingDeliveringSamplesForm = () => {
       <div className="absolute bottom-10 left-0 right-0 flex justify-between px-4 mt-6">
         <div>
           <p className="font-bold mb-4">المستلم</p>
-          <div className="w-32 border-b border-gray-400"></div>
+          <div className="text-gray-600 mr-2">_____________</div>
         </div>
         <div>
           <p className="font-bold mb-4">رئيس هيئة الكشف</p>
-          <div className="w-32 border-b border-gray-400"></div>
+          <div className="text-gray-600 mr-2">_____________</div>
         </div>
       </div>
 
