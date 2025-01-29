@@ -1,77 +1,129 @@
 import React, { useState } from "react";
-import { FaBars, FaTimes, FaHome, FaUser, FaCog, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaBars,
+  FaTimes,
+  FaHome,
+  FaUser,
+  FaMapMarkerAlt,
+  FaFileAlt,
+  FaChevronDown,
+  FaChevronUp,
+} from "react-icons/fa";
 import { useLocation, Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation(); // للحصول على المسار الحالي
+  const [isFormsOpen, setIsFormsOpen] = useState(false);
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
-  // إذا كان المسار الحالي هو "/"، لا تعرض السايد بار
-  if (location.pathname === "/" || location.pathname === "/form/") {
+  const toggleForms = () => {
+    setIsFormsOpen(!isFormsOpen);
+  };
+
+  if (location.pathname === "/") {
     return null;
   }
 
+  const MenuItem = ({ icon: Icon, text, to, onClick, isActive }) => (
+    <Link
+      to={to}
+      onClick={onClick}
+      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 
+        ${isActive ? 'bg-white bg-opacity-10 text-white' : 'text-gray-200 hover:bg-white hover:bg-opacity-10'}`}
+    >
+      <Icon className={`${isOpen ? 'text-2xl' : 'text-3xl'}`} />
+      {isOpen && <span className="text-sm font-medium">{text}</span>}
+    </Link>
+  );
+
   return (
-    <div>
-      {/* Sidebar */}
+    <div className="print:hidden">
       <div
         className={`${
-          isOpen ? "w-64" : "w-16"
-        } bg-gradient-to-r from-blue-500 to-indigo-600 h-screen p-5 pt-8 relative duration-300`}
+          isOpen ? "w-72" : "w-20"
+        } bg-gradient-to-b from-blue-900 to-blue-800 min-h-screen fixed top-0 left-0 
+        transition-all duration-300 shadow-xl z-50 flex flex-col`}
       >
-        {/* Toggle Button */}
-        <div
-          className="absolute top-4 transform p-1 rounded-full cursor-pointer"
-          onClick={toggleSidebar}
-        >
-          {isOpen ? (
-            <FaTimes className="text-white text-2xl" />
-          ) : (
-            <FaBars className="text-white text-2xl" />
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-blue-700">
+          {isOpen && (
+            <h1 className="text-white text-xl font-bold mr-2">الادلة الجنائية</h1>
           )}
+          <button
+            onClick={toggleSidebar}
+            className="p-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+          >
+            {isOpen ? (
+              <FaTimes className="text-white text-xl" />
+            ) : (
+              <FaBars className="text-white text-xl" />
+            )}
+          </button>
         </div>
 
-        {/* Sidebar Content */}
-        <div className="flex flex-col gap-6 mt-16"> {/* زادت المسافة العلوية */}
-          {/* Logo or Brand */}
-          <div className={`text-white text-xl font-bold ${!isOpen && "hidden"}`}>
-            الادلة الجنائية
-          </div>
+        {/* Navigation Menu */}
+        <div className="flex-1 py-6 px-3 flex flex-col gap-2">
+          <MenuItem
+            icon={FaHome}
+            text="الصفحة الرئيسية"
+            to="/home"
+            isActive={location.pathname === '/home'}
+          />
+          <MenuItem
+            icon={FaUser}
+            text="الملف الشخصي"
+            to="/profile"
+            isActive={location.pathname === '/profile'}
+          />
+          <MenuItem
+            icon={FaMapMarkerAlt}
+            text="الخرائط"
+            to="/map"
+            isActive={location.pathname === '/map'}
+          />
 
-          {/* Navigation Items */}
-          <div className="flex flex-col gap-6 text-white"> {/* زاد التباعد بين العناصر */}
-            <Link
-              to="/home"
-              className="flex items-center gap-4 cursor-pointer hover:scale-110 transform transition-all duration-300"
+          {/* Forms Section */}
+          <div className="mt-2">
+            <button
+              onClick={toggleForms}
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-lg
+                transition-all duration-200 text-gray-200 hover:bg-white hover:bg-opacity-10
+                ${isFormsOpen && 'bg-white bg-opacity-10'}`}
             >
-              <FaHome className="text-3xl" />
-              {isOpen && <span>الصفحة الرئيسية</span>}
-            </Link>
-            <Link
-              to="/profile"
-              className="flex items-center gap-4 cursor-pointer hover:scale-110 transform transition-all duration-300"
-            >
-              <FaUser className="text-3xl" />
-              {isOpen && <span>الملف الشخصي</span>}
-            </Link>
-            <Link
-              to="/map"
-              className="flex items-center gap-4 cursor-pointer hover:scale-110 transform transition-all duration-300"
-            >
-              <FaMapMarkerAlt className="text-3xl" />
-              {isOpen && <span>الخرائط</span>}
-            </Link>
-            <Link
-              to="/settings"
-              className="flex items-center gap-4 cursor-pointer hover:scale-110 transform transition-all duration-300"
-            >
-              <FaCog className="text-3xl" />
-              {isOpen && <span>الاعدادات</span>}
-            </Link>
+              <div className="flex items-center gap-3">
+                <FaFileAlt className={`${isOpen ? 'text-2xl' : 'text-3xl'}`} />
+                {isOpen && <span className="text-sm font-medium">استمارات</span>}
+              </div>
+              {isOpen && (
+                isFormsOpen ? <FaChevronUp className="text-sm" /> : <FaChevronDown className="text-sm" />
+              )}
+            </button>
+
+            {/* Forms Submenu */}
+            {isOpen && isFormsOpen && (
+              <div className="mt-2 mr-4 flex flex-col gap-2">
+                {[
+                  { to: "/form2", text: "محضر كشف وإظهار الآثار الجرمية" },
+                  { to: "/form1", text: "إستمارة إستلام وتسليم العينات" },
+                  { to: "/form3", text: "محضر كشف الحرائق" },
+                ].map((form) => (
+                  <Link
+                    key={form.to}
+                    to={form.to}
+                    className={`text-sm px-4 py-2 rounded-lg transition-all duration-200
+                      ${location.pathname === form.to 
+                        ? 'bg-blue-700 text-white' 
+                        : 'text-gray-300 hover:bg-blue-700 hover:bg-opacity-50'}`}
+                  >
+                    {form.text}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

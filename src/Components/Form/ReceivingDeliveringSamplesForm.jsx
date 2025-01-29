@@ -161,13 +161,7 @@ const ReceivingDeliveringSamplesForm = () => {
         </button>
       </div>
 
-      <style jsx>{`
-        @media print {
-          .no-print {
-            display: none;
-          }
-        }
-      `}</style>
+   
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { v4 as uuidv4 } from "uuid";
 import { Map as MapIcon, Trash2, Info } from "lucide-react";
-import {FaTree} from "react-icons/fa";
+import { FaTree } from "react-icons/fa";
 import { GiPayMoney } from "react-icons/gi";
 import { GiPistolGun } from "react-icons/gi";
 import { GiChalkOutlineMurder } from "react-icons/gi";
@@ -11,10 +11,9 @@ import { GiKingJuMask } from "react-icons/gi";
 import { GiNinjaMask } from "react-icons/gi";
 import { GiHeartOrgan } from "react-icons/gi";
 
+import { GrLocationPin } from "react-icons/gr";
+
 import "leaflet/dist/leaflet.css";
-
-
-
 
 const baghdadMarkers = [
   {
@@ -45,7 +44,7 @@ const baghdadMarkers = [
     id: "4",
     position: [33.3356, 44.3959],
     name: "التجارة بالبشر",
-    description: "القبض على شبكة اجرامية متاجة بالبشر",
+    description: "القبض على شبكة اجرامية متاجرة بالبشر",
     icon: GiHeartOrgan,
     color: "#800080",
   },
@@ -143,11 +142,10 @@ const Map = () => {
   };
 
   const handleMarkerClick = (marker) => {
-    if (!isRemoving) {
-      setPosition(marker.position);
-      setSelectedMarker(marker);
-      setTimeout(scrollToInfo, 100);
-    }
+    setIsRemoving(false); // Reset isRemoving state
+    setPosition(marker.position);
+    setSelectedMarker(marker);
+    setTimeout(scrollToInfo, 100);
   };
 
   return (
@@ -195,10 +193,10 @@ const Map = () => {
 
       <div className="flex items-center gap-2 mb-6">
         <MapIcon className="w-8 h-8 text-blue-600" />
-        <h1 className="text-3xl font-bold text-gray-800">خريطة بغداد</h1>
+        <h1 className="text-3xl font-bold text-gray-800">الخرائط</h1>
       </div>
 
-      <div className="w-full max-w-6xl">
+      <div className="w-[900px]">
         <div className="map-container w-full h-[70vh] mb-6 shadow-lg">
           <MapContainer center={position} zoom={12} className="w-full h-full">
             <TileLayer
@@ -211,26 +209,15 @@ const Map = () => {
                 position={marker.position}
                 icon={createCustomIcon(marker.icon, marker.color)}
                 eventHandlers={{
-                  click: () => handleMarkerClick(marker),
+                  click: () => handleMarkerClick(marker)
                 }}
               >
-                <Popup>
+                {/* <Popup>
                   <div dir="rtl" className="flex flex-col items-center p-2">
                     <p className="text-lg font-semibold mb-2">{marker.name}</p>
                     <p className="text-sm text-gray-600 mb-2">{marker.description}</p>
-                    {/* <p className="text-sm text-gray-600 mb-2">التصنيف: {marker.category}</p> */}
-                    <p className="text-sm text-gray-600 mb-3">
-                      الإحداثيات: {marker.position.join(", ")}
-                    </p>
-                    <button
-                      onClick={(e) => removeMarker(marker.id, e)}
-                      className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                      حذف العلامة
-                    </button>
                   </div>
-                </Popup>
+                </Popup> */}
               </Marker>
             ))}
             <MapEvents />
@@ -253,7 +240,7 @@ const Map = () => {
             <div className="space-y-4">
               <div className="p-4 bg-blue-50 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <div style={{ color: selectedMarker.color }}>
+                  <div style={{ color: "black" }}>
                     {React.createElement(selectedMarker.icon, { size: 24 })}
                   </div>
                   <p className="text-lg font-semibold text-blue-800">
@@ -261,7 +248,6 @@ const Map = () => {
                   </p>
                 </div>
                 <p className="text-gray-600 mb-3">{selectedMarker.description}</p>
-                {/* <p className="text-sm text-gray-500 mb-3">التصنيف: {selectedMarker.category}</p> */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white p-3 rounded-md shadow-sm">
                     <p className="text-sm text-gray-500">خط العرض</p>
@@ -278,7 +264,7 @@ const Map = () => {
                 </div>
               </div>
 
-              <div className="text-center">
+              <div className="flex justify-center items-center gap-4">
                 <a
                   href={`https://www.google.com/maps?q=${selectedMarker.position[0]},${selectedMarker.position[1]}`}
                   target="_blank"
@@ -288,6 +274,14 @@ const Map = () => {
                   <MapIcon className="w-5 h-5" />
                   عرض في Google Maps
                 </a>
+                
+                <button
+                  onClick={(e) => removeMarker(selectedMarker.id, e)}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300"
+                >
+                  <Trash2 className="w-5 h-5" />
+                  حذف العلامة
+                </button>
               </div>
             </div>
           ) : (

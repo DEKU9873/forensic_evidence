@@ -70,7 +70,7 @@ const LoginHook = () => {
           Cookies.remove("user");
         }
 
-        if (res.data.detail === "Invalid username or password") {
+        if (res.data.detail === "No active account found with the given credentials") {
           console.log(res.data.detail);
           Cookies.remove("access");
           Cookies.remove("refresh");

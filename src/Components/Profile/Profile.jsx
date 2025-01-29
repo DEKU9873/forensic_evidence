@@ -46,7 +46,7 @@ const Profile = () => {
               { 
                 icon: <FaPhone size={20} className="text-blue-600" />, 
                 title: "رقم الهاتف", 
-                value: user.phoneNumber 
+                value: user.phone_number 
               },
               { 
                 icon: <FaMapMarkerAlt size={20} className="text-blue-600" />, 

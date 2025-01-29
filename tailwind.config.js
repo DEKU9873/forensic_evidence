@@ -3,10 +3,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Cairo', 'sans-serif'], 
+      },
+    },
   },
   plugins: [],
-  fontFamily: {
-    sans: ['Cairo', 'sans-serif'], // إضافة Cairo كخط افتراضي
-  },
 };
+
