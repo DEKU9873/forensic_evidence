@@ -7,6 +7,13 @@ module.exports = {
       fontFamily: {
         sans: ['Cairo', 'sans-serif'], 
       },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: "1rem",
+          sm: "1rem",
+        },
+      },
     },
   },
   plugins: [],

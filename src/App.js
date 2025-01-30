@@ -10,6 +10,9 @@ import Profile from "./Components/Profile/Profile";
 import ReceivingDeliveringSamplesForm from "./Components/Form/ReceivingDeliveringSamplesForm";
 import CriminalEffects from "./Components/Form/CriminalEffects";
 import TrafficEetectionReport from "./Components/Form/TrafficEetectionReport";
+import ReceivingDeliveringSamplesFormPage from "./pages/FormPage/ReceivingDeliveringSamplesFormPage";
+import CriminalEffectsPage from "./pages/FormPage/CriminalEffectsPage";
+import TrafficEetectionReportPage from "./pages/FormPage/TrafficEetectionReportPage";
 
 const App = () => {
   // استدعاء ProtectedRouteHook داخل المكون
@@ -21,9 +24,13 @@ const App = () => {
           <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/form1" element={<ReceivingDeliveringSamplesForm />} />
-            <Route path="/form2" element={<CriminalEffects />} />
-            <Route path="/form3" element={<TrafficEetectionReport />} />
+            <Route path="/form1" element={<ReceivingDeliveringSamplesFormPage />} />
+            <Route path="/form1Details:id" element={<ReceivingDeliveringSamplesForm />} />
+            <Route path="/form2" element={<CriminalEffectsPage />} />
+            <Route path="/form3" element={<TrafficEetectionReportPage />} />
+            <Route path="/form3Details:id" element={<TrafficEetectionReport />} />
+            <Route path="/form2Details:id" element={<CriminalEffects />} />
+
             <Route element={<ProtectedRoute auth={isAuthenticated} />}>
               <Route path="/map" element={<Map />} />
               <Route path="/profile" element={<Profile />} />
