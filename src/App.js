@@ -2,7 +2,7 @@ import React from "react";
 import Map from "./Components/Map/map";
 import Login from "./Components/Auth/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Sidebar from "./Components/Sidebar/Sidebar";
+import Sidebar from "./Components/Uitily/Sidebar";
 import ProtectedRouteHook from "./hook/auth/ptotected-route-hook";
 import ProtectedRoute from "./Components/Uitily/ProtectedRoute";
 import Home from "./Components/Home/Home";
@@ -15,7 +15,6 @@ import CriminalEffectsPage from "./pages/FormPage/CriminalEffectsPage";
 import TrafficEetectionReportPage from "./pages/FormPage/TrafficEetectionReportPage";
 
 const App = () => {
-  // استدعاء ProtectedRouteHook داخل المكون
   const [isUser, isAdmin, userData, isAuthenticated] = ProtectedRouteHook();
 
   return (

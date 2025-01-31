@@ -6,47 +6,38 @@ const CrimeSceneForm = () => {
   };
   return (
     <div
-    className="w-[210mm] h-[297mm] bg-white p-2 mx-auto font-sans text-sm relative"
-    dir="rtl"
-  >
-    {/* Watermark */}
-    <div className="absolute inset-0 flex justify-center items-center opacity-10 z-0">
-      <img
-        src="/images/forensic_evidence.png"
-        alt="Watermark"
-        className="w-[800px] h-[800px] object-contain"
-      />
-    </div>
+      className="w-[210mm] h-[297mm] bg-white p-2 mx-auto font-sans text-sm relative"
+      dir="rtl"
+    >
+      {/* Header */}
+      <div className="flex mb-1">
+        <div className="text-sm text-right leading-tight absolute right-2">
+          <h6 className="text-base">جمهورية العراق</h6>
+          <h6 className="text-base">وزارة الداخلية</h6>
+          <h6 className="text-base">وكالة الوزارة لشؤون الشرطة</h6>
+          <h6 className="text-base">مديرية تحقيق الادلة الجنائية</h6>
+          <h6 className="text-base ">قسم الطبعة الجرمية</h6>
+        </div>
 
-    {/* Header */}
-    <div className="flex mb-1">
-      <div className="text-sm text-right leading-tight absolute right-2">
-        <h6 className="text-base">جمهورية العراق</h6>
-        <h6 className="text-base">وزارة الداخلية</h6>
-        <h6 className="text-base">وكالة الوزارة لشؤون الشرطة</h6>
-        <h6 className="text-base">مديرية تحقيق الادلة الجنائية</h6>
-        <h6 className="text-base ">قسم الطبعة الجرمية</h6>
+        <div className="w-24 h-24 mx-2 flex-grow flex justify-center ">
+          <img
+            src="/images/forensic_evidence.png"
+            alt="logo"
+            className="w-23 h-23 object-contain"
+          />
+        </div>
+
+        <div className="text-sm absolute left-2">
+          <div className="font-bold">رقــم القضــــية</div>
+          <div className="border border-black p-0.5">text</div>
+          <div className="border border-black p-0.5">NCRM: 1</div>
+        </div>
       </div>
 
-      <div className="w-24 h-24 mx-2 flex-grow flex justify-center ">
-        <img
-          src="/images/forensic_evidence.png"
-          alt="logo"
-          className="w-23 h-23 object-contain"
-        />
+      {/* Title */}
+      <div className="text-center font-bold mb-1 text-base">
+        محضر كشــــف وإظهار ورفــــع الآثار الجرمية لمســـرح الجريمة
       </div>
-
-      <div className="text-sm absolute left-2">
-        <div className="font-bold">رقــم القضــــية</div>
-        <div className="border border-black p-0.5">text</div>
-        <div className="border border-black p-0.5">NCRM: 1</div>
-      </div>
-    </div>
-
-    {/* Title */}
-    <div className="text-center font-bold mb-1 text-base">
-    محضر كشــــف وإظهار ورفــــع الآثار الجرمية لمســـرح الجريمة
-    </div>
 
       <div className="mb-1">
         <table className="w-full border-collapse">
@@ -55,28 +46,40 @@ const CrimeSceneForm = () => {
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ اجراء الكشف
               </th>
-              <th className="border border-black p-1 text-xs text-right ">29 كانون الثاني</th>
+              <th className="border border-black p-1 text-xs text-right ">
+                29 كانون الثاني
+              </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 الجهة التحقيقية
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-2">Ali IT</th>
+              <th className="border border-black p-1 text-xs text-right col-span-2">
+                Ali IT
+              </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 وقت اجراء الكشف
               </th>
-              <th className="border border-black p-1 text-xs  text-right">1200</th>
+              <th className="border border-black p-1 text-xs  text-right">
+                1200
+              </th>
             </tr>
             <tr className="grid grid-cols-7">
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 عنوان محل الحادث
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-1">بغداد</th>
-              <th className="border border-black p-1 text-xs text-right col-span-5">شارع الصناعة</th>
+              <th className="border border-black p-1 text-xs text-right col-span-1">
+                بغداد
+              </th>
+              <th className="border border-black p-1 text-xs text-right col-span-5">
+                شارع الصناعة
+              </th>
             </tr>
             <tr className="grid grid-cols-7">
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ الحــــادث
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-6">29/01/2025</th>
+              <th className="border border-black p-1 text-xs text-right col-span-6">
+                29/01/2025
+              </th>
             </tr>
           </thead>
         </table>
@@ -89,7 +92,8 @@ const CrimeSceneForm = () => {
         </div>
         <div className="border border-black h-[440px] p-0.5">
           <div className="text-justify">
-          في حادث مؤسف في محافظة بغداد تم قتل المهندس باسم منقبل فاطمة اثر خلاف على تقسيم كهربائي في مقر الشركة العامة للانظمة الالكترونية
+            في حادث مؤسف في محافظة بغداد تم قتل المهندس باسم منقبل فاطمة اثر
+            خلاف على تقسيم كهربائي في مقر الشركة العامة للانظمة الالكترونية
           </div>
         </div>
       </div>
@@ -102,7 +106,9 @@ const CrimeSceneForm = () => {
               <th className="border border-black p-0.5 text-right text-x bg-blue-300">
                 الطريقة
               </th>
-              <th className="border border-black p-0.5 text-right text-xs col-span-6">اطلاق نار</th>
+              <th className="border border-black p-0.5 text-right text-xs col-span-6">
+                اطلاق نار
+              </th>
             </tr>
           </thead>
         </table>
@@ -176,13 +182,27 @@ const CrimeSceneForm = () => {
       <div className="flex justify-center mt-8 no-print">
         <button
           onClick={handlePrint}
-          className="px-6 py-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 shadow-md"
+          className="px-8 py-3 bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-bold rounded-xl 
+              hover:from-blue-700 hover:to-indigo-800 hover:shadow-lg hover:-translate-y-0.5 
+              active:translate-y-0 transition-all duration-300 shadow-md 
+              flex items-center gap-2 transform"
         >
-          طباعة
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="w-5 h-5"
+          >
+            <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+            <path d="M18 14H6v8h12v-8Z" />
+          </svg>
+          <span>طباعة المحضر</span>
         </button>
       </div>
-
-   
     </div>
   );
 };

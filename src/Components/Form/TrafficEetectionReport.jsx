@@ -144,13 +144,27 @@ const TrafficEetectionReport = () => {
       <div className="flex justify-center mt-8 no-print">
         <button
           onClick={handlePrint}
-          className="px-6 py-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 shadow-md"
+          className="px-8 py-3 bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-bold rounded-xl 
+              hover:from-blue-700 hover:to-indigo-800 hover:shadow-lg hover:-translate-y-0.5 
+              active:translate-y-0 transition-all duration-300 shadow-md 
+              flex items-center gap-2 transform"
         >
-          طباعة
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="w-5 h-5"
+          >
+            <path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+            <path d="M18 14H6v8h12v-8Z" />
+          </svg>
+          <span>طباعة المحضر</span>
         </button>
       </div>
-
-   
     </div>
   );
 };

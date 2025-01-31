@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import notify from "../../hook/useNotification";
+import notify from "../useNotification";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { createNewUser } from "../../redux/actions/authAction";

@@ -4,6 +4,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      
       fontFamily: {
         sans: ['Cairo', 'sans-serif'], 
       },
@@ -13,6 +14,9 @@ module.exports = {
           DEFAULT: "1rem",
           sm: "1rem",
         },
+      },
+      transitionProperty: {
+        'transform-shadow': 'transform, box-shadow'
       },
     },
   },
