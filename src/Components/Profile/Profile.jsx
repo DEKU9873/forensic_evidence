@@ -10,6 +10,8 @@ const Profile = () => {
     if (userCookie != null) setUser(JSON.parse(userCookie));
   }, []);
 
+  console.log(user);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-300">
       <div className="w-full max-w-7xl p-10 rounded-xl shadow-2xl bg-white/90 backdrop-blur-sm">

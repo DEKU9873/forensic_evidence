@@ -9,10 +9,19 @@ const LoginHook = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // const [user, setUser] = useState(null); // تخزين بيانات المستخدم
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(true);
   const [isPress, setIsPress] = useState(false);
+
+  // useEffect(() => {
+  //   const userCookie = Cookies.get("user");
+  //   if (userCookie) {
+  //     setUser(JSON.parse(userCookie));
+  //     navigate("/home"); 
+  //   }
+  // }, []);
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -42,27 +51,28 @@ const LoginHook = () => {
     }
     setIsPress(true);
     setLoading(true);
-    await dispatch(loginUser({ email: name, password: password }));
+    await dispatch(loginUser({ username: name, password: password }));
     setLoading(false);
     setIsPress(false);
   };
 
   const res = useSelector((state) => state.authReducer.loginUser);
   console.log(res);
+
   useEffect(() => {
-    if (loading === false) {
+    if (!loading) {
       if (res) {
         console.log(res);
         if (res.data && res.data.data) {
-          // Set cookies with a 1-minute expiration
+          // حفظ التوكنات في الكوكيز
           Cookies.set("access", res.data.data.access_token, { expires: 1 });
-          Cookies.set("refresh", res.data.data.refresh_token, { expires: 1  });
-          Cookies.set("user", JSON.stringify(res.data.data), { expires: 1  });
+          Cookies.set("refresh", res.data.data.refresh_token, { expires: 1 });
+          Cookies.set("user", JSON.stringify(res.data.data), { expires: 1 });
 
           notify("تم تسجيل الدخول بنجاح", "success");
 
           setTimeout(() => {
-            window.location.href = "/Home";
+            navigate("/home"); // إعادة التوجيه
           }, 1500);
         } else {
           Cookies.remove("access");
@@ -79,7 +89,7 @@ const LoginHook = () => {
         }
       }
     }
-  }, [loading]);
+  }, [loading, res, navigate]);
 
   return [name, password, loading, onChangeName, onChangePassword, onSubmit, isPress];
 };

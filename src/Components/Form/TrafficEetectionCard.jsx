@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Eye, FileText } from "lucide-react";
 import ActionButtons from "../Uitily/ActionButtons";
 
-const CardForm = ({
+const TrafficEetectionCard = ({
   data,
   viewMode="grid",
 }) => {
@@ -14,6 +14,7 @@ const CardForm = ({
   const handleEdit = (e) => {
     e.preventDefault();
   };
+
 
  
 
@@ -26,7 +27,7 @@ const CardForm = ({
             <div className="flex items-center gap-6">
               <div className="w-2 h-14 bg-blue-200 rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
               <div>
-                <h2 className="text-lg font-bold text-blue-900 mb-1">{data.investigative_body}</h2>
+                <h2 className="text-lg font-bold text-blue-900 mb-1">{data.request_authority}</h2>
                 <p className="text-blue-500 text-sm font-medium">{data.inspection_date}</p>
               </div>
             </div>
@@ -34,7 +35,7 @@ const CardForm = ({
             <div className="flex items-center gap-4">
               <ActionButtons onDelete={handleDelete} onEdit={handleEdit} />
               <Link
-                to={`/form2/${data.id}`}
+                to={`/form3/${data.id}`}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
               >
                 <Eye className="w-4 h-4" />
@@ -62,12 +63,12 @@ const CardForm = ({
             <ActionButtons onDelete={handleDelete} onEdit={handleEdit} />{" "}
           </div>
 
-          <h2 className="text-xl font-extrabold text-blue-900 mb-2">{data.investigative_body}</h2>
+          <h2 className="text-xl font-extrabold text-blue-900 mb-2">{data.request_authority}</h2>
           <p className="text-blue-500 text-sm font-medium mb-6">{data.inspection_date}</p>
 
           <div className="flex justify-center">
             <Link
-              to={`/form2/${data.id}`}
+              to={`/form3/${data.id}`}
               className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               <Eye className="w-5 h-5" />
@@ -80,4 +81,4 @@ const CardForm = ({
   );
 };
 
-export default CardForm;
+export default TrafficEetectionCard;

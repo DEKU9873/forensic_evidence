@@ -1,6 +1,10 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import TrafficeEtectionHook from "../../hook/TrafficEetection/traffice-etection-details-hook";
 
 const TrafficEetectionReport = () => {
+  const {id} = useParams();
+  const [data] = TrafficeEtectionHook (id);
   const handlePrint = () => {
     window.print();
   };
@@ -55,28 +59,28 @@ const TrafficEetectionReport = () => {
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ اجراء الكشف
               </th>
-              <th className="border border-black p-1 text-xs text-right "></th>
+              <th className="border border-black p-1 text-xs text-right ">{data.inspection_date}</th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 الجهة التحقيقية
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-2"></th>
+              <th className="border border-black p-1 text-xs text-right col-span-2">{data.request_authority}</th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 وقت اجراء الكشف
               </th>
-              <th className="border border-black p-1 text-xs  text-right"></th>
+              <th className="border border-black p-1 text-xs  text-right">{data.inspection_time}</th>
             </tr>
             <tr className="grid grid-cols-7">
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 عنوان محل الحادث
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-1"></th>
+              <th className="border border-black p-1 text-xs text-right col-span-1">{data.inspection_place}</th>
               <th className="border border-black p-1 text-xs text-right col-span-5"></th>
             </tr>
             <tr className="grid grid-cols-7">
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ الحــــادث
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-6"></th>
+              <th className="border border-black p-1 text-xs text-right col-span-6">{data.incident_date}</th>
             </tr>
           </thead>
         </table>
@@ -88,7 +92,7 @@ const TrafficEetectionReport = () => {
           وصــــف محــــل الحــــادث
         </div>
         <div className="border border-black h-[150px] p-0.5">
-          <div className="text-justify"></div>
+          <div className="text-justify">{data.fire_place}</div>
         </div>
       </div>
       <div className="mb-1">
@@ -96,7 +100,7 @@ const TrafficEetectionReport = () => {
           الاضرار الناتجة
         </div>
         <div className="border border-black h-[150px] p-0.5">
-          <div className="text-justify"></div>
+          <div className="text-justify">{data.damage}</div>
         </div>
       </div>
       <div className="mb-1">
@@ -104,7 +108,7 @@ const TrafficEetectionReport = () => {
           اسباب الحريق
         </div>
         <div className="border border-black h-[300px] p-0.5">
-          <div className="text-justify"></div>
+          <div className="text-justify">{data.fire_reason}</div>
         </div>
       </div>
       <div className="mb-1">
@@ -112,7 +116,7 @@ const TrafficEetectionReport = () => {
           الاجراءات المتخذة
         </div>
         <div className="border border-black h-[80px] p-0.5">
-          <div className="text-justify"></div>
+          <div className="text-justify">{data.procedures}</div>
         </div>
       </div>
 

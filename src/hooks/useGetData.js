@@ -1,5 +1,4 @@
 import baseURL from "../Api/baseURL";
-import { jwtDecode } from "jwt-decode";
 import Cookies from "js-cookie";
 
 
@@ -48,6 +47,7 @@ const useGetDataToken = async (url, params) => {
   }
 };
 
+export { useGetData, useGetDataToken };
 
 
 
@@ -212,4 +212,3 @@ const useGetDataToken = async (url, params) => {
 //   }
 // };
 
-export { useGetData, useGetDataToken };

@@ -2,18 +2,23 @@ import React, { useState } from "react";
 import CardForm from "../../Components/Form/CardForm";
 import Heading from "../../Components/Uitily/Heading";
 import { LayoutGrid, List } from "lucide-react";
+import ViewMode from "../../Components/Uitily/ViewMode";
+import ReceivingDeliveringSamplesFormCard from "../../Components/Form/ReceivingDeliveringSamplesFormCard";
+import IncidentsHook from "../../hook/CriminalEffects/Incidents-hook.js";
+import { getAllEvidence } from "../../redux/actions/CriminalEffectsAction";
 
 const ReceivingDeliveringSamplesFormPage = () => {
   const [viewMode, setViewMode] = useState('grid');
+  const [incidents,loading] = IncidentsHook();
 
-  const cases = [
-    { id: 1, name: "قضية 1", date: "30/11/2023", link: "/form1Details:id" },
-    { id: 2, name: "قضية 2", date: "30/11/2023", link: "/form1Details:id" },
-    { id: 3, name: "قضية 3", date: "30/11/2023", link: "/form1Details:id" },
-    { id: 4, name: "قضية 4", date: "30/11/2023", link: "/form1Details:id" },
-    { id: 5, name: "قضية 5", date: "30/11/2023", link: "/form1Details:id" },
-    { id: 6, name: "قضية 6", date: "30/11/2023", link: "/form1Details:id" },
-  ];
+  // const cases = [
+  //   { id: 1, name: "قضية 1", date: "30/11/2023", link: "/form1Details:id" },
+  //   { id: 2, name: "قضية 2", date: "30/11/2023", link: "/form1Details:id" },
+  //   { id: 3, name: "قضية 3", date: "30/11/2023", link: "/form1Details:id" },
+  //   { id: 4, name: "قضية 4", date: "30/11/2023", link: "/form1Details:id" },
+  //   { id: 5, name: "قضية 5", date: "30/11/2023", link: "/form1Details:id" },
+  //   { id: 6, name: "قضية 6", date: "30/11/2023", link: "/form1Details:id" },
+  // ];
 
   const handleDelete = (id) => {
     // تنفيذ منطق الحذف
@@ -32,30 +37,8 @@ const ReceivingDeliveringSamplesFormPage = () => {
           title="إستمارة إستلام وتسليم العينات" 
           subtitle="" 
         />
-        <div className="flex gap-2 bg-gray-100 p-2 rounded-lg">
-          <button
-            onClick={() => setViewMode('grid')}
-            className={`p-2 rounded-md transition-colors ${
-              viewMode === 'grid' 
-                ? 'bg-white text-blue-600 shadow-sm' 
-                : 'text-gray-600 hover:bg-gray-200'
-            }`}
-            aria-label="عرض شبكي"
-          >
-            <LayoutGrid size={20} />
-          </button>
-          <button
-            onClick={() => setViewMode('list')}
-            className={`p-2 rounded-md transition-colors ${
-              viewMode === 'list' 
-                ? 'bg-white text-blue-600 shadow-sm' 
-                : 'text-gray-600 hover:bg-gray-200'
-            }`}
-            aria-label="عرض قائمة"
-          >
-            <List size={20} />
-          </button>
-        </div>
+        <ViewMode mode={viewMode} setViewMode={setViewMode} />
+
       </div>
 
       <div className={`
@@ -64,15 +47,9 @@ const ReceivingDeliveringSamplesFormPage = () => {
           : 'flex flex-col'
         }
       `}>
-        {cases.map((caseItem) => (
-          <CardForm
-            key={caseItem.id}
-            name={caseItem.name}
-            date={caseItem.date}
-            link={caseItem.link}
-            viewMode={viewMode}
-            onDelete={() => handleDelete(caseItem.id)}
-            onEdit={() => handleEdit(caseItem.id)}
+        {incidents?.data?.map((item, index) => (
+          <ReceivingDeliveringSamplesFormCard
+          key={index} data={item} viewMode={viewMode}
           />
         ))}
       </div>

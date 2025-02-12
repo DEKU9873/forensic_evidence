@@ -1,6 +1,11 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import IncidentseDetailsHook from "../../hook/CriminalEffects/Incidents-details-hook";
 
 const CrimeSceneForm = () => {
+  const { id } = useParams();
+  const [data, table] = IncidentseDetailsHook(id);
+
   const handlePrint = () => {
     window.print();
   };
@@ -47,19 +52,19 @@ const CrimeSceneForm = () => {
                 تاريخ اجراء الكشف
               </th>
               <th className="border border-black p-1 text-xs text-right ">
-                29 كانون الثاني
+                {data.inspection_date}
               </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 الجهة التحقيقية
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-2">
-                Ali IT
+               {data.investigative_body}
               </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 وقت اجراء الكشف
               </th>
               <th className="border border-black p-1 text-xs  text-right">
-                1200
+                {data.inspection_time}
               </th>
             </tr>
             <tr className="grid grid-cols-7">
@@ -67,7 +72,7 @@ const CrimeSceneForm = () => {
                 عنوان محل الحادث
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-1">
-                بغداد
+              {data.incident_location}
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-5">
                 شارع الصناعة
@@ -78,7 +83,7 @@ const CrimeSceneForm = () => {
                 تاريخ الحــــادث
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-6">
-                29/01/2025
+                {data.incident_date}
               </th>
             </tr>
           </thead>
@@ -92,8 +97,7 @@ const CrimeSceneForm = () => {
         </div>
         <div className="border border-black h-[440px] p-0.5">
           <div className="text-justify">
-            في حادث مؤسف في محافظة بغداد تم قتل المهندس باسم منقبل فاطمة اثر
-            خلاف على تقسيم كهربائي في مقر الشركة العامة للانظمة الالكترونية
+            {data.description}
           </div>
         </div>
       </div>
@@ -107,52 +111,61 @@ const CrimeSceneForm = () => {
                 الطريقة
               </th>
               <th className="border border-black p-0.5 text-right text-xs col-span-6">
-                اطلاق نار
+                {data.procedure}
               </th>
             </tr>
           </thead>
         </table>
       </div>
 
-      {/* Procedures Section*/}
-      <div className="mb-1">
-        <div className="bg-blue-300 p-0.5 text-center border border-black">
-          الإجــــراءات المتخــــذة
-        </div>
-        <div className=" p-0.5 text-center border border-black h-[60px]"></div>
-        <table className="w-full border-collapse">
-          <thead>
-            <tr className="grid grid-cols-7">
-              <th className="border border-black p-1 text-xs bg-blue-300">ت</th>
-              <th className="border border-black p-1 text-xs bg-blue-300">
-                رقم الأثر او المبرز
-              </th>
-              <th className="border border-black p-1 text-xs bg-blue-300">
-                نوع الأثر او المبرز
-              </th>
-              <th className="border border-black p-1 text-xs col-span-3 bg-blue-300">
-                مكان الرفـــــع
-              </th>
-              <th className="border border-black p-1 text-xs bg-blue-300">
-                طريقـــة الرفـــع
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {[...Array(8)].map((_, i) => (
-              <tr key={i} className="grid grid-cols-7">
-                <td className="border border-black p-1 text-xs text-center bg-blue-300 break-words">
-                  {i + 1}
-                </td>
-                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal"></td>
-                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal"></td>
-                <td className="border border-black p-1 text-xs text-right col-span-3 break-words whitespace-normal"></td>
-                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal"></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+{/* Procedures Section */}
+<div className="mb-1">
+  <div className="bg-blue-300 p-0.5 text-center border border-black">
+    الإجــــراءات المتخــــذة
+  </div>
+  <div className=" p-0.5 text-center border border-black h-[60px]"></div>
+  <table className="w-full border-collapse">
+    <thead>
+      <tr className="grid grid-cols-7">
+        <th className="border border-black p-1 text-xs bg-blue-300">ت</th>
+        <th className="border border-black p-1 text-xs bg-blue-300">
+          رقم الأثر او المبرز
+        </th>
+        <th className="border border-black p-1 text-xs bg-blue-300">
+          نوع الأثر او المبرز
+        </th>
+        <th className="border border-black p-1 text-xs col-span-3 bg-blue-300">
+          مكان الرفـــــع
+        </th>
+        <th className="border border-black p-1 text-xs bg-blue-300">
+          طريقـــة الرفـــع
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {table.map((item, index) => (
+        <tr key={index} className="grid grid-cols-7">
+          <td className="border border-black p-1 text-xs text-center break-words">
+            {index + 1}
+          </td>
+          <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+          {item.number}
+          </td>
+          <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+          {item.Typeofevidence}
+          </td>
+          <td className="border border-black p-1 text-xs text-right col-span-3 break-words whitespace-normal">
+          {item.place}
+          </td>
+          <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+          {item.waytosave}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
 
       {/* Signatures Section */}
       <div className="grid grid-cols-5 gap-1 text-center ">

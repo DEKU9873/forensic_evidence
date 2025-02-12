@@ -1,33 +1,19 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import SampleDetailsHook from "../../hook/ReceivingDeliveringSamples/sample-details-hook";
+import IncidentseDetailsHook from "../../hook/CriminalEffects/Incidents-details-hook";
 
 const ReceivingDeliveringSamplesForm = () => {
+  const { id } = useParams();
+  const [lab] = SampleDetailsHook(id);
+  const [data, table] = IncidentseDetailsHook(id);
+
+  console.log(table);
+  console.log(lab);
+
   const handlePrint = () => {
     window.print();
   };
-
-  // البيانات الخاصة بالجدول
-  const tableData = [
-    {
-      type: "عينة دم",
-      count: 5,
-      criminalNature: "نعم",
-      photographyLab: "لا",
-      weaponsLab: "نعم",
-      chemistryLab: "لا",
-      dnaLab: "نعم",
-      cyberCrimesLab: "لا",
-    },
-    {
-      type: "بصمات أصابع",
-      count: 3,
-      criminalNature: "نعم",
-      photographyLab: "نعم",
-      weaponsLab: "لا",
-      chemistryLab: "لا",
-      dnaLab: "لا",
-      cyberCrimesLab: "نعم",
-    },
-  ];
 
   return (
     <div className="w-[210mm] h-[297mm] mx-auto bg-white p-8 shadow-lg relative">
@@ -67,11 +53,11 @@ const ReceivingDeliveringSamplesForm = () => {
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div className="border-b border-gray-300 pb-1">
           <span className="font-bold ml-2">تاريخ التفتيش:</span>
-          <span className="text-gray-600">_____________</span>
+          <span className="text-gray-600">{data.inspection_date}</span>
         </div>
         <div className="border-b border-gray-300 pb-1">
           <span className="font-bold ml-2">جهة الطلب:</span>
-          <span className="text-gray-600">_____________</span>
+          <span className="text-gray-600">{data.investigative_body}</span>
         </div>
         <div className="border-b border-gray-300 pb-1">
           <span className="font-bold ml-2">الحادث:</span>
@@ -111,34 +97,36 @@ const ReceivingDeliveringSamplesForm = () => {
             </tr>
           </thead>
           <tbody>
-            {tableData.map((item, index) => (
-              <tr key={index}>
-                <td className="border border-black p-2 h-8">{item.type}</td>
-                <td className="border border-black p-2 h-8">{item.count}</td>
-                <td className="border border-black p-2 h-8">
-                  {item.criminalNature}
-                </td>
-                <td className="border border-black p-2 h-8">
-                  {item.photographyLab}
-                </td>
-                <td className="border border-black p-2 h-8">
-                  {item.weaponsLab}
-                </td>
-                <td className="border border-black p-2 h-8">
-                  {item.chemistryLab}
-                </td>
-                <td className="border border-black p-2 h-8">{item.dnaLab}</td>
-                <td className="border border-black p-2 h-8">
-                  {item.cyberCrimesLab}
-                </td>
-              </tr>
-            ))}
-            <tr>
-              <td colSpan="8" className="border border-black p-2 text-right">
-                <span className="font-bold">مجموع المبرز:</span>
-                <span className="text-gray-600 mr-2">_____________</span>
-              </td>
-            </tr>
+            {lab.map((item, index) => {
+              // البحث عن نوع المبرز باستخدام evidence من lab وربطه بـ table
+              const evidenceItem = table.find((e) => e.id === item.evidence);
+              return (
+                <tr key={index}>
+                  <td className="border border-black p-2 h-8">
+                    {evidenceItem ? evidenceItem.Typeofevidence : "غير معروف"}
+                  </td>
+                  <td className="border border-black p-2 h-8">{item.count}</td>
+                  <td className="border border-black p-2 h-8">
+                    {item.crime_lab ? "✅" : "❌"}
+                  </td>
+                  <td className="border border-black p-2 h-8">
+                    {item.dna_lab ? "✅" : "❌"}
+                  </td>
+                  <td className="border border-black p-2 h-8">
+                    {item.weapon_lab ? "✅" : "❌"}
+                  </td>
+                  <td className="border border-black p-2 h-8">
+                    {item.chemistry_lab ? "✅" : "❌"}
+                  </td>
+                  <td className="border border-black p-2 h-8">
+                    {item.dna_lab ? "✅" : "❌"}
+                  </td>
+                  <td className="border border-black p-2 h-8">
+                    {item.cyber_crime_lab ? "✅" : "❌"}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

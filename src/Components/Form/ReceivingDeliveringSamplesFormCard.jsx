@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Eye, FileText } from "lucide-react";
 import ActionButtons from "../Uitily/ActionButtons";
 
-const CardForm = ({
+const ReceivingDeliveringSamplesFormCard = ({
   data,
   viewMode="grid",
 }) => {
@@ -15,9 +15,7 @@ const CardForm = ({
     e.preventDefault();
   };
 
- 
-
-
+  
   if (viewMode === "list") {
     return (
       <div className="group relative mb-3 mx-2">
@@ -34,7 +32,7 @@ const CardForm = ({
             <div className="flex items-center gap-4">
               <ActionButtons onDelete={handleDelete} onEdit={handleEdit} />
               <Link
-                to={`/form2/${data.id}`}
+                to={`/form1/${data.id}`}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
               >
                 <Eye className="w-4 h-4" />
@@ -67,7 +65,7 @@ const CardForm = ({
 
           <div className="flex justify-center">
             <Link
-              to={`/form2/${data.id}`}
+              to={`/form1/${data.id}`}
               className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               <Eye className="w-5 h-5" />
@@ -80,4 +78,4 @@ const CardForm = ({
   );
 };
 
-export default CardForm;
+export default ReceivingDeliveringSamplesFormCard;

@@ -2,17 +2,10 @@ import React, { useState, useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { v4 as uuidv4 } from "uuid";
-import { Map as MapIcon, Trash2, Info } from "lucide-react";
+import { Map as MapIcon, Trash2, Info, ZoomIn, Maximize2, Minimize2 } from "lucide-react";
 import { FaTree } from "react-icons/fa";
-import { GiPayMoney } from "react-icons/gi";
-import { GiPistolGun } from "react-icons/gi";
-import { GiChalkOutlineMurder } from "react-icons/gi";
-import { GiKingJuMask } from "react-icons/gi";
-import { GiNinjaMask } from "react-icons/gi";
-import { GiHeartOrgan } from "react-icons/gi";
-
+import { GiPayMoney, GiPistolGun, GiChalkOutlineMurder, GiKingJuMask, GiNinjaMask, GiHeartOrgan } from "react-icons/gi";
 import { GrLocationPin } from "react-icons/gr";
-
 import "leaflet/dist/leaflet.css";
 
 const baghdadMarkers = [
@@ -87,8 +80,17 @@ const Map = () => {
   const [markers, setMarkers] = useState(baghdadMarkers);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [isRemoving, setIsRemoving] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const mapRef = useRef(null);
+  const mapContainerRef = useRef(null);
   const infoSectionRef = useRef(null);
+
+  const handleMarkerClick = (marker) => {
+    setIsRemoving(false);
+    setPosition(marker.position);
+    setSelectedMarker(marker);
+    setTimeout(scrollToInfo, 100);
+  };
 
   const scrollToInfo = () => {
     if (infoSectionRef.current) {
@@ -96,6 +98,20 @@ const Map = () => {
         behavior: "smooth",
         block: "start",
       });
+    }
+  };
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      if (mapContainerRef.current.requestFullscreen) {
+        mapContainerRef.current.requestFullscreen();
+      }
+      setIsFullscreen(true);
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+      setIsFullscreen(false);
     }
   };
 
@@ -141,37 +157,48 @@ const Map = () => {
     setMarkers((prev) => prev.filter((marker) => marker.id !== markerId));
   };
 
-  const handleMarkerClick = (marker) => {
-    setIsRemoving(false); // Reset isRemoving state
-    setPosition(marker.position);
-    setSelectedMarker(marker);
-    setTimeout(scrollToInfo, 100);
-  };
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, []);
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-b from-blue-50 to-white p-6">
       <style>
         {`
           .leaflet-control-attribution {
-            position: relative;
-            z-index: 10;
-          }
-
-          .leaflet-control-attribution:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: white;
-            z-index: 999;
+            display: none !important;
           }
 
           .map-container {
             position: relative;
             border-radius: 1rem;
             overflow: hidden;
+          }
+
+          .map-container:fullscreen {
+            padding: 0;
+            border-radius: 0;
+          }
+
+          .map-controls {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+
+          .map-container:not(:fullscreen) .map-controls {
+            position: absolute;
           }
 
           .info-section {
@@ -188,6 +215,14 @@ const Map = () => {
               scroll-margin-top: 4rem;
             }
           }
+
+          :fullscreen .map-controls button {
+            background-color: rgba(59, 130, 246, 0.9);
+          }
+
+          :fullscreen .map-controls button:hover {
+            background-color: rgba(37, 99, 235, 1);
+          }
         `}
       </style>
 
@@ -197,11 +232,10 @@ const Map = () => {
       </div>
 
       <div className="w-[900px]">
-        <div className="map-container w-full h-[70vh] mb-6 shadow-lg">
-          <MapContainer center={position} zoom={12} className="w-full h-full">
+        <div ref={mapContainerRef} className="map-container w-full h-[70vh] mb-6 shadow-lg">
+          <MapContainer center={position} zoom={12} className="w-full h-full" attributionControl={false}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
             {markers.map((marker) => (
               <Marker
@@ -211,17 +245,19 @@ const Map = () => {
                 eventHandlers={{
                   click: () => handleMarkerClick(marker)
                 }}
-              >
-                {/* <Popup>
-                  <div dir="rtl" className="flex flex-col items-center p-2">
-                    <p className="text-lg font-semibold mb-2">{marker.name}</p>
-                    <p className="text-sm text-gray-600 mb-2">{marker.description}</p>
-                  </div>
-                </Popup> */}
-              </Marker>
+              />
             ))}
             <MapEvents />
           </MapContainer>
+          <div className="map-controls">
+            <button
+              onClick={toggleFullscreen}
+              className="p-2 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 transition"
+              title={isFullscreen ? "إنهاء ملء الشاشة" : "ملء الشاشة"}
+            >
+              {isFullscreen ? <Minimize2 size={24} /> : <Maximize2 size={24} />}
+            </button>
+          </div>
         </div>
 
         <div
