@@ -5,7 +5,7 @@ import {
   getOneFireForm,
 } from "../../redux/actions/TrafficEetectionAction";
 
-const TrafficeEtectionHook = (id) => {
+const TrafficeEtectionDetailsHook = (id) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOneFireForm(id));
@@ -23,4 +23,4 @@ const TrafficeEtectionHook = (id) => {
   return [data];
 };
 
-export default TrafficeEtectionHook;
+export default TrafficeEtectionDetailsHook;

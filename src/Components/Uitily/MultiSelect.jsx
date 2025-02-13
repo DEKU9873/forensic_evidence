@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from "react";
 
 const MultiSelect = () => {
   // حالة فتح القائمة أو إغلاقها
@@ -6,40 +6,43 @@ const MultiSelect = () => {
   // الحالة التي تحتوي على العناصر المُختارة
   const [selected, setSelected] = useState([]);
   // حالة النص المكتوب في حقل البحث
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   // مرجع للحاوية الخارجة، لاستخدامه في إغلاق القائمة عند النقر خارجها
   const containerRef = useRef(null);
 
   // إغلاق القائمة عند النقر خارج المكون
-//   useEffect(() => {
-//     const handleOutsideClick = (event) => {
-//       if (containerRef.current && !containerRef.current.contains(event.target)) {
-//         setOpen(false);
-//       }
-//     };
-//     document.addEventListener('mousedown', handleOutsideClick);
-//     return () => document.removeEventListener('mousedown', handleOutsideClick);
-//   }, []);
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
 
   // قائمة الخيارات
   const options = [
-    { id: 1, label: 'تفاح' },
-    { id: 2, label: 'موز' },
-    { id: 3, label: 'برتقال' },
-    { id: 4, label: 'مانجو' },
-    { id: 5, label: 'فراولة' },
-    { id: 6, label: 'عنب' },
+    { id: 1, label: "تفاح" },
+    { id: 2, label: "موز" },
+    { id: 3, label: "برتقال" },
+    { id: 4, label: "مانجو" },
+    { id: 5, label: "فراولة" },
+    { id: 6, label: "عنب" },
   ];
 
   // تصفية الخيارات بناءً على النص المكتوب في البحث
-  const filteredOptions = options.filter(option =>
+  const filteredOptions = options.filter((option) =>
     option.label.toLowerCase().includes(query.toLowerCase())
   );
 
   // تبديل اختيار العنصر: إضافة إذا لم يكن موجودًا أو إزالته إذا كان موجودًا
   const toggleOption = (option) => {
-    if (selected.some(item => item.id === option.id)) {
-      setSelected(selected.filter(item => item.id !== option.id));
+    if (selected.some((item) => item.id === option.id)) {
+      setSelected(selected.filter((item) => item.id !== option.id));
     } else {
       setSelected([...selected, option]);
     }
@@ -47,7 +50,7 @@ const MultiSelect = () => {
 
   // إزالة عنصر من العناصر المُختارة
   const removeItem = (id) => {
-    setSelected(selected.filter(item => item.id !== id));
+    setSelected(selected.filter((item) => item.id !== id));
   };
 
   return (
@@ -60,7 +63,7 @@ const MultiSelect = () => {
         {selected.length === 0 ? (
           <span className="text-gray-400">اختر عناصر...</span>
         ) : (
-          selected.map(item => (
+          selected.map((item) => (
             <span
               key={item.id}
               className="bg-blue-200 text-blue-800 px-2 py-1 rounded-full flex items-center"
@@ -99,7 +102,7 @@ const MultiSelect = () => {
             {filteredOptions.length === 0 ? (
               <div className="p-2 text-center text-gray-500">لا توجد نتائج</div>
             ) : (
-              filteredOptions.map(option => (
+              filteredOptions.map((option) => (
                 <div
                   key={option.id}
                   className="p-2 hover:bg-gray-100 flex items-center cursor-pointer transition-colors duration-200"
@@ -108,7 +111,7 @@ const MultiSelect = () => {
                   <input
                     type="checkbox"
                     readOnly
-                    checked={selected.some(item => item.id === option.id)}
+                    checked={selected.some((item) => item.id === option.id)}
                     className="mr-2"
                   />
                   <span>{option.label}</span>

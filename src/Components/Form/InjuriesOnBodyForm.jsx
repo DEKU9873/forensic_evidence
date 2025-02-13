@@ -76,29 +76,28 @@ const InjuriesOnBodyForm = () => {
         />
 
         {/* Signatures Section */}
-<div className="grid grid-cols-5 gap-1 text-center mt-[65px] mx-1 ">
-        <div>
-          <div className="font-bold text-xs">المشتكي</div>
-          <div className="border border-black h-20"></div>
+        <div className="grid grid-cols-5 gap-1 text-center mt-[65px] mx-1 ">
+          <div>
+            <div className="font-bold text-xs">المشتكي</div>
+            <div className="border border-black h-20"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">المصـــور</div>
+            <div className="border border-black h-20"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">الممارس</div>
+            <div className="border border-black h-20"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">المحقـــق</div>
+            <div className="border border-black h-20"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
+            <div className="border border-black h-20"></div>
+          </div>
         </div>
-        <div>
-          <div className="font-bold text-xs">المصـــور</div>
-          <div className="border border-black h-20"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">الممارس</div>
-          <div className="border border-black h-20"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">المحقـــق</div>
-          <div className="border border-black h-20"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
-          <div className="border border-black h-20"></div>
-        </div>
-      </div>
-
       </div>
     </div>
   );

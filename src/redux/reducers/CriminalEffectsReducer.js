@@ -1,4 +1,11 @@
-import {GET_Evidence, GET_ONE_EVIDENCE, GET_ERROR, GET_Incidents, GET_ONE_Incidents, GET_Evidencebyincident } from "../type";
+import {
+  GET_Evidence,
+  GET_ONE_EVIDENCE,
+  GET_ERROR,
+  GET_Incidents,
+  GET_ONE_Incidents,
+  GET_Evidencebyincident,
+} from "../type";
 
 const inital = {
   evidence: [],
@@ -7,7 +14,7 @@ const inital = {
   incidents: [],
   oneIncidents: [],
   evidencebyincident: [],
-  
+
   loading: true,
 };
 const criminalEffectsReducer = (state = inital, action) => {
@@ -45,7 +52,7 @@ const criminalEffectsReducer = (state = inital, action) => {
     case GET_ERROR:
       return {
         ...state,
-        loading: false,  
+        loading: false,
         evidence: action.payload,
       };
     default:

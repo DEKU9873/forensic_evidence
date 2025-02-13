@@ -1,15 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import SampleDetailsHook from "../../hook/ReceivingDeliveringSamples/sample-details-hook";
-import IncidentseDetailsHook from "../../hook/CriminalEffects/Incidents-details-hook";
+import SampleDetailsHook from "../../../hook/ReceivingDeliveringSamples/sample-details-hook";
+import IncidentseDetailsHook from "../../../hook/CriminalEffects/Incidents-details-hook";
 
 const ReceivingDeliveringSamplesForm = () => {
   const { id } = useParams();
   const [lab] = SampleDetailsHook(id);
   const [data, table] = IncidentseDetailsHook(id);
-
-  console.log(table);
-  console.log(lab);
 
   const handlePrint = () => {
     window.print();

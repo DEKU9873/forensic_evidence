@@ -33,9 +33,13 @@ const Sidebar = () => {
       to={to}
       onClick={onClick}
       className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 
-        ${isActive ? 'bg-white bg-opacity-10 text-white' : 'text-gray-200 hover:bg-white hover:bg-opacity-10'}`}
+        ${
+          isActive
+            ? "bg-white bg-opacity-10 text-white"
+            : "text-gray-200 hover:bg-white hover:bg-opacity-10"
+        }`}
     >
-      <Icon className={`${isOpen ? 'text-2xl' : 'text-3xl'}`} />
+      <Icon className={`${isOpen ? "text-2xl" : "text-3xl"}`} />
       {isOpen && <span className="text-sm font-medium">{text}</span>}
     </Link>
   );
@@ -51,7 +55,9 @@ const Sidebar = () => {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-blue-700">
           {isOpen && (
-            <h1 className="text-white text-xl font-bold mr-2">الادلة الجنائية</h1>
+            <h1 className="text-white text-xl font-bold mr-2">
+              الادلة الجنائية
+            </h1>
           )}
           <button
             onClick={toggleSidebar}
@@ -71,19 +77,19 @@ const Sidebar = () => {
             icon={FaHome}
             text="الصفحة الرئيسية"
             to="/home"
-            isActive={location.pathname === '/home'}
+            isActive={location.pathname === "/home"}
           />
           <MenuItem
             icon={FaUser}
             text="الملف الشخصي"
             to="/profile"
-            isActive={location.pathname === '/profile'}
+            isActive={location.pathname === "/profile"}
           />
           <MenuItem
             icon={FaMapMarkerAlt}
             text="الخرائط"
             to="/map"
-            isActive={location.pathname === '/map'}
+            isActive={location.pathname === "/map"}
           />
 
           {/* Forms Section */}
@@ -92,15 +98,20 @@ const Sidebar = () => {
               onClick={toggleForms}
               className={`w-full flex items-center justify-between px-4 py-3 rounded-lg
                 transition-all duration-200 text-gray-200 hover:bg-white hover:bg-opacity-10
-                ${isFormsOpen && 'bg-white bg-opacity-10'}`}
+                ${isFormsOpen && "bg-white bg-opacity-10"}`}
             >
               <div className="flex items-center gap-3">
-                <FaFileAlt className={`${isOpen ? 'text-2xl' : 'text-3xl'}`} />
-                {isOpen && <span className="text-sm font-medium">استمارات</span>}
+                <FaFileAlt className={`${isOpen ? "text-2xl" : "text-3xl"}`} />
+                {isOpen && (
+                  <span className="text-sm font-medium">استمارات</span>
+                )}
               </div>
-              {isOpen && (
-                isFormsOpen ? <FaChevronUp className="text-sm" /> : <FaChevronDown className="text-sm" />
-              )}
+              {isOpen &&
+                (isFormsOpen ? (
+                  <FaChevronUp className="text-sm" />
+                ) : (
+                  <FaChevronDown className="text-sm" />
+                ))}
             </button>
 
             {/* Forms Submenu */}
@@ -117,9 +128,11 @@ const Sidebar = () => {
                     key={form.to}
                     to={form.to}
                     className={`text-sm px-4 py-2 rounded-lg transition-all duration-200
-                      ${location.pathname === form.to 
-                        ? 'bg-blue-700 text-white' 
-                        : 'text-gray-300 hover:bg-blue-700 hover:bg-opacity-50'}`}
+                      ${
+                        location.pathname === form.to
+                          ? "bg-blue-700 text-white"
+                          : "text-gray-300 hover:bg-blue-700 hover:bg-opacity-50"
+                      }`}
                   >
                     {form.text}
                   </Link>

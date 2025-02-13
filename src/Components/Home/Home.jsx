@@ -12,7 +12,8 @@ const Home = () => {
   const features = [
     {
       title: "اتمتة العمل",
-      description: "ادارة محاضر الكشف بطريقة رقمية لتسهيل ادارة البيانات الجنائية",
+      description:
+        "ادارة محاضر الكشف بطريقة رقمية لتسهيل ادارة البيانات الجنائية",
       icon: <FileSearch className="h-8 w-8 text-blue-600" />,
     },
     {
@@ -53,7 +54,8 @@ const Home = () => {
               نظام الادلة الجنائية
             </h1>
             <p className="text-xl md:text-2xl text-blue-100 font-medium mb-10 leading-relaxed">
-              منصة التحقيقات الرقمية المتكاملة لإدارة الأدلة الجنائية وتحليل البيانات
+              منصة التحقيقات الرقمية المتكاملة لإدارة الأدلة الجنائية وتحليل
+              البيانات
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <button className="px-8 py-4 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transform hover:scale-105 transition-all duration-200 shadow-lg">
@@ -97,22 +99,29 @@ const Home = () => {
               {
                 number: "5000+",
                 title: "قضية تم حلها",
-                subtitle: "بكفاءة تحليل عالية"
+                subtitle: "بكفاءة تحليل عالية",
               },
               {
                 number: "98%",
                 title: "دقة النتائج",
-                subtitle: "في التحليلات الجنائية"
+                subtitle: "في التحليلات الجنائية",
               },
               {
                 number: "24/7",
                 title: "دعم فني",
-                subtitle: "خدمة عملاء على مدار الساعة"
-              }
+                subtitle: "خدمة عملاء على مدار الساعة",
+              },
             ].map((stat, index) => (
-              <div key={index} className="bg-blue-800/50 p-8 rounded-xl text-center">
-                <div className="text-5xl font-bold text-white mb-4">{stat.number}</div>
-                <div className="text-xl font-medium text-white mb-2">{stat.title}</div>
+              <div
+                key={index}
+                className="bg-blue-800/50 p-8 rounded-xl text-center"
+              >
+                <div className="text-5xl font-bold text-white mb-4">
+                  {stat.number}
+                </div>
+                <div className="text-xl font-medium text-white mb-2">
+                  {stat.title}
+                </div>
                 <div className="text-blue-200">{stat.subtitle}</div>
               </div>
             ))}

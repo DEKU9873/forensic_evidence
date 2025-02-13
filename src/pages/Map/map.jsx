@@ -2,9 +2,23 @@ import React, { useState, useRef, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { v4 as uuidv4 } from "uuid";
-import { Map as MapIcon, Trash2, Info, ZoomIn, Maximize2, Minimize2 } from "lucide-react";
+import {
+  Map as MapIcon,
+  Trash2,
+  Info,
+  ZoomIn,
+  Maximize2,
+  Minimize2,
+} from "lucide-react";
 import { FaTree } from "react-icons/fa";
-import { GiPayMoney, GiPistolGun, GiChalkOutlineMurder, GiKingJuMask, GiNinjaMask, GiHeartOrgan } from "react-icons/gi";
+import {
+  GiPayMoney,
+  GiPistolGun,
+  GiChalkOutlineMurder,
+  GiKingJuMask,
+  GiNinjaMask,
+  GiHeartOrgan,
+} from "react-icons/gi";
 import { GrLocationPin } from "react-icons/gr";
 import "leaflet/dist/leaflet.css";
 
@@ -56,7 +70,7 @@ const baghdadMarkers = [
     description: "تم العثور على جثة",
     icon: GiChalkOutlineMurder,
     color: "#FFC107",
-  }
+  },
 ];
 
 const createCustomIcon = (IconComponent, color) => {
@@ -68,10 +82,10 @@ const createCustomIcon = (IconComponent, color) => {
 
   return new L.DivIcon({
     html: svgTemplate,
-    className: 'custom-pin-icon',
+    className: "custom-pin-icon",
     iconSize: [40, 40],
     iconAnchor: [20, 40],
-    popupAnchor: [0, -40]
+    popupAnchor: [0, -40],
   });
 };
 
@@ -135,7 +149,7 @@ const Map = () => {
           id: uuidv4(),
           icon: FaTree,
           color: "#999999",
-          description: "علامة جديدة"
+          description: "علامة جديدة",
         };
 
         setMarkers((prev) => [...prev, newMarker]);
@@ -162,9 +176,9 @@ const Map = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
 
-    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
     return () => {
-      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
     };
   }, []);
 
@@ -232,18 +246,24 @@ const Map = () => {
       </div>
 
       <div className="w-[900px]">
-        <div ref={mapContainerRef} className="map-container w-full h-[70vh] mb-6 shadow-lg">
-          <MapContainer center={position} zoom={12} className="w-full h-full" attributionControl={false}>
-            <TileLayer
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
+        <div
+          ref={mapContainerRef}
+          className="map-container w-full h-[70vh] mb-6 shadow-lg"
+        >
+          <MapContainer
+            center={position}
+            zoom={12}
+            className="w-full h-full"
+            attributionControl={false}
+          >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {markers.map((marker) => (
               <Marker
                 key={marker.id}
                 position={marker.position}
                 icon={createCustomIcon(marker.icon, marker.color)}
                 eventHandlers={{
-                  click: () => handleMarkerClick(marker)
+                  click: () => handleMarkerClick(marker),
                 }}
               />
             ))}
@@ -283,7 +303,9 @@ const Map = () => {
                     {selectedMarker.name}
                   </p>
                 </div>
-                <p className="text-gray-600 mb-3">{selectedMarker.description}</p>
+                <p className="text-gray-600 mb-3">
+                  {selectedMarker.description}
+                </p>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white p-3 rounded-md shadow-sm">
                     <p className="text-sm text-gray-500">خط العرض</p>
@@ -310,7 +332,7 @@ const Map = () => {
                   <MapIcon className="w-5 h-5" />
                   عرض في Google Maps
                 </a>
-                
+
                 <button
                   onClick={(e) => removeMarker(selectedMarker.id, e)}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300"
@@ -323,7 +345,9 @@ const Map = () => {
           ) : (
             <div className="text-center py-8 text-gray-500">
               <p>لم يتم تحديد أي علامة</p>
-              <p className="text-sm mt-2">انقر على الخريطة لإضافة علامة جديدة</p>
+              <p className="text-sm mt-2">
+                انقر على الخريطة لإضافة علامة جديدة
+              </p>
             </div>
           )}
         </div>

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FaUserCircle, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaEnvelope,
+  FaPhone,
+  FaMapMarkerAlt,
+} from "react-icons/fa";
 import { FaCircleInfo } from "react-icons/fa6";
 import Cookies from "js-cookie";
 
@@ -26,7 +31,9 @@ const Profile = () => {
               <FaUserCircle size={24} />
             </div>
           </div>
-          <h1 className="text-4xl font-black text-gray-800 mb-2">{user.username}</h1>
+          <h1 className="text-4xl font-black text-gray-800 mb-2">
+            {user.username}
+          </h1>
           <p className="text-gray-600 text-lg max-w-xl mx-auto">المنصب</p>
           <button className="mt-6 bg-blue-600 text-white hover:bg-blue-700 py-3 px-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center mx-auto gap-2">
             <FaUserCircle size={20} />
@@ -40,28 +47,35 @@ const Profile = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
-              { 
-                icon: <FaEnvelope size={20} className="text-blue-600" />, 
-                title: "البريد الإلكتروني", 
-                value: user.email
+              {
+                icon: <FaEnvelope size={20} className="text-blue-600" />,
+                title: "البريد الإلكتروني",
+                value: user.email,
               },
-              { 
-                icon: <FaPhone size={20} className="text-blue-600" />, 
-                title: "رقم الهاتف", 
-                value: user.phone_number 
+              {
+                icon: <FaPhone size={20} className="text-blue-600" />,
+                title: "رقم الهاتف",
+                value: user.phone_number,
               },
-              { 
-                icon: <FaMapMarkerAlt size={20} className="text-blue-600" />, 
-                title: "الموقع", 
-                value: "بغداد، العراق" 
-              }
+              {
+                icon: <FaMapMarkerAlt size={20} className="text-blue-600" />,
+                title: "الموقع",
+                value: "بغداد، العراق",
+              },
             ].map((item, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2">
+              <div
+                key={index}
+                className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2"
+              >
                 <div className="flex items-center mb-3 gap-3 border-b border-blue-100 pb-3">
                   {item.icon}
-                  <span className="text-gray-500 font-semibold">{item.title}</span>
+                  <span className="text-gray-500 font-semibold">
+                    {item.title}
+                  </span>
                 </div>
-                <span className="text-gray-800 text-lg font-bold mt-2 block">{item.value}</span>
+                <span className="text-gray-800 text-lg font-bold mt-2 block">
+                  {item.value}
+                </span>
               </div>
             ))}
           </div>

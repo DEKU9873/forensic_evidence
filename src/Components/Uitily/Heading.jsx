@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Heading = ({ title, subtitle }) => {
   return (
@@ -6,12 +6,8 @@ const Heading = ({ title, subtitle }) => {
       <h1 className="text-2xl font-bold text-gray-800 mb-2 lg:text-3xl">
         {title}
       </h1>
-      
-      {subtitle && (
-        <p className="text-sm text-gray-500">
-          {subtitle}
-        </p>
-      )}
+
+      {subtitle && <p className="text-sm text-gray-500">{subtitle}</p>}
     </div>
   );
 };

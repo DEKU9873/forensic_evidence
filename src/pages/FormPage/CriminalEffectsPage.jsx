@@ -1,26 +1,22 @@
-import React, { useState } from "react";
-import CardForm from "../../Components/Form/CardForm";
+import React, { useState, useEffect } from "react";
+import CardForm from "../../Components/Form/CriminalEffects/CardForm.jsx";
 import Heading from "../../Components/Uitily/Heading";
 import ViewMode from "../../Components/Uitily/ViewMode.jsx";
-import MultiSelect from "../../Components/Uitily/MultiSelect.jsx";
 import EvidenceHook from "../../hook/CriminalEffects/evidence-hook.js";
 import IncidentsHook from "../../hook/CriminalEffects/Incidents-hook.js";
+import SearchBar from "../../Components/Uitily/SearchBar.jsx";
+import Pagination from "../../Components/Uitily/Pagination.jsx";
 
 const CriminalEffectsPage = () => {
-  const [incidents,loading] = IncidentsHook();
-  const [viewMode, setViewMode] = useState("grid");
+  const [incidents, loading] = IncidentsHook();
+  const [viewMode, setViewMode] = useState(() => {
+    return localStorage.getItem("viewMode") || "grid";
+  });
 
-
-
-  const handleDelete = (id) => {
-    // تنفيذ منطق الحذف
-    console.log("Delete case:", id);
-  };
-
-  const handleEdit = (id) => {
-    // تنفيذ منطق التعديل
-    console.log("Edit case:", id);
-  };
+  // حفظ الـ viewMode في localStorage عند تغييره
+  useEffect(() => {
+    localStorage.setItem("viewMode", viewMode);
+  }, [viewMode]);
 
   return (
     <div className="ml-[120px] mx-[60px] py-4">
@@ -29,7 +25,9 @@ const CriminalEffectsPage = () => {
           title="محضر كشــــف وإظهار ورفــــع الآثار الجرمية لمســـرح الجريمة"
           subtitle=""
         />
-
+      </div>
+      <div className="flex felx-row mb-2">
+        <SearchBar />
         <ViewMode mode={viewMode} setViewMode={setViewMode} />
       </div>
 
@@ -44,6 +42,7 @@ const CriminalEffectsPage = () => {
           <CardForm key={index} data={item} viewMode={viewMode} />
         ))}
       </div>
+      <Pagination />
     </div>
   );
 };

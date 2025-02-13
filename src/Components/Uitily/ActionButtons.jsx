@@ -1,8 +1,6 @@
 import { Trash2, Pencil } from "lucide-react";
 
 const ActionButtons = ({ onDelete, onEdit }) => {
-
-
   return (
     <div className="flex gap-2">
       <button

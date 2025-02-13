@@ -1,12 +1,10 @@
 import baseURL from "../Api/baseURL";
 import Cookies from "js-cookie";
 
-
 const useGetData = async (url, parmas) => {
   const res = await baseURL.get(url, parmas);
   return res.data;
 };
-
 
 const useGetDataToken = async (url, params) => {
   const refreshTokenUrl = "/accont/token/refresh/";
@@ -32,7 +30,7 @@ const useGetDataToken = async (url, params) => {
         Cookies.set("access", refreshResponse.data.access);
 
         // إعادة المحاولة باستخدام التوكن الجديد
-        config.headers.Authorization =`Bearer ${Cookies.get("access")}`;
+        config.headers.Authorization = `Bearer ${Cookies.get("access")}`;
         const retryRes = await baseURL.get(url, config);
         return retryRes.data;
       } catch (refreshError) {
@@ -48,14 +46,6 @@ const useGetDataToken = async (url, params) => {
 };
 
 export { useGetData, useGetDataToken };
-
-
-
-
-
-
-
-
 
 // const useGetDataToken = async (url, params) => {
 //   const refreshTokenUrl = "/account/token/refresh/";
@@ -92,7 +82,7 @@ export { useGetData, useGetDataToken };
 
 //         // تحديث الرموز في localStorage
 //         localStorage.setItem("access", refreshResponse.data.data.access_token);
-        
+
 //         // إعادة محاولة الطلب الأصلي باستخدام الرمز الجديد
 //         config.headers.Authorization = `Bearer ${refreshResponse.data.data.access_token}`;
 //         const retryRes = await baseURL.get(url, config);
@@ -129,36 +119,17 @@ export { useGetData, useGetDataToken };
 //   localStorage.removeItem("access");
 //   localStorage.removeItem("refresh");
 //   localStorage.removeItem("user");
-  
+
 //   // إعادة التوجيه إلى صفحة تسجيل الدخول أو تنفيذ إجراء تسجيل الخروج
 //   // هذا يعتمد على إعدادات التوجيه الخاصة بك
 //   window.location.href = "/login";
-  
+
 //   // إذا كنت تستخدم Redux أو أي إدارة حالة أخرى
 //   // store.dispatch(logoutAction());
 
 //   // منع التنفيذ بعد الآن
 //   throw new Error("تم تسجيل الخروج");
 // };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const useGetDataToken = async (url, parmas) => {
 //     const config = {
@@ -167,10 +138,6 @@ export { useGetData, useGetDataToken };
 //     const res = await baseURL.get(url, config);
 //     return res.data;
 // }
-
-
-
-
 
 // const useGetDataToken = async (url, params) => {
 //   const refreshTokenUrl = "/accont/token/refresh/";
@@ -186,7 +153,7 @@ export { useGetData, useGetDataToken };
 //     // التحقق إذا كان الخطأ بسبب انتهاء صلاحية التوكن
 //     if (error.response && error.response.status === 401) {
 //       try {
-     
+
 //         // محاولة تجديد التوكن
 //         const refreshToken = localStorage.getItem("refresh");
 //         const refreshResponse = await baseURL.post(refreshTokenUrl, {
@@ -211,4 +178,3 @@ export { useGetData, useGetDataToken };
 //     }
 //   }
 // };
-

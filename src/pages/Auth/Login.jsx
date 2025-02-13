@@ -6,18 +6,33 @@ import { ToastContainer } from "react-toastify";
 import MultiSelect from "../../Components/Uitily/MultiSelect";
 
 const Login = () => {
-  const [name, password, loading, onChangeName, onChangePassword, onSubmit, isPress] = LoginHook();
+  const [
+    name,
+    password,
+    loading,
+    onChangeName,
+    onChangePassword,
+    onSubmit,
+    isPress,
+  ] = LoginHook();
+
+  // دالة لمعالجة الضغط على زر Enter
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200">
       <div className="bg-white p-10 rounded-lg shadow-2xl w-full max-w-2xl">
         <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">
-
           أهلاً بك!
         </h2>
         <p className="text-gray-600 text-center mb-10 text-lg">
           تسجيل الدخول لحسابك
         </p>
-        
+
         <div className="grid grid-cols-1 gap-6">
           {/* Username Field */}
           <div>
@@ -32,6 +47,7 @@ const Login = () => {
                 type="text"
                 value={name}
                 onChange={onChangeName}
+                onKeyDown={handleKeyDown} // استدعاء الدالة عند الضغط على زر Enter
                 className="w-full px-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-lg text-left"
                 dir="ltr"
                 placeholder="اسم المستخدم"
@@ -53,6 +69,7 @@ const Login = () => {
                 type="password"
                 value={password}
                 onChange={onChangePassword}
+                onKeyDown={handleKeyDown} // استدعاء الدالة عند الضغط على زر Enter
                 className="w-full px-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none transition text-lg text-left"
                 dir="ltr"
                 placeholder="********"

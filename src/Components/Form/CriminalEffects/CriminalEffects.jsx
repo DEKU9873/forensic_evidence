@@ -1,10 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import TrafficeEtectionHook from "../../hook/TrafficEetection/traffice-etection-details-hook";
+import IncidentseDetailsHook from "../../../hook/CriminalEffects/Incidents-details-hook";
+const CrimeSceneForm = () => {
+  const { id } = useParams();
+  const [data, table] = IncidentseDetailsHook(id);
 
-const TrafficEetectionReport = () => {
-  const {id} = useParams();
-  const [data] = TrafficeEtectionHook (id);
   const handlePrint = () => {
     window.print();
   };
@@ -13,15 +13,6 @@ const TrafficEetectionReport = () => {
       className="w-[210mm] h-[297mm] bg-white p-2 mx-auto font-sans text-sm relative"
       dir="rtl"
     >
-      {/* Watermark */}
-      <div className="absolute inset-0 flex justify-center items-center opacity-10 z-0">
-        <img
-          src="/images/forensic_evidence.png"
-          alt="Watermark"
-          className="w-[800px] h-[800px] object-contain"
-        />
-      </div>
-
       {/* Header */}
       <div className="flex mb-1">
         <div className="text-sm text-right leading-tight absolute right-2">
@@ -49,7 +40,7 @@ const TrafficEetectionReport = () => {
 
       {/* Title */}
       <div className="text-center font-bold mb-1 text-base">
-        محضر كشــــف الحرائق
+        محضر كشــــف وإظهار ورفــــع الآثار الجرمية لمســـرح الجريمة
       </div>
 
       <div className="mb-1">
@@ -59,28 +50,40 @@ const TrafficEetectionReport = () => {
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ اجراء الكشف
               </th>
-              <th className="border border-black p-1 text-xs text-right ">{data.inspection_date}</th>
+              <th className="border border-black p-1 text-xs text-right ">
+                {data.inspection_date}
+              </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 الجهة التحقيقية
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-2">{data.request_authority}</th>
+              <th className="border border-black p-1 text-xs text-right col-span-2">
+                {data.investigative_body}
+              </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 وقت اجراء الكشف
               </th>
-              <th className="border border-black p-1 text-xs  text-right">{data.inspection_time}</th>
+              <th className="border border-black p-1 text-xs  text-right">
+                {data.inspection_time}
+              </th>
             </tr>
             <tr className="grid grid-cols-7">
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 عنوان محل الحادث
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-1">{data.inspection_place}</th>
-              <th className="border border-black p-1 text-xs text-right col-span-5"></th>
+              <th className="border border-black p-1 text-xs text-right col-span-1">
+                {data.incident_location}
+              </th>
+              <th className="border border-black p-1 text-xs text-right col-span-5">
+                شارع الصناعة
+              </th>
             </tr>
             <tr className="grid grid-cols-7">
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ الحــــادث
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-6">{data.incident_date}</th>
+              <th className="border border-black p-1 text-xs text-right col-span-6">
+                {data.incident_date}
+              </th>
             </tr>
           </thead>
         </table>
@@ -88,59 +91,99 @@ const TrafficEetectionReport = () => {
 
       {/* Description Section*/}
       <div className="mb-1">
-        <div className="bg-gray-300 p-0.5 text-center border border-black">
+        <div className="bg-blue-300 p-0.5 text-center border border-black">
           وصــــف محــــل الحــــادث
         </div>
-        <div className="border border-black h-[150px] p-0.5">
-          <div className="text-justify">{data.fire_place}</div>
+        <div className="border border-black h-[440px] p-0.5">
+          <div className="text-justify">{data.description}</div>
         </div>
       </div>
+
+      {/* Method Section*/}
       <div className="mb-1">
-        <div className="bg-gray-300 p-0.5 text-center border border-black">
-          الاضرار الناتجة
-        </div>
-        <div className="border border-black h-[150px] p-0.5">
-          <div className="text-justify">{data.damage}</div>
-        </div>
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="grid grid-cols-7">
+              <th className="border border-black p-0.5 text-right text-x bg-blue-300">
+                الطريقة
+              </th>
+              <th className="border border-black p-0.5 text-right text-xs col-span-6">
+                {data.procedure}
+              </th>
+            </tr>
+          </thead>
+        </table>
       </div>
+
+      {/* Procedures Section */}
       <div className="mb-1">
-        <div className="bg-gray-300 p-0.5 text-center border border-black">
-          اسباب الحريق
+        <div className="bg-blue-300 p-0.5 text-center border border-black">
+          الإجــــراءات المتخــــذة
         </div>
-        <div className="border border-black h-[300px] p-0.5">
-          <div className="text-justify">{data.fire_reason}</div>
-        </div>
-      </div>
-      <div className="mb-1">
-        <div className="bg-gray-300 p-0.5 text-center border border-black">
-          الاجراءات المتخذة
-        </div>
-        <div className="border border-black h-[80px] p-0.5">
-          <div className="text-justify">{data.procedures}</div>
-        </div>
+        <div className=" p-0.5 text-center border border-black h-[60px]"></div>
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="grid grid-cols-7">
+              <th className="border border-black p-1 text-xs bg-blue-300">ت</th>
+              <th className="border border-black p-1 text-xs bg-blue-300">
+                رقم الأثر او المبرز
+              </th>
+              <th className="border border-black p-1 text-xs bg-blue-300">
+                نوع الأثر او المبرز
+              </th>
+              <th className="border border-black p-1 text-xs col-span-3 bg-blue-300">
+                مكان الرفـــــع
+              </th>
+              <th className="border border-black p-1 text-xs bg-blue-300">
+                طريقـــة الرفـــع
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {table.map((item, index) => (
+              <tr key={index} className="grid grid-cols-7">
+                <td className="border border-black p-1 text-xs text-center break-words">
+                  {index + 1}
+                </td>
+                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+                  {item.number}
+                </td>
+                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+                  {item.Typeofevidence}
+                </td>
+                <td className="border border-black p-1 text-xs text-right col-span-3 break-words whitespace-normal">
+                  {item.place}
+                </td>
+                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+                  {item.waytosave}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Signatures Section */}
       <div className="grid grid-cols-5 gap-1 text-center ">
         <div>
           <div className="font-bold text-xs">المشتكي</div>
-          <div className="border border-black h-20"></div>
+          <div className="border border-black h-10"></div>
         </div>
         <div>
           <div className="font-bold text-xs">المصـــور</div>
-          <div className="border border-black h-20"></div>
+          <div className="border border-black h-10"></div>
         </div>
         <div>
           <div className="font-bold text-xs">الممارس</div>
-          <div className="border border-black h-20"></div>
+          <div className="border border-black h-10"></div>
         </div>
         <div>
           <div className="font-bold text-xs">المحقـــق</div>
-          <div className="border border-black h-20"></div>
+          <div className="border border-black h-10"></div>
         </div>
         <div>
           <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
-          <div className="border border-black h-20"></div>
+          <div className="border border-black h-10"></div>
         </div>
       </div>
 
@@ -173,4 +216,4 @@ const TrafficEetectionReport = () => {
   );
 };
 
-export default TrafficEetectionReport;
+export default CrimeSceneForm;
