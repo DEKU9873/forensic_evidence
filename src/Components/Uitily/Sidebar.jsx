@@ -8,13 +8,18 @@ import {
   FaFileAlt,
   FaChevronDown,
   FaChevronUp,
+  FaSignOutAlt,
 } from "react-icons/fa";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie"; 
+
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFormsOpen, setIsFormsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -22,6 +27,15 @@ const Sidebar = () => {
 
   const toggleForms = () => {
     setIsFormsOpen(!isFormsOpen);
+  };
+
+  const handleLogout = () => {
+    Cookies.remove("access");  
+    Cookies.remove("refresh");  
+    Cookies.remove("user"); 
+    setTimeout(() => {
+      navigate("/");
+    }, 500);
   };
 
   if (location.pathname === "/") {
@@ -141,6 +155,15 @@ const Sidebar = () => {
             )}
           </div>
         </div>
+
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-3 px-4 py-4 text-white hover:bg-blue-300 hover:bg-opacity-20 transition-colors duration-200 border-t border-blue-700"
+        >
+          <FaSignOutAlt className={`${isOpen ? "text-2xl" : "text-3xl"}`} />
+          {isOpen && <span className="text-xl font-medium">تسجيل خروج</span>}
+        </button>
       </div>
     </div>
   );

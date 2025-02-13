@@ -43,14 +43,30 @@ export const getOneEvidence = (id) => async (dispatch) => {
     });
   }
 };
-export const getAllIncidents = () => async (dispatch) => {
+export const getAllIncidents = (limit) => async (dispatch) => {
   try {
     // const res = await baseURL.get("/categories/");
-    const res = await useGetData(`api/incidents/`);
+    const res = await useGetData(`api/incidents/?limit=${limit}`);
 
     dispatch({
       type: GET_Incidents,
       payload: res,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error" + e,
+    });
+  }
+};
+
+export const getAllIncidentsPage = (page, limit) => async (dispatch) => {
+  try {
+    const res = await useGetData(`api/incidents/?limit=${limit}&page=${page}`);
+    dispatch({
+      type: GET_Incidents,
+      payload: res,
+      loading: true,
     });
   } catch (e) {
     dispatch({

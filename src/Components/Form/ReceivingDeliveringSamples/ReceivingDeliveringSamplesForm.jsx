@@ -103,23 +103,23 @@ const ReceivingDeliveringSamplesForm = () => {
                     {evidenceItem ? evidenceItem.Typeofevidence : "غير معروف"}
                   </td>
                   <td className="border border-black p-2 h-8">{item.count}</td>
-                  <td className="border border-black p-2 h-8">
-                    {item.crime_lab ? "✅" : "❌"}
+                  <td className="border border-black p-2 h-8 text-center">
+                    {item.crime_lab ? "✅" : ""}
                   </td>
-                  <td className="border border-black p-2 h-8">
-                    {item.dna_lab ? "✅" : "❌"}
+                  <td className="border border-black p-2 h-8 text-center">
+                    {item.dna_lab ? "✅" : ""}
                   </td>
-                  <td className="border border-black p-2 h-8">
-                    {item.weapon_lab ? "✅" : "❌"}
+                  <td className="border border-black p-2 h-8 text-center">
+                    {item.weapon_lab ? "✅" : ""}
                   </td>
-                  <td className="border border-black p-2 h-8">
-                    {item.chemistry_lab ? "✅" : "❌"}
+                  <td className="border border-black p-2 h-8 text-center">
+                    {item.chemistry_lab ? "✅" : ""}
                   </td>
-                  <td className="border border-black p-2 h-8">
-                    {item.dna_lab ? "✅" : "❌"}
+                  <td className="border border-black p-2 h-8 text-center">
+                    {item.dna_lab ? "✅" : ""}
                   </td>
-                  <td className="border border-black p-2 h-8">
-                    {item.cyber_crime_lab ? "✅" : "❌"}
+                  <td className="border border-black p-2 h-8 text-center">
+                    {item.cyber_crime_lab ? "✅" : ""}
                   </td>
                 </tr>
               );

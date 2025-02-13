@@ -3,13 +3,29 @@ import { GET_Fire_Form, GET_ONE_Fire_Form, GET_ERROR } from "../type";
 import { useGetData } from "../../hooks/useGetData";
 
 // get all Criminal Effects
-export const getAllFireForm = () => async (dispatch) => {
+export const getAllFireForm = (limit) => async (dispatch) => {
   try {
-    const res = await useGetData(`api/fireplace/`);
+    const res = await useGetData(`api/fireplace/?limit=${limit}`);
 
     dispatch({
       type: GET_Fire_Form,
       payload: res,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error" + e,
+    });
+  }
+};
+
+export const getAllFireFormPage = (page, limit) => async (dispatch) => {
+  try {
+    const res = await useGetData(`api/fireplace/?limit=${limit}&page=${page}`);
+    dispatch({
+      type: GET_Fire_Form,
+      payload: res,
+      loading: true,
     });
   } catch (e) {
     dispatch({

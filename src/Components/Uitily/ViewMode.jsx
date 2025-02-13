@@ -1,4 +1,4 @@
-import { LayoutGrid, List } from "lucide-react";
+import { LayoutGrid, List, Table as TableIcon } from "lucide-react";
 import React from "react";
 
 const ViewMode = ({ mode, setViewMode }) => {
@@ -23,6 +23,16 @@ const ViewMode = ({ mode, setViewMode }) => {
         }`}
       >
         <List size={20} />
+      </button>
+      <button
+        onClick={() => setViewMode("table")}
+        className={`p-2 rounded-md transition-colors ${
+          mode === "table"
+            ? "bg-white text-blue-600 shadow-sm"
+            : "text-gray-600 hover:bg-gray-200"
+        }`}
+      >
+        <TableIcon size={20} />
       </button>
     </div>
   );

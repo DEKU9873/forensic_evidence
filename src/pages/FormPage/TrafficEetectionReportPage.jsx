@@ -9,7 +9,7 @@ import SearchBar from "../../Components/Uitily/SearchBar";
 import Pagination from "../../Components/Uitily/Pagination";
 
 const TrafficDetectionReportPage = () => {
-  const [fire, loading] = TrafficeEtectionHook();
+  const [fire, loading, pageCount, getPage] = TrafficeEtectionHook();
   const [viewMode, setViewMode] = useState(() => {
     return localStorage.getItem("viewMode") || "grid";
   });
@@ -42,7 +42,7 @@ const TrafficDetectionReportPage = () => {
           <TrafficEetectionCard key={index} data={item} viewMode={viewMode} />
         ))}
       </div>
-      <Pagination />
+      <Pagination pageCount={pageCount} onPress={getPage} />
     </div>
   );
 };

@@ -10,7 +10,7 @@ import SearchBar from "../../Components/Uitily/SearchBar.jsx";
 import Pagination from "../../Components/Uitily/Pagination.jsx";
 
 const ReceivingDeliveringSamplesFormPage = () => {
-  const [incidents, loading] = IncidentsHook();
+  const [incidents, loading, pageCount, getPage] = IncidentsHook();
 
   const [viewMode, setViewMode] = useState(() => {
     return localStorage.getItem("viewMode") || "grid";
@@ -49,7 +49,7 @@ const ReceivingDeliveringSamplesFormPage = () => {
           />
         ))}
       </div>
-      <Pagination />
+      <Pagination pageCount={pageCount} onPress={getPage} />
     </div>
   );
 };
