@@ -12,37 +12,9 @@ const TrafficEetectionCard = ({ data, viewMode = "grid" }) => {
     e.preventDefault();
   };
 
-  
-  if (viewMode === "table") {
-    return (
-      <div className="bg-white hover:bg-blue-50 border-b border-gray-200 transition-colors">
-        <div className="flex items-center px-6 py-4">
-          <div className="flex-1">
-            <h2 className="text-blue-900 font-semibold">
-            {data.request_authority}
-            </h2>
-          </div>
-          <div className="flex-1">
-            <p className="text-blue-500 text-sm">{data.inspection_date}</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <ActionButtons onDelete={handleDelete} onEdit={handleEdit} />
-            <Link
-              to={`/form3/${data.id}`}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg transition-all duration-300"
-            >
-              <Eye className="w-4 h-4" />
-              <span className="font-medium">عرض التفاصيل</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   if (viewMode === "list") {
     return (
-      <div className="group relative mb-3 mx-2">
+      <div className="group relative mb-3 mx-2 ">
         <div className="bg-gradient-to-r from-white to-blue-50 border-l-4 border-blue-300 p-5 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-6">

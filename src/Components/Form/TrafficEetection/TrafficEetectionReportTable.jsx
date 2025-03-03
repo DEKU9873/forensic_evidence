@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Eye, MoreVertical, Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import IncidentsHook from "../../../hook/CriminalEffects/Incidents-hook";
+import TrafficeEtectionHook from "../../../hook/TrafficEetection/traffice-etection-hook";
 
-const CriminalEffectsTable = () => {
-  const [incidents, loading, pageCount, getPage] = IncidentsHook();
-  const [isMenuOpen, setIsMenuOpen] = useState(null);
+const TrafficEetectionReportTable = () => {
+    const [fire, loading, pageCount, onPress] = TrafficeEtectionHook();
+    const [isMenuOpen, setIsMenuOpen] = useState(null);
 
   const handleMenuToggle = (id) => {
     setIsMenuOpen(isMenuOpen === id ? null : id);
@@ -37,7 +38,7 @@ const CriminalEffectsTable = () => {
 
       {/* Table Body */}
       <div className="bg-white divide-y divide-blue-50">
-        {incidents?.data?.map((item, index) => (
+        {fire?.data?.map((item, index) => (
           <div key={item.id} className="hover:bg-blue-50 transition-colors ">
             <div className="grid grid-cols-12 gap-4 items-center px-6 py-4">
               <div className="col-span-1">
@@ -45,7 +46,7 @@ const CriminalEffectsTable = () => {
               </div>
               <div className="col-span-4">
                 <p className="text-blue-900 font-medium">
-                  {item.investigative_body}
+                  {item.request_authority}
                 </p>
               </div>
               <div className="col-span-4">
@@ -93,4 +94,4 @@ const CriminalEffectsTable = () => {
   );
 };
 
-export default CriminalEffectsTable;
+export default TrafficEetectionReportTable;

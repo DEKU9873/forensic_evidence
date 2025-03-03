@@ -26,8 +26,12 @@ const Sidebar = () => {
   };
 
   const toggleForms = () => {
+    if (!isOpen) {
+      setIsOpen(true);
+    }
     setIsFormsOpen(!isFormsOpen);
   };
+  
 
   const handleLogout = () => {
     Cookies.remove("access");  

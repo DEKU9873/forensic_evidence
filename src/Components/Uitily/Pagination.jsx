@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 
-const Pagination = ({pageCount, onPress}) => {
+const Pagination = ({ pageCount, onPress }) => {
+  const [currentPage, setCurrentPage] = useState(0);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [pageCount]);
+
   const handlePageClick = (data) => {
+    setCurrentPage(data.selected);
     onPress(data.selected + 1);
   };
- 
+
   return (
     <ReactPaginate
+      forcePage={currentPage}
       breakLabel="..."
       nextLabel="التالي"
       onPageChange={handlePageClick}

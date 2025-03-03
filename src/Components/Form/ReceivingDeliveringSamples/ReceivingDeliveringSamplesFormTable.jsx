@@ -3,7 +3,7 @@ import { Eye, MoreVertical, Edit, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import IncidentsHook from "../../../hook/CriminalEffects/Incidents-hook";
 
-const CriminalEffectsTable = () => {
+const ReceivingDeliveringSamplesFormTable = () => {
   const [incidents, loading, pageCount, getPage] = IncidentsHook();
   const [isMenuOpen, setIsMenuOpen] = useState(null);
 
@@ -14,7 +14,7 @@ const CriminalEffectsTable = () => {
   const handleCloseMenu = () => {
     setIsMenuOpen(null);
   };
-
+  
   return (
     <div className="w-full border border-blue-50 rounded-lg  shadow-sm mt-10">
       {/* Header */}
@@ -67,7 +67,7 @@ const CriminalEffectsTable = () => {
                       onMouseLeave={handleCloseMenu}
                     >
                       <Link
-                        to={`/form2/${item.id}`}
+                        to={`/form1/${item.id}`}
                         className="w-full px-4 py-2 text-sm text-blue-900 hover:bg-blue-50 flex items-center gap-2"
                       >
                         <Eye className="w-4 h-4" />
@@ -93,4 +93,4 @@ const CriminalEffectsTable = () => {
   );
 };
 
-export default CriminalEffectsTable;
+export default ReceivingDeliveringSamplesFormTable;

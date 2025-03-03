@@ -31,9 +31,9 @@ const ReceivingDeliveringSamplesForm = () => {
         <div className="flex justify-center">
           <div className="w-23 h-23 bg-gray-100 rounded-full flex items-center justify-center">
             <img
-              src="/images/forensic_evidence.png"
+              src="/images/logo3.jpg"
               alt="Forensic Evidence"
-              className="w-22 h-22 rounded-full object-cover"
+              className="w-15 h-15 rounded-full object-cover"
             />
           </div>
         </div>
@@ -58,7 +58,7 @@ const ReceivingDeliveringSamplesForm = () => {
         </div>
         <div className="border-b border-gray-300 pb-1">
           <span className="font-bold ml-2">الحادث:</span>
-          <span className="text-gray-600">_____________</span>
+          <span className="text-gray-600">{data.incident_type}</span>
         </div>
       </div>
 

@@ -1,12 +1,22 @@
 import React, { useEffect } from "react";
-import { getAllIncidents, getAllIncidentsPage } from "../../redux/actions/CriminalEffectsAction";
+import { getAllIncidents, getAllIncidentsPage, getAllIncidentsSearch } from "../../redux/actions/CriminalEffectsAction";
 import { useSelector, useDispatch } from "react-redux";
 
 const IncidentsHook = () => {
+  let limit = 9
   const dispatch = useDispatch();
+
+  const getIncidents = async () => {
+    let word= ""
+    if (localStorage.getItem("searchWord") != null) 
+      word = localStorage.getItem("searchWord"); 
+    await dispatch(getAllIncidentsSearch(`limit=${limit}&investigative_body=${word}`));
+  };
   useEffect(() => {
-    dispatch(getAllIncidents(2));
+    getIncidents()
   }, []);
+ 
+
 
   const incidents = useSelector(
     (state) => state.criminalEffectsReducer.incidents
@@ -17,13 +27,16 @@ const IncidentsHook = () => {
   if (incidents.paginationResult)
     pageCount = incidents.paginationResult.numberOfPages;
 
-  // When press pagination
-  const getPage = (page) => {
-    dispatch(getAllIncidentsPage(page, 2));
-    console.log(page);
+
+  const onPress = async (page) => {
+    
+    let word= ""
+    if (localStorage.getItem("searchWord") != null) 
+      word = localStorage.getItem("searchWord");
+    await dispatch(getAllIncidentsSearch(`limit=${limit}&page=${page}&investigative_body=${word}`));
   };
 
-  return [incidents, loading, pageCount, getPage];
+  return [incidents, loading, pageCount, onPress, getIncidents];
 };
 
 export default IncidentsHook;

@@ -5,7 +5,7 @@ import { getAllFireForm, getAllFireFormPage } from "../../redux/actions/TrafficE
 const TrafficeEtectionHook = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getAllFireForm(2));
+    dispatch(getAllFireForm(9));
   }, []);
 
   const fire = useSelector((state) => state.TrafficEetectionReducer.fire);
@@ -19,7 +19,7 @@ const TrafficeEtectionHook = () => {
   
     // When press pagination
     const getPage = (page) => {
-      dispatch(getAllFireFormPage(page, 2));
+      dispatch(getAllFireFormPage(page, 9));
       console.log(page);
     };
   

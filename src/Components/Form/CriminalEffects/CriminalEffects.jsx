@@ -25,7 +25,7 @@ const CrimeSceneForm = () => {
 
         <div className="w-24 h-24 mx-2 flex-grow flex justify-center ">
           <img
-            src="/images/forensic_evidence.png"
+            src="/images/logo3.jpg"
             alt="logo"
             className="w-23 h-23 object-contain"
           />
@@ -74,15 +74,20 @@ const CrimeSceneForm = () => {
                 {data.incident_location}
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-5">
-                شارع الصناعة
               </th>
             </tr>
             <tr className="grid grid-cols-7">
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ الحــــادث
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-6">
+              <th className="border border-black p-1 text-xs text-right col-span-1">
                 {data.incident_date}
+              </th>
+              <th className="border border-black p-1 text-xs bg-blue-300 text-right">
+                نوع الحادث
+              </th>
+              <th className="border border-black p-1 text-xs text-right col-span-4">
+                {data.incident_type}
               </th>
             </tr>
           </thead>

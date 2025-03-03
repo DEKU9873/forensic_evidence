@@ -16,7 +16,6 @@ const Login = () => {
     isPress,
   ] = LoginHook();
 
-  // دالة لمعالجة الضغط على زر Enter
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       onSubmit();
@@ -26,11 +25,14 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200">
       <div className="bg-white p-10 rounded-lg shadow-2xl w-full max-w-2xl">
-        <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">
-          أهلاً بك!
+        <img src="/images/logo3.jpg"
+            alt="logo"
+            className="w-[130px] h-[130px] object-contain mx-auto"/>
+        <h2 className="text-3xl font-bold text-indigo-600 mb-6 text-center">
+          نظام الادلة الجنائية
         </h2>
-        <p className="text-gray-600 text-center mb-10 text-lg">
-          تسجيل الدخول لحسابك
+        <p className="text-2xl font-bold text-gray-500 mb-6 text-center">
+          وزراة الداخلية
         </p>
 
         <div className="grid grid-cols-1 gap-6">

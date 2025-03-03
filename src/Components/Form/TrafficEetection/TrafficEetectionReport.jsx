@@ -34,7 +34,7 @@ const TrafficEetectionReport = () => {
 
         <div className="w-24 h-24 mx-2 flex-grow flex justify-center ">
           <img
-            src="/images/forensic_evidence.png"
+            src="/images/logo3.jpg"
             alt="logo"
             className="w-23 h-23 object-contain"
           />

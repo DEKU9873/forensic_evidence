@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { Search, X } from "lucide-react";
+import SearchHook from "../../hook/Search/search-hook";
 
 const SearchBar = () => {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [oneChangeSearch, searchWord, onClickDeleteSearch] = SearchHook();
+  let word= ""
+  if (localStorage.getItem("searchWord") != null) 
+    word = localStorage.getItem("searchWord");
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("البحث عن:", searchTerm);
+    console.log("البحث عن:", word);
   };
 
   return (
@@ -26,17 +30,17 @@ const SearchBar = () => {
 
           <input
             type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={word}
+            onChange={oneChangeSearch}
             placeholder="ابحث هنا..."
             className="w-full px-12 py-3 text-base text-right bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-lg transition-shadow"
             dir="rtl"
           />
 
-          {searchTerm && (
+          {word && (
             <button
               type="button"
-              onClick={() => setSearchTerm("")}
+              onClick={onClickDeleteSearch}
               className="absolute left-3 p-2 text-gray-400 hover:text-gray-600 transition-colors"
               aria-label="مسح البحث"
             >

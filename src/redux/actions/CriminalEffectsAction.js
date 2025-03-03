@@ -12,7 +12,6 @@ import { useGetData } from "../../hooks/useGetData";
 // get all Criminal Effects
 export const getAllEvidence = () => async (dispatch) => {
   try {
-    // const res = await baseURL.get("/categories/");
     const res = await useGetData(`api/evidence/`);
 
     dispatch({
@@ -29,7 +28,6 @@ export const getAllEvidence = () => async (dispatch) => {
 
 export const getOneEvidence = (id) => async (dispatch) => {
   try {
-    // const res = await baseURL.get("/categories/");
     const res = await useGetData(`api/evidence/${id}`);
 
     dispatch({
@@ -63,6 +61,23 @@ export const getAllIncidents = (limit) => async (dispatch) => {
 export const getAllIncidentsPage = (page, limit) => async (dispatch) => {
   try {
     const res = await useGetData(`api/incidents/?limit=${limit}&page=${page}`);
+    dispatch({
+      type: GET_Incidents,
+      payload: res,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error" + e,
+    });
+  }
+};
+
+export const getAllIncidentsSearch = (queryString) => async (dispatch) => {
+  try {
+    const res = await useGetData(`api/incidents/?${queryString}`);
+
     dispatch({
       type: GET_Incidents,
       payload: res,

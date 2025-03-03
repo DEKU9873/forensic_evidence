@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import { LayersControl } from "react-leaflet";
+
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
 import { v4 as uuidv4 } from "uuid";
@@ -10,68 +12,76 @@ import {
   Maximize2,
   Minimize2,
 } from "lucide-react";
-import { FaTree } from "react-icons/fa";
-import {
-  GiPayMoney,
-  GiPistolGun,
-  GiChalkOutlineMurder,
-  GiKingJuMask,
-  GiNinjaMask,
-  GiHeartOrgan,
-} from "react-icons/gi";
-import { GrLocationPin } from "react-icons/gr";
 import "leaflet/dist/leaflet.css";
+
+import { GiPistolGun } from "react-icons/gi"
+import { GiSuicide } from "react-icons/gi"
+import { GiDeathSkull } from "react-icons/gi"
+import { FaPeopleRobbery } from "react-icons/fa6"
+import { GiTakeMyMoney } from "react-icons/gi"
+import { HiFire } from "react-icons/hi"
+import { GiMineExplosion } from "react-icons/gi"
+
 
 const baghdadMarkers = [
   {
     id: "1",
     position: [33.3152, 44.3661],
-    name: "سرقة",
-    description: "تم سرقة منزل ",
-    icon: GiPayMoney,
-    color: "#4CAF50",
+    name: "جريمة قتل",
+    description: "حادثة قتل وقعت في هذا الموقع، والجهات الأمنية تحقق في ملابساتها.",
+    icon: GiPistolGun,
+    color: "#ff4c4c",
   },
   {
     id: "2",
     position: [33.3089, 44.3705],
-    name: "خطف",
-    description: "تم خطف طفل يبلغ من العمر 5 سنوات",
-    icon: GiNinjaMask,
-    color: "#2196F3",
+    name: "انتحار",
+    description: "تم الإبلاغ عن حالة انتحار في هذا الموقع، والسلطات تحقق في الأسباب المحتملة.",
+    icon: GiSuicide,
+    color: "#ffff54",
   },
   {
     id: "3",
     position: [33.3147, 44.4404],
-    name: "اغتيال",
-    description: "تم اغتيال المهندس باسم في حادث غامض",
-    icon: GiPistolGun,
-    color: "#F44336",
+    name: "وفاة",
+    description: "تم العثور على شخص متوفى في ظروف غامضة، والتحقيقات جارية.",
+    icon: GiDeathSkull,
+    color: "#d0c0c0",
   },
   {
     id: "4",
     position: [33.3356, 44.3959],
-    name: "التجارة بالبشر",
-    description: "القبض على شبكة اجرامية متاجرة بالبشر",
-    icon: GiHeartOrgan,
-    color: "#800080",
+    name: "سرقة",
+    description: "عملية سرقة وقعت في هذا الموقع، وتم اتخاذ الإجراءات القانونية.",
+    icon: GiTakeMyMoney,
+    color: "#578dff",
   },
   {
     id: "5",
     position: [33.3449, 44.4009],
-    name: "ارهاب",
-    description: "القبض على عصابة ارهابية",
-    icon: GiKingJuMask,
-    color: "#000",
+    name: "سرقة بالإكراه",
+    description: "حادثة سرقة تحت التهديد وقعت هنا، والشرطة تتابع التحقيق.",
+    icon: GiTakeMyMoney,
+    color: "#40b07b",
   },
   {
     id: "6",
     position: [33.3298, 44.3947],
-    name: "جريمة قتل",
-    description: "تم العثور على جثة",
-    icon: GiChalkOutlineMurder,
-    color: "#FFC107",
+    name: "حريق",
+    description: "اندلاع حريق في هذا الموقع، وتمت السيطرة عليه من قبل فرق الإطفاء.",
+    icon: HiFire,
+    color: "#ffe840",
+  },
+  {
+    id: "7",
+    position: [33.3298, 44.4047],
+    name: "انفجار إرهابي",
+    description: "انفجار وقع في هذا المكان، والجهات المختصة تعمل على كشف ملابساته.",
+    icon: GiMineExplosion,
+    color: "#792da4",
   },
 ];
+
 
 const createCustomIcon = (IconComponent, color) => {
   const svgTemplate = `
@@ -90,6 +100,8 @@ const createCustomIcon = (IconComponent, color) => {
 };
 
 const Map = () => {
+  const { BaseLayer } = LayersControl;
+
   const [position, setPosition] = useState([33.335821, 44.383414]);
   const [markers, setMarkers] = useState(baghdadMarkers);
   const [selectedMarker, setSelectedMarker] = useState(null);
@@ -135,26 +147,26 @@ const Map = () => {
 
     useEffect(() => {
       const handleClick = (event) => {
-        if (isRemoving) {
-          setIsRemoving(false);
-          return;
-        }
+        // if (isRemoving) {
+        //   setIsRemoving(false);
+        //   return;
+        // }
 
-        const { lat, lng } = event.latlng;
-        setPosition([lat, lng]);
+        // const { lat, lng } = event.latlng;
+        // setPosition([lat, lng]);
 
-        const newMarker = {
-          position: [lat, lng],
-          name: `علامة ${markers.length + 1}`,
-          id: uuidv4(),
-          icon: FaTree,
-          color: "#999999",
-          description: "علامة جديدة",
-        };
+        // const newMarker = {
+        //   position: [lat, lng],
+        //   name: `علامة ${markers.length + 1}`,
+        //   id: uuidv4(),
+        //   icon: FaTree,
+        //   color: "#999999",
+        //   description: "علامة جديدة",
+        // };
 
-        setMarkers((prev) => [...prev, newMarker]);
-        setSelectedMarker(newMarker);
-        setTimeout(scrollToInfo, 100);
+        // setMarkers((prev) => [...prev, newMarker]);
+        // setSelectedMarker(newMarker);
+        // setTimeout(scrollToInfo, 100);
       };
 
       map.on("click", handleClick);
@@ -256,7 +268,18 @@ const Map = () => {
             className="w-full h-full"
             attributionControl={false}
           >
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <LayersControl position="bottomright">
+              <BaseLayer checked name="OpenStreetMap">
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+              </BaseLayer>
+              <BaseLayer name="Google Maps">
+                <TileLayer url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}" />
+              </BaseLayer>
+              <BaseLayer name="Google Satellite">
+                <TileLayer url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
+              </BaseLayer>
+            </LayersControl>
+
             {markers.map((marker) => (
               <Marker
                 key={marker.id}
@@ -333,13 +356,13 @@ const Map = () => {
                   عرض في Google Maps
                 </a>
 
-                <button
+                {/* <button
                   onClick={(e) => removeMarker(selectedMarker.id, e)}
                   className="inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300"
                 >
                   <Trash2 className="w-5 h-5" />
                   حذف العلامة
-                </button>
+                </button> */}
               </div>
             </div>
           ) : (

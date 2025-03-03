@@ -3,13 +3,12 @@ import CardForm from "../../Components/Form/CriminalEffects/CardForm.jsx";
 import CriminalEffectsTable from "../../Components/Form/CriminalEffects/CriminalEffectsTable.jsx";
 import Heading from "../../Components/Uitily/Heading";
 import ViewMode from "../../Components/Uitily/ViewMode.jsx";
-import EvidenceHook from "../../hook/CriminalEffects/evidence-hook.js";
 import IncidentsHook from "../../hook/CriminalEffects/Incidents-hook.js";
 import SearchBar from "../../Components/Uitily/SearchBar.jsx";
 import Pagination from "../../Components/Uitily/Pagination.jsx";
 
 const CriminalEffectsPage = () => {
-  const [incidents, loading, pageCount, getPage] = IncidentsHook();
+  const [incidents, loading, pageCount, onPress] = IncidentsHook();
 
   const [viewMode, setViewMode] = useState(() => {
     return localStorage.getItem("viewMode") || "grid";
@@ -27,7 +26,7 @@ const CriminalEffectsPage = () => {
           subtitle=""
         />
       </div>
-      <div className="flex felx-row mb-2">
+      <div className="flex felx-row mb-10">
         <SearchBar />
         <ViewMode mode={viewMode} setViewMode={setViewMode} />
       </div>
@@ -48,7 +47,7 @@ const CriminalEffectsPage = () => {
         </div>
       )}
 
-      <Pagination pageCount={pageCount} onPress={getPage} />
+      <Pagination pageCount={pageCount} onPress={onPress} />
     </div>
   );
 };
