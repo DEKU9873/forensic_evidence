@@ -11,6 +11,8 @@
     "@redux-devtools/extension": "^3.3.0",
     "axios": "^1.7.9",
     "cra-template": "1.2.0",
+    "docx": "^9.2.0",
+    "file-saver": "^2.0.5",
     "framer-motion": "^12.0.6",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",

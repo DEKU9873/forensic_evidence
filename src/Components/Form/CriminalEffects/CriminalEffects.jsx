@@ -5,6 +5,7 @@ const CrimeSceneForm = () => {
   const { id } = useParams();
   const [data, table] = IncidentseDetailsHook(id);
 
+
   const handlePrint = () => {
     window.print();
   };
@@ -51,13 +52,13 @@ const CrimeSceneForm = () => {
                 تاريخ اجراء الكشف
               </th>
               <th className="border border-black p-1 text-xs text-right ">
-                {data.inspection_date}
+                {data.date_discovery}
               </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 الجهة التحقيقية
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-2">
-                {data.investigative_body}
+                {data.investigating_body}
               </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 وقت اجراء الكشف
@@ -71,23 +72,22 @@ const CrimeSceneForm = () => {
                 عنوان محل الحادث
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-1">
-                {data.incident_location}
+                {data.accident_location}
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-5">
-              </th>
+              <th className="border border-black p-1 text-xs text-right col-span-5"></th>
             </tr>
             <tr className="grid grid-cols-7">
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ الحــــادث
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-1">
-                {data.incident_date}
+                {data.accident_date}
               </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 نوع الحادث
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-4">
-                {data.incident_type}
+                {data.typeAccident}
               </th>
             </tr>
           </thead>
@@ -99,8 +99,8 @@ const CrimeSceneForm = () => {
         <div className="bg-blue-300 p-0.5 text-center border border-black">
           وصــــف محــــل الحــــادث
         </div>
-        <div className="border border-black h-[440px] p-0.5">
-          <div className="text-justify">{data.description}</div>
+        <div className="border border-black min-h-[440px] p-0.5">
+          <div className="text-justify">{data.accident_description}</div>
         </div>
       </div>
 
@@ -113,7 +113,7 @@ const CrimeSceneForm = () => {
                 الطريقة
               </th>
               <th className="border border-black p-0.5 text-right text-xs col-span-6">
-                {data.procedure}
+                {data.method}
               </th>
             </tr>
           </thead>
@@ -125,7 +125,7 @@ const CrimeSceneForm = () => {
         <div className="bg-blue-300 p-0.5 text-center border border-black">
           الإجــــراءات المتخــــذة
         </div>
-        <div className=" p-0.5 text-center border border-black h-[60px]"></div>
+        <div className=" p-0.5 text-right border border-black h-[60px]">{data.action_taken}</div>
         <table className="w-full border-collapse">
           <thead>
             <tr className="grid grid-cols-7">
@@ -151,16 +151,16 @@ const CrimeSceneForm = () => {
                   {index + 1}
                 </td>
                 <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
-                  {item.number}
+                  {item.sampleNumber}
                 </td>
                 <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
-                  {item.Typeofevidence}
+                  {item.sampleType}
                 </td>
                 <td className="border border-black p-1 text-xs text-right col-span-3 break-words whitespace-normal">
-                  {item.place}
+                  {item.Placeoflifting}
                 </td>
                 <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
-                  {item.waytosave}
+                  {item.metodeIifting}
                 </td>
               </tr>
             ))}
@@ -169,26 +169,28 @@ const CrimeSceneForm = () => {
       </div>
 
       {/* Signatures Section */}
-      <div className="grid grid-cols-5 gap-1 text-center ">
-        <div>
-          <div className="font-bold text-xs">المشتكي</div>
-          <div className="border border-black h-10"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">المصـــور</div>
-          <div className="border border-black h-10"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">الممارس</div>
-          <div className="border border-black h-10"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">المحقـــق</div>
-          <div className="border border-black h-10"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
-          <div className="border border-black h-10"></div>
+      <div className="absolute bottom-1 left-1 right-1">
+        <div className="grid grid-cols-5 gap-1 text-center ">
+          <div>
+            <div className="font-bold text-xs">المشتكي</div>
+            <div className="border border-black h-10"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">المصـــور</div>
+            <div className="border border-black h-10"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">الممارس</div>
+            <div className="border border-black h-10"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">المحقـــق</div>
+            <div className="border border-black h-10"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
+            <div className="border border-black h-10"></div>
+          </div>
         </div>
       </div>
 

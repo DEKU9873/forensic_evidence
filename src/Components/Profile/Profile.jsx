@@ -4,8 +4,10 @@ import {
   FaEnvelope,
   FaPhone,
   FaMapMarkerAlt,
+  FaEdit,
+  FaCamera,
+  FaEllipsisV
 } from "react-icons/fa";
-import { FaCircleInfo } from "react-icons/fa6";
 import Cookies from "js-cookie";
 
 const Profile = () => {
@@ -15,69 +17,129 @@ const Profile = () => {
     if (userCookie != null) setUser(JSON.parse(userCookie));
   }, []);
 
-  console.log(user);
-
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-300">
-      <div className="w-full max-w-7xl p-10 rounded-xl shadow-2xl bg-white/90 backdrop-blur-sm">
-        <div className="text-center">
-          <div className="relative inline-block">
-            <img
-              src="/api/placeholder/150/150"
-              alt=""
-              className="w-40 h-40 mx-auto mb-6 rounded-full shadow-2xl border-4 border-white ring-4 ring-blue-300 transform hover:scale-105 transition-transform duration-300"
-            />
-            <div className="absolute bottom-2 right-2 bg-blue-500 text-white rounded-full p-2 shadow-lg">
-              <FaUserCircle size={24} />
-            </div>
-          </div>
-          <h1 className="text-4xl font-black text-gray-800 mb-2">
-            {user.username}
-          </h1>
-          <p className="text-gray-600 text-lg max-w-xl mx-auto">المنصب</p>
-          <button className="mt-6 bg-blue-600 text-white hover:bg-blue-700 py-3 px-6 rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center justify-center mx-auto gap-2">
-            <FaUserCircle size={20} />
-            <span>تعديل الملف الشخصي</span>
+    <div className="min-h-screen bg-gray-100">
+      {/* Header Bar - Minimalist */}
+      <div className="bg-white text-gray-800 p-4 shadow-sm">
+        <div className="max-w-6xl mx-auto flex justify-between items-center">
+          <h1 className="text-xl font-bold">الملف الشخصي</h1>
+          <button className="text-gray-600 hover:text-gray-900 px-3 py-2 rounded-md flex items-center gap-2 transition-all">
+            <FaEllipsisV />
           </button>
         </div>
+      </div>
 
-        <div className="mt-12 bg-blue-50 p-8 rounded-xl ">
-          <h2 className="text-2xl font-bold text-gray-700 mb-6 flex items-center justify-center gap-3">
-            <span>المعلومات الشخصية</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: <FaEnvelope size={20} className="text-blue-600" />,
-                title: "البريد الإلكتروني",
-                value: user.email,
-              },
-              {
-                icon: <FaPhone size={20} className="text-blue-600" />,
-                title: "رقم الهاتف",
-                value: user.phone_number,
-              },
-              {
-                icon: <FaMapMarkerAlt size={20} className="text-blue-600" />,
-                title: "الموقع",
-                value: "بغداد، العراق",
-              },
-            ].map((item, index) => (
-              <div
-                key={index}
-                className="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-2"
-              >
-                <div className="flex items-center mb-3 gap-3 border-b border-blue-100 pb-3">
-                  {item.icon}
-                  <span className="text-gray-500 font-semibold">
-                    {item.title}
-                  </span>
+      <div className="max-w-6xl mx-auto p-4 mt-4">
+        {/* Profile Layout */}
+        <div className="flex flex-col md:flex-row gap-6">
+          {/* Left Column - Profile Card */}
+          <div className="w-full md:w-1/3">
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="p-6 flex flex-col items-center">
+                {/* Profile Photo */}
+                <div className="relative">
+                  <img
+                    src="/api/placeholder/120/120"
+                    alt=""
+                    className="w-24 h-24 rounded-full object-cover border-2 border-gray-100"
+                  />
+                  <button className="absolute bottom-0 right-0 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 transition-all">
+                    <FaCamera size={12} />
+                  </button>
                 </div>
-                <span className="text-gray-800 text-lg font-bold mt-2 block">
-                  {item.value}
-                </span>
+                
+                {/* User Info */}
+                <h2 className="mt-4 text-xl font-bold text-gray-800">{user.username || "اسم المستخدم"}</h2>
+                <p className="text-gray-500 text-sm">المنصب</p>
+                
+                {/* Edit Button */}
+                <button className="mt-4 w-full bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 transition-all">
+                  <FaEdit size={14} />
+                  <span>تعديل الملف</span>
+                </button>
               </div>
-            ))}
+            </div>
+          </div>
+          
+          {/* Right Column - Contact Info */}
+          <div className="w-full md:w-2/3">
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+              <div className="border-b border-gray-100">
+                <div className="flex items-center p-4">
+                  <h3 className="text-lg font-medium text-gray-800">معلومات الاتصال</h3>
+                </div>
+              </div>
+              
+              <div className="p-5">
+                <ul className="divide-y divide-gray-100">
+                  <li className="py-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="text-gray-400">
+                          <FaEnvelope />
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">البريد الإلكتروني</div>
+                          <div className="font-medium text-gray-800">{user.email || "user@example.com"}</div>
+                        </div>
+                      </div>
+                      <button className="text-gray-400 hover:text-gray-600">
+                        <FaEdit size={14} />
+                      </button>
+                    </div>
+                  </li>
+                  
+                  <li className="py-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="text-gray-400">
+                          <FaPhone />
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">رقم الهاتف</div>
+                          <div className="font-medium text-gray-800">{user.phone_number || "07XX XXX XXXX"}</div>
+                        </div>
+                      </div>
+                      <button className="text-gray-400 hover:text-gray-600">
+                        <FaEdit size={14} />
+                      </button>
+                    </div>
+                  </li>
+                  
+                  <li className="py-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="text-gray-400">
+                          <FaMapMarkerAlt />
+                        </div>
+                        <div>
+                          <div className="text-xs text-gray-500">الموقع</div>
+                          <div className="font-medium text-gray-800">بغداد، العراق</div>
+                        </div>
+                      </div>
+                      <button className="text-gray-400 hover:text-gray-600">
+                        <FaEdit size={14} />
+                      </button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            
+            {/* Additional Info Card */}
+            <div className="bg-white rounded-lg shadow-sm overflow-hidden mt-6">
+              <div className="border-b border-gray-100">
+                <div className="flex items-center p-4">
+                  <h3 className="text-lg font-medium text-gray-800">معلومات إضافية</h3>
+                </div>
+              </div>
+              
+              <div className="p-5">
+                <div className="text-gray-500 text-sm">
+                  لم يتم إضافة معلومات إضافية بعد.
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

@@ -50,15 +50,15 @@ const ReceivingDeliveringSamplesForm = () => {
       <div className="grid grid-cols-3 gap-4 mb-4">
         <div className="border-b border-gray-300 pb-1">
           <span className="font-bold ml-2">تاريخ التفتيش:</span>
-          <span className="text-gray-600">{data.inspection_date}</span>
+          <span className="text-gray-600">{data.date_discovery}</span>
         </div>
         <div className="border-b border-gray-300 pb-1">
           <span className="font-bold ml-2">جهة الطلب:</span>
-          <span className="text-gray-600">{data.investigative_body}</span>
+          <span className="text-gray-600">{data.investigating_body}</span>
         </div>
         <div className="border-b border-gray-300 pb-1">
           <span className="font-bold ml-2">الحادث:</span>
-          <span className="text-gray-600">{data.incident_type}</span>
+          <span className="text-gray-600">{data.typeAccident}</span>
         </div>
       </div>
 
@@ -74,7 +74,7 @@ const ReceivingDeliveringSamplesForm = () => {
                 العدد
               </th>
               <th className="border border-black p-1 bg-blue-300 w-16">
-                طبيعة جرمية
+                الطبعة جرمية
               </th>
               <th className="border border-black p-1 bg-blue-300 w-12">
                 مختبر التصوير
@@ -94,36 +94,34 @@ const ReceivingDeliveringSamplesForm = () => {
             </tr>
           </thead>
           <tbody>
-            {lab.map((item, index) => {
-              // البحث عن نوع المبرز باستخدام evidence من lab وربطه بـ table
-              const evidenceItem = table.find((e) => e.id === item.evidence);
-              return (
-                <tr key={index}>
-                  <td className="border border-black p-2 h-8">
-                    {evidenceItem ? evidenceItem.Typeofevidence : "غير معروف"}
-                  </td>
-                  <td className="border border-black p-2 h-8">{item.count}</td>
-                  <td className="border border-black p-2 h-8 text-center">
-                    {item.crime_lab ? "✅" : ""}
-                  </td>
-                  <td className="border border-black p-2 h-8 text-center">
-                    {item.dna_lab ? "✅" : ""}
-                  </td>
-                  <td className="border border-black p-2 h-8 text-center">
-                    {item.weapon_lab ? "✅" : ""}
-                  </td>
-                  <td className="border border-black p-2 h-8 text-center">
-                    {item.chemistry_lab ? "✅" : ""}
-                  </td>
-                  <td className="border border-black p-2 h-8 text-center">
-                    {item.dna_lab ? "✅" : ""}
-                  </td>
-                  <td className="border border-black p-2 h-8 text-center">
-                    {item.cyber_crime_lab ? "✅" : ""}
-                  </td>
-                </tr>
-              );
-            })}
+            {lab.map((item, index) => (
+              <tr key={index}>
+                <td className="border border-black p-2 h-8">
+                  {table[index]?.sampleType || "N/A"}
+                </td>
+                <td className="border border-black p-2 h-8">
+                  {table[index]?.sampleNumber || "N/A"}
+                </td>
+                <td className="border border-black p-2 h-8 text-center">
+                  {item.isCriminalPrint ? "✅" : ""}
+                </td>
+                <td className="border border-black p-2 h-8 text-center">
+                  {item.dna_lab ? "✅" : ""}
+                </td>
+                <td className="border border-black p-2 h-8 text-center">
+                  {item.isWeaponsLab ? "✅" : ""}
+                </td>
+                <td className="border border-black p-2 h-8 text-center">
+                  {item.isChemistryLab ? "✅" : ""}
+                </td>
+                <td className="border border-black p-2 h-8 text-center">
+                  {item.isDNALab ? "✅" : ""}
+                </td>
+                <td className="border border-black p-2 h-8 text-center">
+                  {item.isCriminalElectronic ? "✅" : ""}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>

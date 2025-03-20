@@ -10,7 +10,7 @@ const IncidentsHook = () => {
     let word= ""
     if (localStorage.getItem("searchWord") != null) 
       word = localStorage.getItem("searchWord"); 
-    await dispatch(getAllIncidentsSearch(`limit=${limit}&investigative_body=${word}`));
+    await dispatch(getAllIncidentsSearch(`limit=${limit}&investigating_body=${word}`));
   };
   useEffect(() => {
     getIncidents()
@@ -33,7 +33,7 @@ const IncidentsHook = () => {
     let word= ""
     if (localStorage.getItem("searchWord") != null) 
       word = localStorage.getItem("searchWord");
-    await dispatch(getAllIncidentsSearch(`limit=${limit}&page=${page}&investigative_body=${word}`));
+    await dispatch(getAllIncidentsSearch(`limit=${limit}&page=${page}&investigating_body=${word}`));
   };
 
   return [incidents, loading, pageCount, onPress, getIncidents];

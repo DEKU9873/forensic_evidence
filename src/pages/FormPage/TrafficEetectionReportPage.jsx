@@ -6,9 +6,10 @@ import TrafficeEtectionHook from "../../hook/TrafficEetection/traffice-etection-
 import SearchBar from "../../Components/Uitily/SearchBar";
 import Pagination from "../../Components/Uitily/Pagination";
 import TrafficEetectionReportTable from "../../Components/Form/TrafficEetection/TrafficEetectionReportTable";
+import IncidentsHook from "../../hook/CriminalEffects/Incidents-hook.js";
 
 const TrafficDetectionReportPage = () => {
-  const [fire, loading, pageCount, getPage] = TrafficeEtectionHook();
+  const [incidents, loading, pageCount, onPress] = IncidentsHook();
   const [viewMode, setViewMode] = useState(() => {
     return localStorage.getItem("viewMode") || "grid";
   });
@@ -16,6 +17,10 @@ const TrafficDetectionReportPage = () => {
   useEffect(() => {
     localStorage.setItem("viewMode", viewMode);
   }, [viewMode]);
+
+  const filteredIncidents = incidents?.data?.filter(
+    (item) => item.category_accident === "fireAccident"
+  );
 
   return (
     <div className="ml-[120px] mx-[60px] py-4">
@@ -29,7 +34,7 @@ const TrafficDetectionReportPage = () => {
       </div>
 
       {viewMode === "table" ? (
-        <TrafficEetectionReportTable  />
+        <TrafficEetectionReportTable data={filteredIncidents}  />
       ) : (
         <div
           className={`${
@@ -38,12 +43,13 @@ const TrafficDetectionReportPage = () => {
               : "flex flex-col"
           }`}
         >
-          {fire?.data?.map((item, index) => (
+          {filteredIncidents?.map((item, index) => (
+
             <TrafficEetectionCard key={index} data={item} viewMode={viewMode} />
           ))}
         </div>
       )}
-      <Pagination pageCount={pageCount} onPress={getPage} />
+      <Pagination pageCount={pageCount} onPress={onPress} />
     </div>
   );
 };

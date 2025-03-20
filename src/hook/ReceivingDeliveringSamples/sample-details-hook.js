@@ -20,6 +20,7 @@ const SampleDetailsHook = (id) => {
     lab = [];
   }
 
+
   return [lab];
 };
 

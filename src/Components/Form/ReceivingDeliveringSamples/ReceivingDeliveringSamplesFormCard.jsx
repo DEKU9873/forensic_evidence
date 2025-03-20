@@ -21,10 +21,10 @@ const ReceivingDeliveringSamplesFormCard = ({ data, viewMode = "grid" }) => {
               <div className="w-2 h-14 bg-blue-200 rounded-full opacity-80 group-hover:opacity-100 transition-opacity" />
               <div>
                 <h2 className="text-lg font-bold text-blue-900 mb-1">
-                  {data.investigative_body}
+                {data.investigating_body}
                 </h2>
                 <p className="text-blue-500 text-sm font-medium">
-                  {data.inspection_date}
+                {data.accident_date}
                 </p>
               </div>
             </div>
@@ -60,10 +60,10 @@ const ReceivingDeliveringSamplesFormCard = ({ data, viewMode = "grid" }) => {
           </div>
 
           <h2 className="text-xl font-extrabold text-blue-900 mb-2">
-            {data.investigative_body}
+          {data.investigating_body}
           </h2>
           <p className="text-blue-500 text-sm font-medium mb-6">
-            {data.inspection_date}
+          {data.accident_date}
           </p>
 
           <div className="flex justify-center">

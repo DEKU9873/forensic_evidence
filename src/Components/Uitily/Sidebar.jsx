@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaBars,
   FaTimes,
@@ -9,148 +9,202 @@ import {
   FaChevronDown,
   FaChevronUp,
   FaSignOutAlt,
+  FaChartBar,
 } from "react-icons/fa";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie"; 
-
 
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFormsOpen, setIsFormsOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-
+  
+  // تكيف مع حجم الشاشة
+  // useEffect(() => {
+  //   const handleResize = () => {
+  //     if (window.innerWidth < 768) {
+  //       setIsOpen(false);
+  //     } else {
+  //       setIsOpen(false);
+  //     }
+  //   };
+    
+  //   window.addEventListener('resize', handleResize);
+  //   handleResize();
+    
+  //   return () => window.removeEventListener('resize', handleResize);
+  // }, []);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
   const toggleForms = () => {
+    // فتح السايد بار إذا كانت مغلقة عند الضغط على الاستمارات
     if (!isOpen) {
       setIsOpen(true);
     }
     setIsFormsOpen(!isFormsOpen);
   };
-  
 
   const handleLogout = () => {
     Cookies.remove("access");  
     Cookies.remove("refresh");  
     Cookies.remove("user"); 
-    setTimeout(() => {
-      navigate("/");
-    }, 500);
+    navigate("/");
   };
 
   if (location.pathname === "/") {
     return null;
   }
 
-  const MenuItem = ({ icon: Icon, text, to, onClick, isActive }) => (
-    <Link
-      to={to}
-      onClick={onClick}
-      className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 
-        ${
-          isActive
-            ? "bg-white bg-opacity-10 text-white"
-            : "text-gray-200 hover:bg-white hover:bg-opacity-10"
-        }`}
-    >
-      <Icon className={`${isOpen ? "text-2xl" : "text-3xl"}`} />
-      {isOpen && <span className="text-sm font-medium">{text}</span>}
-    </Link>
-  );
+  // القائمة المنسدلة للاستمارات
+  const formsMenu = [
+    { to: "/form2", text: "محضر كشف وإظهار الآثار الجرمية" },
+    { to: "/form1", text: "إستمارة إستلام وتسليم العينات" },
+    { to: "/form3", text: "محضر كشف الحرائق" },
+    { to: "/form4", text: "مفصل ومخطط موقع الاصابة على الجثة" },
+    { to: "/form5", text: "مخطط الكشف على عجلة" },
+  ];
 
   return (
-    <div className="print:hidden">
-      <div
-        className={`${
-          isOpen ? "w-72" : "w-20"
-        } bg-gradient-to-b from-blue-900 to-blue-800 min-h-screen fixed top-0 left-0 
-        transition-all duration-300 shadow-xl z-50 flex flex-col`}
+    <>
+      {/* طبقة التعتيم للشاشات الصغيرة */}
+      {isOpen && window.innerWidth < 768 && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black bg-opacity-40 z-30"
+          onClick={toggleSidebar}
+        />
+      )}
+      
+      {/* زر فتح الشريط الجانبي للشاشات الصغيرة - الآن دائماً أيقونة ساندويتش */}
+      {!isOpen && (
+        <button 
+          onClick={toggleSidebar}
+          className="fixed top-4 right-4 z-50 bg-blue-600 text-white p-3 rounded-full shadow-lg md:hidden"
+        >
+          <FaBars />
+        </button>
+      )}
+      
+      {/* الشريط الجانبي الرئيسي */}
+      <div 
+        className={`fixed top-0 left-0 h-full bg-white z-40 transition-all duration-300 ease-in-out shadow-2xl print:hidden flex flex-col
+          ${isOpen ? "translate-x-0 w-64" : "translate-x-full w-0 md:w-20 md:translate-x-0"}`}
       >
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-blue-700">
+        {/* رأس الشريط الجانبي مع زر التبديل */}
+        <div className="h-16 bg-blue-600 flex items-center justify-between px-4">
           {isOpen && (
-            <h1 className="text-white text-xl font-bold mr-2">
-              الادلة الجنائية
-            </h1>
+            <h1 className="text-white text-lg font-bold">الادلة الجنائية</h1>
           )}
           <button
             onClick={toggleSidebar}
-            className="p-2 rounded-lg hover:bg-blue-700 transition-colors duration-200"
+            className="text-white hover:bg-blue-700 p-2 rounded-md"
           >
-            {isOpen ? (
-              <FaTimes className="text-white text-xl" />
-            ) : (
-              <FaBars className="text-white text-xl" />
-            )}
+            {/* استخدام أيقونة ساندويتش لفتح القائمة وأيقونة إغلاق للإغلاق */}
+            {isOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
-
-        {/* Navigation Menu */}
-        <div className="flex-1 py-6 px-3 flex flex-col gap-2">
-          <MenuItem
-            icon={FaHome}
-            text="الصفحة الرئيسية"
+        
+        {/* قسم المستخدم */}
+        <div className="p-4 border-b border-gray-200">
+          {isOpen ? (
+            <div className="flex flex-col items-center">
+              <div className="w-16 h-16 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-2xl mb-2">
+                <FaUser />
+              </div>
+              <p className="text-gray-800 font-medium">مستخدم النظام</p>
+              <p className="text-gray-500 text-sm">مسؤول</p>
+            </div>
+          ) : (
+            <div className="flex justify-center">
+              <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                <FaUser />
+              </div>
+            </div>
+          )}
+        </div>
+        
+        {/* قائمة التنقل */}
+        <nav className="p-3 overflow-y-auto flex-grow">
+          {/* الصفحة الرئيسية */}
+          <Link 
             to="/home"
-            isActive={location.pathname === "/home"}
-          />
-          <MenuItem
-            icon={FaUser}
-            text="الملف الشخصي"
+            className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
+              ${location.pathname === "/home" 
+                ? "bg-blue-50 text-blue-600" 
+                : "text-gray-700 hover:bg-gray-100"}`}
+          >
+            <FaHome className="text-lg" />
+            {isOpen && <span className="text-sm">الصفحة الرئيسية</span>}
+          </Link>
+          
+          {/* الملف الشخصي */}
+          <Link 
             to="/profile"
-            isActive={location.pathname === "/profile"}
-          />
-          <MenuItem
-            icon={FaMapMarkerAlt}
-            text="الخرائط"
+            className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
+              ${location.pathname === "/profile" 
+                ? "bg-blue-50 text-blue-600" 
+                : "text-gray-700 hover:bg-gray-100"}`}
+          >
+            <FaUser className="text-lg" />
+            {isOpen && <span className="text-sm">الملف الشخصي</span>}
+          </Link>
+          
+          {/* الخرائط */}
+          <Link 
             to="/map"
-            isActive={location.pathname === "/map"}
-          />
-
-          {/* Forms Section */}
-          <div className="mt-2">
+            className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
+              ${location.pathname === "/map" 
+                ? "bg-blue-50 text-blue-600" 
+                : "text-gray-700 hover:bg-gray-100"}`}
+          >
+            <FaMapMarkerAlt className="text-lg" />
+            {isOpen && <span className="text-sm">الخرائط</span>}
+          </Link>
+          
+          {/* الإحصائيات */}
+          <Link 
+            to="/dashboard"
+            className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
+              ${location.pathname === "/dashboard" 
+                ? "bg-blue-50 text-blue-600" 
+                : "text-gray-700 hover:bg-gray-100"}`}
+          >
+            <FaChartBar className="text-lg" />
+            {isOpen && <span className="text-sm">الإحصائيات</span>}
+          </Link>
+          
+          {/* قسم الاستمارات */}
+          <div className="mb-2">
             <button
               onClick={toggleForms}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-lg
-                transition-all duration-200 text-gray-200 hover:bg-white hover:bg-opacity-10
-                ${isFormsOpen && "bg-white bg-opacity-10"}`}
+              className={`w-full flex items-center justify-between p-3 rounded-md transition-all
+                ${isFormsOpen || location.pathname.includes("/form")
+                  ? "bg-blue-50 text-blue-600" 
+                  : "text-gray-700 hover:bg-gray-100"}`}
             >
               <div className="flex items-center gap-3">
-                <FaFileAlt className={`${isOpen ? "text-2xl" : "text-3xl"}`} />
-                {isOpen && (
-                  <span className="text-sm font-medium">استمارات</span>
-                )}
+                <FaFileAlt className="text-lg" />
+                {isOpen && <span className="text-sm">استمارات</span>}
               </div>
-              {isOpen &&
-                (isFormsOpen ? (
-                  <FaChevronUp className="text-sm" />
-                ) : (
-                  <FaChevronDown className="text-sm" />
-                ))}
+              {isOpen && (
+                isFormsOpen ? <FaChevronUp size={12} /> : <FaChevronDown size={12} />
+              )}
             </button>
-
-            {/* Forms Submenu */}
+            
+            {/* قائمة الاستمارات الفرعية */}
             {isOpen && isFormsOpen && (
-              <div className="mt-2 mr-4 flex flex-col gap-2">
-                {[
-                  { to: "/form2", text: "محضر كشف وإظهار الآثار الجرمية" },
-                  { to: "/form1", text: "إستمارة إستلام وتسليم العينات" },
-                  { to: "/form3", text: "محضر كشف الحرائق" },
-                  { to: "/form4", text: "مفصل ومخطط موقع الاصابة على الجثة" },
-                  { to: "/form5", text: "مخطط الكشف على عجلة" },
-                ].map((form) => (
+              <div className="mr-4 mt-1 border-r-2 border-blue-100 pr-2">
+                {formsMenu.map((form) => (
                   <Link
                     key={form.to}
                     to={form.to}
-                    className={`text-sm px-4 py-2 rounded-lg transition-all duration-200
-                      ${
-                        location.pathname === form.to
-                          ? "bg-blue-700 text-white"
-                          : "text-gray-300 hover:bg-blue-700 hover:bg-opacity-50"
-                      }`}
+                    className={`flex items-center p-2 text-sm rounded-md my-1 transition-all
+                      ${location.pathname === form.to
+                        ? "bg-blue-50 text-blue-600 font-medium" 
+                        : "text-gray-700 hover:bg-gray-100"}`}
                   >
                     {form.text}
                   </Link>
@@ -158,18 +212,25 @@ const Sidebar = () => {
               </div>
             )}
           </div>
+        </nav>
+        
+        {/* زر تسجيل الخروج في نهاية السايد بار */}
+        <div className="mt-auto border-t border-gray-200">
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 p-4 text-red-500 hover:bg-red-50 transition-all"
+          >
+            <FaSignOutAlt className="text-lg" />
+            {isOpen && <span className="text-sm">تسجيل خروج</span>}
+          </button>
         </div>
-
-        {/* Logout Button */}
-        <button
-          onClick={handleLogout}
-          className="flex items-center gap-3 px-4 py-4 text-white hover:bg-blue-300 hover:bg-opacity-20 transition-colors duration-200 border-t border-blue-700"
-        >
-          <FaSignOutAlt className={`${isOpen ? "text-2xl" : "text-3xl"}`} />
-          {isOpen && <span className="text-xl font-medium">تسجيل خروج</span>}
-        </button>
       </div>
-    </div>
+      
+      {/* مساحة للمحتوى الرئيسي */}
+      <main className={`transition-all duration-300 ${isOpen ? "md:mr-64" : "md:mr-20"}`}>
+        {/* هنا يمكن وضع المحتوى الرئيسي للصفحة */}
+      </main>
+    </>
   );
 };
 

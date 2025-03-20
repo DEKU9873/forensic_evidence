@@ -18,6 +18,11 @@ const CriminalEffectsPage = () => {
     localStorage.setItem("viewMode", viewMode);
   }, [viewMode]);
 
+  // فلترة البيانات بحيث يتم عرض فقط الحوادث التي تحتوي على category_accident === "accident"
+  const filteredIncidents = incidents?.data?.filter(
+    (item) => item.category_accident === "accident"
+  );
+
   return (
     <div className="ml-[120px] mx-[60px] py-4">
       <div className="flex justify-between items-center mb-6">
@@ -32,7 +37,7 @@ const CriminalEffectsPage = () => {
       </div>
 
       {viewMode === "table" ? (
-        <CriminalEffectsTable  />
+        <CriminalEffectsTable data={filteredIncidents} />
       ) : (
         <div
           className={`${
@@ -41,7 +46,7 @@ const CriminalEffectsPage = () => {
               : "flex flex-col"
           }`}
         >
-          {incidents?.data?.map((item, index) => (
+          {filteredIncidents?.map((item, index) => (
             <CardForm key={index} data={item} viewMode={viewMode} />
           ))}
         </div>

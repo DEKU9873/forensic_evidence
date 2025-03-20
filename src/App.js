@@ -15,6 +15,8 @@ import TrafficEetectionReportPage from "./pages/FormPage/TrafficEetectionReportP
 import TrafficEetectionReport from "./Components/Form/TrafficEetection/TrafficEetectionReport";
 import InjuriesOnBodyForm from "./Components/Form/InjuriesOnBodyForm";
 import CarForm from "./Components/Form/CarForm";
+import ReportDownloader from "./Components/Report/ReportDownloader";
+import CrimeDashboard from "./pages/Dashboard/CrimeDashboard";
 
 const App = () => {
   const [isUser, isAdmin, userData, isAuthenticated, loading] = ProtectedRouteHook();
@@ -25,7 +27,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      {/* <Sidebar /> */}
+      <Sidebar />
       <Routes>
         <Route path="/" element={isAuthenticated ? <Navigate to="/home" /> : <Login />} />
         <Route path="/home" element={<Home />} />
@@ -37,8 +39,8 @@ const App = () => {
         <Route path="/form3/:id" element={<TrafficEetectionReport />} />
         <Route path="/form4" element={<InjuriesOnBodyForm />} />
         <Route path="/form5" element={<CarForm />} />
-
-        {/* ✅ استخدام `Navigate` عند التحقق من `isAuthenticated` */}
+        <Route path="/report" element={<ReportDownloader />} />
+        <Route path="/dashboard" element={<CrimeDashboard />} />
         <Route
           path="/map"
           element={isAuthenticated ? <Map /> : <Navigate to="/" />}

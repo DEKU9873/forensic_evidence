@@ -1,281 +1,169 @@
 import React, { useState, useRef, useEffect } from "react";
-import { LayersControl } from "react-leaflet";
-
-import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import {
+  LayersControl,
+  MapContainer,
+  TileLayer,
+  Marker,
+  useMap,
+  Popup,
+} from "react-leaflet";
 import L from "leaflet";
-import { v4 as uuidv4 } from "uuid";
 import {
   Map as MapIcon,
-  Trash2,
-  Info,
-  ZoomIn,
   Maximize2,
   Minimize2,
+  Clock,
+  MapPin,
 } from "lucide-react";
 import "leaflet/dist/leaflet.css";
+import IncidentsHook from "../../hook/CriminalEffects/Incidents-hook";
 
-import { GiPistolGun } from "react-icons/gi"
-import { GiSuicide } from "react-icons/gi"
-import { GiDeathSkull } from "react-icons/gi"
-import { FaPeopleRobbery } from "react-icons/fa6"
-import { GiTakeMyMoney } from "react-icons/gi"
-import { HiFire } from "react-icons/hi"
-import { GiMineExplosion } from "react-icons/gi"
+const createCustomIcon = (color) => {
+  const size = 42;
+  // تأكد من أن اللون له قيمة صالحة
+  const markerColor = color && color.trim() ? color : "#3b82f6";
 
-
-const baghdadMarkers = [
-  {
-    id: "1",
-    position: [33.3152, 44.3661],
-    name: "جريمة قتل",
-    description: "حادثة قتل وقعت في هذا الموقع، والجهات الأمنية تحقق في ملابساتها.",
-    icon: GiPistolGun,
-    color: "#ff4c4c",
-  },
-  {
-    id: "2",
-    position: [33.3089, 44.3705],
-    name: "انتحار",
-    description: "تم الإبلاغ عن حالة انتحار في هذا الموقع، والسلطات تحقق في الأسباب المحتملة.",
-    icon: GiSuicide,
-    color: "#ffff54",
-  },
-  {
-    id: "3",
-    position: [33.3147, 44.4404],
-    name: "وفاة",
-    description: "تم العثور على شخص متوفى في ظروف غامضة، والتحقيقات جارية.",
-    icon: GiDeathSkull,
-    color: "#d0c0c0",
-  },
-  {
-    id: "4",
-    position: [33.3356, 44.3959],
-    name: "سرقة",
-    description: "عملية سرقة وقعت في هذا الموقع، وتم اتخاذ الإجراءات القانونية.",
-    icon: GiTakeMyMoney,
-    color: "#578dff",
-  },
-  {
-    id: "5",
-    position: [33.3449, 44.4009],
-    name: "سرقة بالإكراه",
-    description: "حادثة سرقة تحت التهديد وقعت هنا، والشرطة تتابع التحقيق.",
-    icon: GiTakeMyMoney,
-    color: "#40b07b",
-  },
-  {
-    id: "6",
-    position: [33.3298, 44.3947],
-    name: "حريق",
-    description: "اندلاع حريق في هذا الموقع، وتمت السيطرة عليه من قبل فرق الإطفاء.",
-    icon: HiFire,
-    color: "#ffe840",
-  },
-  {
-    id: "7",
-    position: [33.3298, 44.4047],
-    name: "انفجار إرهابي",
-    description: "انفجار وقع في هذا المكان، والجهات المختصة تعمل على كشف ملابساته.",
-    icon: GiMineExplosion,
-    color: "#792da4",
-  },
-];
-
-
-const createCustomIcon = (IconComponent, color) => {
-  const svgTemplate = `
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 0C12.0645 0 5.625 6.43953 5.625 14.375C5.625 25.1563 20 40 20 40C20 40 34.375 25.1563 34.375 14.375C34.375 6.43953 27.9355 0 20 0ZM20 19.375C17.2395 19.375 15 17.1355 15 14.375C15 11.6145 17.2395 9.375 20 9.375C22.7605 9.375 25 11.6145 25 14.375C25 17.1355 22.7605 19.375 20 19.375Z" fill="${color}"/>
-    </svg>
-  `;
+  const svgTemplate = `<svg width="${size}" height="${size}" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <filter id="shadow" x="-20%" y="0%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="3" stdDeviation="3" flood-color="#000" flood-opacity="0.3" />
+    </filter>
+    <path d="M24 0C14.4774 0 6.75 7.72744 6.75 17.25C6.75 30.1876 24 48 24 48C24 48 41.25 30.1876 41.25 17.25C41.25 7.72744 33.5226 0 24 0ZM24 23.25C20.6874 23.25 18 20.5626 18 17.25C18 13.9374 20.6874 11.25 24 11.25C27.3126 11.25 30 13.9374 30 17.25C30 20.5626 27.3126 23.25 24 23.25Z" fill="${markerColor}" filter="url(#shadow)"/>
+    <circle cx="24" cy="17.25" r="8" fill="white" opacity="0.3"/>
+  </svg>`;
 
   return new L.DivIcon({
     html: svgTemplate,
     className: "custom-pin-icon",
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-    popupAnchor: [0, -40],
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size],
+    popupAnchor: [0, -size],
   });
+};
+
+const RecenterButton = ({ position }) => {
+  const map = useMap();
+
+  const handleRecenter = () => {
+    map.flyTo(position, 12, {
+      animate: true,
+      duration: 1.5,
+    });
+  };
+
+  return (
+    <button
+      onClick={handleRecenter}
+      className="p-2 bg-white text-blue-600 rounded-full shadow-lg hover:bg-blue-50 transition absolute z-[1000] top-4 right-4 border border-gray-200"
+    >
+      <MapPin size={20} />
+    </button>
+  );
 };
 
 const Map = () => {
   const { BaseLayer } = LayersControl;
-
   const [position, setPosition] = useState([33.335821, 44.383414]);
-  const [markers, setMarkers] = useState(baghdadMarkers);
-  const [selectedMarker, setSelectedMarker] = useState(null);
-  const [isRemoving, setIsRemoving] = useState(false);
+  const [markers, setMarkers] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const mapRef = useRef(null);
+  const [selectedIncident, setSelectedIncident] = useState(null);
   const mapContainerRef = useRef(null);
-  const infoSectionRef = useRef(null);
+  const detailsRef = useRef(null);
 
-  const handleMarkerClick = (marker) => {
-    setIsRemoving(false);
-    setPosition(marker.position);
-    setSelectedMarker(marker);
-    setTimeout(scrollToInfo, 100);
-  };
+  const [incidents] = IncidentsHook();
 
-  const scrollToInfo = () => {
-    if (infoSectionRef.current) {
-      infoSectionRef.current.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+  useEffect(() => {
+    if (incidents && incidents.data) {
+      const newMarkers = incidents.data.map((incident) => ({
+        id: incident.id,
+        position: [
+          parseFloat(incident.latitude),
+          parseFloat(incident.longitude),
+        ],
+        name: incident.typeAccident,
+        description: incident.accident_description,
+        color: incident.color || "#3b82f6",
+        date: incident.accident_date,
+        time: incident.inspection_time,
+        lat: incident.latitude,
+        long: incident.longitude,
+      }));
+      setMarkers(newMarkers);
+
+      console.log("Markers with colors:", newMarkers);
     }
-  };
+  }, [incidents]);
 
-  const toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      if (mapContainerRef.current.requestFullscreen) {
-        mapContainerRef.current.requestFullscreen();
-      }
-      setIsFullscreen(true);
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
-      setIsFullscreen(false);
+  // تأكد من أن التفاصيل مرئية بعد تغيير الحادث المختار
+  useEffect(() => {
+    if (selectedIncident && detailsRef.current) {
+      // التمرير إلى قسم التفاصيل باستخدام timeout للتأكد من تحديث DOM
+      setTimeout(() => {
+        detailsRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 100);
     }
-  };
+  }, [selectedIncident]);
 
-  const MapEvents = () => {
-    const map = useMap();
-    mapRef.current = map;
-
-    useEffect(() => {
-      const handleClick = (event) => {
-        // if (isRemoving) {
-        //   setIsRemoving(false);
-        //   return;
-        // }
-
-        // const { lat, lng } = event.latlng;
-        // setPosition([lat, lng]);
-
-        // const newMarker = {
-        //   position: [lat, lng],
-        //   name: `علامة ${markers.length + 1}`,
-        //   id: uuidv4(),
-        //   icon: FaTree,
-        //   color: "#999999",
-        //   description: "علامة جديدة",
-        // };
-
-        // setMarkers((prev) => [...prev, newMarker]);
-        // setSelectedMarker(newMarker);
-        // setTimeout(scrollToInfo, 100);
-      };
-
-      map.on("click", handleClick);
-      return () => map.off("click", handleClick);
-    }, [markers, isRemoving]);
-
-    return null;
-  };
-
-  const removeMarker = (markerId, e) => {
-    e.stopPropagation();
-    setIsRemoving(true);
-    setSelectedMarker(null);
-    setMarkers((prev) => prev.filter((marker) => marker.id !== markerId));
-  };
-
+  // مراقبة تغيير حالة ملء الشاشة
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
     };
 
     document.addEventListener("fullscreenchange", handleFullscreenChange);
+
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange);
     };
   }, []);
 
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      mapContainerRef.current.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  };
+
+  const handleMarkerClick = (incident) => {
+    console.log("تم النقر على العلامة:", incident);
+    setSelectedIncident(incident);
+  };
+
   return (
-    <div className="flex flex-col items-center justify-start min-h-screen bg-gradient-to-b from-blue-50 to-white p-6">
-      <style>
-        {`
-          .leaflet-control-attribution {
-            display: none !important;
-          }
-
-          .map-container {
-            position: relative;
-            border-radius: 1rem;
-            overflow: hidden;
-          }
-
-          .map-container:fullscreen {
-            padding: 0;
-            border-radius: 0;
-          }
-
-          .map-controls {
-            position: fixed;
-            top: 1rem;
-            right: 1rem;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-          }
-
-          .map-container:not(:fullscreen) .map-controls {
-            position: absolute;
-          }
-
-          .info-section {
-            scroll-margin-top: 2rem;
-          }
-
-          .custom-pin-icon {
-            background: none;
-            border: none;
-          }
-
-          @media (min-width: 768px) {
-            .info-section {
-              scroll-margin-top: 4rem;
-            }
-          }
-
-          :fullscreen .map-controls button {
-            background-color: rgba(59, 130, 246, 0.9);
-          }
-
-          :fullscreen .map-controls button:hover {
-            background-color: rgba(37, 99, 235, 1);
-          }
-        `}
-      </style>
-
-      <div className="flex items-center gap-2 mb-6">
+    <div
+      className="flex flex-col items-center justify-start min-h-screen p-4 md:p-6 bg-gray-50"
+      dir="rtl"
+    >
+      <div className="flex items-center gap-3 mb-6 bg-white p-4 rounded-xl shadow-md w-full max-w-5xl">
         <MapIcon className="w-8 h-8 text-blue-600" />
-        <h1 className="text-3xl font-bold text-gray-800">الخرائط</h1>
+        <h1 className="text-3xl font-bold text-gray-800">خريطة الحوادث</h1>
       </div>
 
-      <div className="w-[900px]">
+      <div className="w-full max-w-5xl">
         <div
           ref={mapContainerRef}
-          className="map-container w-full h-[70vh] mb-6 shadow-lg"
+          className="map-container w-full h-[70vh] mb-6 shadow-xl rounded-xl overflow-hidden border-4 border-white relative"
         >
           <MapContainer
             center={position}
             zoom={12}
             className="w-full h-full"
             attributionControl={false}
+            zoomControl={false}
           >
+            <RecenterButton position={position} />
+
             <LayersControl position="bottomright">
-              <BaseLayer checked name="OpenStreetMap">
+              <BaseLayer checked name="خريطة الشوارع">
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
               </BaseLayer>
-              <BaseLayer name="Google Maps">
+              <BaseLayer name="خرائط جوجل">
                 <TileLayer url="https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}" />
               </BaseLayer>
-              <BaseLayer name="Google Satellite">
+              <BaseLayer name="قمر صناعي">
                 <TileLayer url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
               </BaseLayer>
             </LayersControl>
@@ -284,96 +172,91 @@ const Map = () => {
               <Marker
                 key={marker.id}
                 position={marker.position}
-                icon={createCustomIcon(marker.icon, marker.color)}
+                icon={createCustomIcon(marker.color)}
                 eventHandlers={{
                   click: () => handleMarkerClick(marker),
                 }}
-              />
+              ></Marker>
             ))}
-            <MapEvents />
           </MapContainer>
-          <div className="map-controls">
+
+          {/* زر ملء الشاشة محسّن داخل الخريطة */}
+          <div className="absolute top-4 left-4 z-[1000]">
             <button
               onClick={toggleFullscreen}
-              className="p-2 bg-blue-500 text-white rounded-full shadow-lg hover:bg-blue-600 transition"
-              title={isFullscreen ? "إنهاء ملء الشاشة" : "ملء الشاشة"}
+              className="flex items-center gap-2 bg-white text-blue-600 px-3 py-2 rounded-lg shadow-lg hover:bg-blue-50 transition border border-gray-200"
+              title={isFullscreen ? "إغلاق ملء الشاشة" : "عرض بملء الشاشة"}
             >
-              {isFullscreen ? <Minimize2 size={24} /> : <Maximize2 size={24} />}
+              {isFullscreen ? (
+                <>
+                  <Minimize2 size={18} />
+                  <span className="text-sm font-medium">إغلاق ملء الشاشة</span>
+                </>
+              ) : (
+                <>
+                  <Maximize2 size={18} />
+                  <span className="text-sm font-medium">عرض بملء الشاشة</span>
+                </>
+              )}
             </button>
           </div>
         </div>
 
-        <div
-          ref={infoSectionRef}
-          className="info-section w-full bg-white rounded-xl shadow-lg p-6"
-          dir="rtl"
-        >
-          <div className="flex items-center gap-2 mb-4">
-            <Info className="w-6 h-6 text-blue-600" />
-            <h2 className="text-xl font-bold text-gray-800">
-              معلومات العلامة المحددة
-            </h2>
+        {/* عرض تفاصيل الحادث خارج الخريطة بتصميم محسن */}
+        {selectedIncident ? (
+          <div
+            ref={detailsRef}
+            id="incident-details"
+            className="bg-white rounded-xl shadow-lg p-6 mb-6 border-r-4 transform transition-all duration-300 ease-in-out"
+            style={{ borderRightColor: selectedIncident.color }}
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <h3 className="text-2xl font-bold">
+                {selectedIncident.name || "حادث"}
+              </h3>
+              <div
+                className="w-4 h-4 rounded-full"
+                style={{ backgroundColor: selectedIncident.color }}
+              ></div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-5 h-5 text-gray-600" />
+                <span className="text-md text-blue-500">
+                  {selectedIncident.long || "موقع غير معروف"}
+                </span>
+                <span className="text-md">,</span>
+                <span className="text-md text-blue-500">
+                  {selectedIncident.lat || "موقع غير معروف"}
+                </span>
+              </div>
+
+              {selectedIncident.time && (
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-gray-600" />
+                  <span className="text-md text-blue-500">
+                    {selectedIncident.time && `${selectedIncident.time}`}
+                  </span>
+                </div>
+              )}
+            </div>
+
+            {selectedIncident.description ? (
+              <div className="mt-3 text-md text-gray-700 border-t pt-3">
+                <p>{selectedIncident.description}</p>
+              </div>
+            ) : (
+              <div className="mt-3 text-md text-gray-500 border-t pt-3 italic">
+                <p>لا يوجد وصف متاح لهذا الحادث</p>
+              </div>
+            )}
           </div>
-
-          {selectedMarker ? (
-            <div className="space-y-4">
-              <div className="p-4 bg-blue-50 rounded-lg">
-                <div className="flex items-center gap-2 mb-2">
-                  <div style={{ color: "black" }}>
-                    {React.createElement(selectedMarker.icon, { size: 24 })}
-                  </div>
-                  <p className="text-lg font-semibold text-blue-800">
-                    {selectedMarker.name}
-                  </p>
-                </div>
-                <p className="text-gray-600 mb-3">
-                  {selectedMarker.description}
-                </p>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white p-3 rounded-md shadow-sm">
-                    <p className="text-sm text-gray-500">خط العرض</p>
-                    <p className="font-mono text-blue-600">
-                      {selectedMarker.position[0].toFixed(6)}
-                    </p>
-                  </div>
-                  <div className="bg-white p-3 rounded-md shadow-sm">
-                    <p className="text-sm text-gray-500">خط الطول</p>
-                    <p className="font-mono text-blue-600">
-                      {selectedMarker.position[1].toFixed(6)}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex justify-center items-center gap-4">
-                <a
-                  href={`https://www.google.com/maps?q=${selectedMarker.position[0]},${selectedMarker.position[1]}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors duration-300"
-                >
-                  <MapIcon className="w-5 h-5" />
-                  عرض في Google Maps
-                </a>
-
-                {/* <button
-                  onClick={(e) => removeMarker(selectedMarker.id, e)}
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors duration-300"
-                >
-                  <Trash2 className="w-5 h-5" />
-                  حذف العلامة
-                </button> */}
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-8 text-gray-500">
-              <p>لم يتم تحديد أي علامة</p>
-              <p className="text-sm mt-2">
-                انقر على الخريطة لإضافة علامة جديدة
-              </p>
-            </div>
-          )}
-        </div>
+        ) : (
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-6 text-center text-gray-500">
+            <p>انقر على أحد العلامات في الخريطة لعرض تفاصيل الحادث</p>
+          </div>
+        )}
       </div>
     </div>
   );

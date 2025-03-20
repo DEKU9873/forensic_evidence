@@ -1,9 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import TrafficeEtectionDetailsHook from "../../../hook/TrafficEetection/traffice-etection-details-hook";
+import IncidentseDetailsHook from "../../../hook/CriminalEffects/Incidents-details-hook";
 const TrafficEetectionReport = () => {
   const { id } = useParams();
-  const [data] = TrafficeEtectionDetailsHook(id);
+  const [data, table] = IncidentseDetailsHook(id);
 
   const handlePrint = () => {
     window.print();
@@ -14,13 +15,13 @@ const TrafficEetectionReport = () => {
       dir="rtl"
     >
       {/* Watermark */}
-      <div className="absolute inset-0 flex justify-center items-center opacity-10 z-0">
+      {/* <div className="absolute inset-0 flex justify-center items-center opacity-10 z-0">
         <img
           src="/images/forensic_evidence.png"
           alt="Watermark"
           className="w-[800px] h-[800px] object-contain"
         />
-      </div>
+      </div> */}
 
       {/* Header */}
       <div className="flex mb-1">
@@ -101,7 +102,7 @@ const TrafficEetectionReport = () => {
         <div className="bg-gray-300 p-0.5 text-center border border-black">
           وصــــف محــــل الحــــادث
         </div>
-        <div className="border border-black h-[150px] p-0.5">
+        <div className="border border-black min-h-[200px] p-0.5">
           <div className="text-justify">{data.fire_place}</div>
         </div>
       </div>
@@ -109,7 +110,7 @@ const TrafficEetectionReport = () => {
         <div className="bg-gray-300 p-0.5 text-center border border-black">
           الاضرار الناتجة
         </div>
-        <div className="border border-black h-[150px] p-0.5">
+        <div className="border border-black min-h-[100px] p-0.5">
           <div className="text-justify">{data.damage}</div>
         </div>
       </div>
@@ -117,7 +118,7 @@ const TrafficEetectionReport = () => {
         <div className="bg-gray-300 p-0.5 text-center border border-black">
           اسباب الحريق
         </div>
-        <div className="border border-black h-[300px] p-0.5">
+        <div className="border border-black min-h-[150px] p-0.5">
           <div className="text-justify">{data.fire_reason}</div>
         </div>
       </div>
@@ -125,34 +126,81 @@ const TrafficEetectionReport = () => {
         <div className="bg-gray-300 p-0.5 text-center border border-black">
           الاجراءات المتخذة
         </div>
-        <div className="border border-black h-[80px] p-0.5">
+        <div className="border border-black h-auto p-0.5">
           <div className="text-justify">{data.procedures}</div>
         </div>
       </div>
 
-      {/* Signatures Section */}
-      <div className="grid grid-cols-5 gap-1 text-center ">
-        <div>
-          <div className="font-bold text-xs">المشتكي</div>
-          <div className="border border-black h-20"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">المصـــور</div>
-          <div className="border border-black h-20"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">الممارس</div>
-          <div className="border border-black h-20"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">المحقـــق</div>
-          <div className="border border-black h-20"></div>
-        </div>
-        <div>
-          <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
-          <div className="border border-black h-20"></div>
-        </div>
+      {/* Procedures Section */}
+      <div className="mb-1">
+        
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="grid grid-cols-7">
+              <th className="border border-black p-1 text-xs bg-blue-300">ت</th>
+              <th className="border border-black p-1 text-xs bg-blue-300">
+                رقم الأثر او المبرز
+              </th>
+              <th className="border border-black p-1 text-xs bg-blue-300">
+                نوع الأثر او المبرز
+              </th>
+              <th className="border border-black p-1 text-xs col-span-3 bg-blue-300">
+                مكان الرفـــــع
+              </th>
+              <th className="border border-black p-1 text-xs bg-blue-300">
+                طريقـــة الرفـــع
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+          {table.map((item, index) => (
+              <tr key={index} className="grid grid-cols-7">
+                <td className="border border-black p-1 text-xs text-center break-words">
+                  {index + 1}
+                </td>
+                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+                  {item.sampleNumber}
+                </td>
+                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+                  {item.sampleType}
+                </td>
+                <td className="border border-black p-1 text-xs text-right col-span-3 break-words whitespace-normal">
+                  {item.Placeoflifting}
+                </td>
+                <td className="border border-black p-1 text-xs text-right break-words whitespace-normal">
+                  {item.metodeIifting}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
+
+      {/* Signatures Section */}
+      <div className="absolute bottom-1 left-1 right-1">
+  <div className="grid grid-cols-5 gap-1 text-center ">
+    <div>
+      <div className="font-bold text-xs">المشتكي</div>
+      <div className="border border-black h-10"></div>
+    </div>
+    <div>
+      <div className="font-bold text-xs">المصـــور</div>
+      <div className="border border-black h-10"></div>
+    </div>
+    <div>
+      <div className="font-bold text-xs">الممارس</div>
+      <div className="border border-black h-10"></div>
+    </div>
+    <div>
+      <div className="font-bold text-xs">المحقـــق</div>
+      <div className="border border-black h-10"></div>
+    </div>
+    <div>
+      <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
+      <div className="border border-black h-10"></div>
+    </div>
+  </div>
+</div>
 
       {/* Print Button */}
       <div className="flex justify-center mt-8 no-print">
