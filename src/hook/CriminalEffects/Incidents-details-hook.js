@@ -32,6 +32,7 @@ const IncidentseDetailsHook = (id) => {
     table = [];
   }
 
+
   return [data, table];
 };
 

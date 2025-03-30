@@ -25,9 +25,11 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-200">
       <div className="bg-white p-10 rounded-lg shadow-2xl w-full max-w-2xl">
-        <img src="/images/logo3.jpg"
-            alt="logo"
-            className="w-[130px] h-[130px] object-contain mx-auto"/>
+        <img
+          src="/images/logo3.jpg"
+          alt="logo"
+          className="w-[130px] h-[130px] object-contain mx-auto"
+        />
         <h2 className="text-3xl font-bold text-indigo-600 mb-6 text-center">
           نظام الادلة الجنائية
         </h2>

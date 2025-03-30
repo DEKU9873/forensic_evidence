@@ -6,6 +6,9 @@ const CrimeSceneForm = () => {
   const [data, table] = IncidentseDetailsHook(id);
 
 
+  
+
+
   const handlePrint = () => {
     window.print();
   };

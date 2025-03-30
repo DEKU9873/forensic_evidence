@@ -14,4 +14,6 @@ export const GET_LAB_INCIDENT = "GET_LAB_INCIDENT";
 export const GET_Fire_Form = "GET_Fire_Form";
 export const GET_ONE_Fire_Form = "GET_ONE_Fire_Form";
 
+export const GET_Statistics = "GET_Statistics";
+
 export const GET_ERROR = "GET_ERROR";

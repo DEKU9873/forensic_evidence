@@ -32,7 +32,7 @@ const ReceivingDeliveringSamplesFormCard = ({ data, viewMode = "grid" }) => {
             <div className="flex items-center gap-4">
               <ActionButtons onDelete={handleDelete} onEdit={handleEdit} />
               <Link
-                to={`/form1/${data.id}`}
+                to={`/form1/${data.uuid}`}
                 className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
               >
                 <Eye className="w-4 h-4" />
@@ -68,7 +68,7 @@ const ReceivingDeliveringSamplesFormCard = ({ data, viewMode = "grid" }) => {
 
           <div className="flex justify-center">
             <Link
-              to={`/form1/${data.id}`}
+              to={`/form1/${data.uuid}`}
               className="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl transition-all duration-300 shadow-md hover:shadow-lg hover:-translate-y-0.5"
             >
               <Eye className="w-5 h-5" />

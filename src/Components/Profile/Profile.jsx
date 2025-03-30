@@ -49,8 +49,9 @@ const Profile = () => {
                 </div>
                 
                 {/* User Info */}
-                <h2 className="mt-4 text-xl font-bold text-gray-800">{user.username || "اسم المستخدم"}</h2>
-                <p className="text-gray-500 text-sm">المنصب</p>
+                <h2 className="mt-4 text-xl font-bold text-gray-800">{user.first_name} {user.last_name}</h2>
+                <p className="text-gray-500 text-sm">{user.role === "user" ? "مستخدم" : "أدمن"}</p>
+                
                 
                 {/* Edit Button */}
                 <button className="mt-4 w-full bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 transition-all">

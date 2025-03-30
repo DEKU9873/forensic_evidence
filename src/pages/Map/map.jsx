@@ -180,7 +180,7 @@ const Map = () => {
             ))}
           </MapContainer>
 
-          {/* زر ملء الشاشة محسّن داخل الخريطة */}
+          {/* زر ملء الشاشة  */}
           <div className="absolute top-4 left-4 z-[1000]">
             <button
               onClick={toggleFullscreen}
@@ -202,7 +202,7 @@ const Map = () => {
           </div>
         </div>
 
-        {/* عرض تفاصيل الحادث خارج الخريطة بتصميم محسن */}
+        {/* عرض تفاصيل الحادث  */}
         {selectedIncident ? (
           <div
             ref={detailsRef}

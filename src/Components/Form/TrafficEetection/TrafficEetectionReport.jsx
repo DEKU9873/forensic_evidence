@@ -6,6 +6,8 @@ const TrafficEetectionReport = () => {
   const { id } = useParams();
   const [data, table] = IncidentseDetailsHook(id);
 
+  console.log(data)
+
   const handlePrint = () => {
     window.print();
   };
@@ -61,13 +63,13 @@ const TrafficEetectionReport = () => {
                 تاريخ اجراء الكشف
               </th>
               <th className="border border-black p-1 text-xs text-right ">
-                {data.inspection_date}
+                {data.date_discovery}
               </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 الجهة التحقيقية
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-2">
-                {data.request_authority}
+                {data.investigating_body}
               </th>
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 وقت اجراء الكشف
@@ -81,7 +83,7 @@ const TrafficEetectionReport = () => {
                 عنوان محل الحادث
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-1">
-                {data.inspection_place}
+                {data.accident_location}
               </th>
               <th className="border border-black p-1 text-xs text-right col-span-5"></th>
             </tr>
@@ -89,8 +91,14 @@ const TrafficEetectionReport = () => {
               <th className="border border-black p-1 text-xs bg-blue-300 text-right">
                 تاريخ الحــــادث
               </th>
-              <th className="border border-black p-1 text-xs text-right col-span-6">
-                {data.incident_date}
+              <th className="border border-black p-1 text-xs text-right col-span-1">
+                {data.accident_date}
+              </th>
+              <th className="border border-black p-1 text-xs bg-blue-300 text-right">
+                نوع الحادث
+              </th>
+              <th className="border border-black p-1 text-xs text-right col-span-4">
+                {data.typeAccident}
               </th>
             </tr>
           </thead>
@@ -103,7 +111,7 @@ const TrafficEetectionReport = () => {
           وصــــف محــــل الحــــادث
         </div>
         <div className="border border-black min-h-[200px] p-0.5">
-          <div className="text-justify">{data.fire_place}</div>
+          <div className="text-justify">{data.accident_description}</div>
         </div>
       </div>
       <div className="mb-1">
@@ -111,7 +119,7 @@ const TrafficEetectionReport = () => {
           الاضرار الناتجة
         </div>
         <div className="border border-black min-h-[100px] p-0.5">
-          <div className="text-justify">{data.damage}</div>
+          <div className="text-justify">{data.resulting_damages}</div>
         </div>
       </div>
       <div className="mb-1">
@@ -119,7 +127,7 @@ const TrafficEetectionReport = () => {
           اسباب الحريق
         </div>
         <div className="border border-black min-h-[150px] p-0.5">
-          <div className="text-justify">{data.fire_reason}</div>
+          <div className="text-justify">{data.causes_of_fire}</div>
         </div>
       </div>
       <div className="mb-1">
@@ -127,7 +135,7 @@ const TrafficEetectionReport = () => {
           الاجراءات المتخذة
         </div>
         <div className="border border-black h-auto p-0.5">
-          <div className="text-justify">{data.procedures}</div>
+          <div className="text-justify">{data.action_taken}</div>
         </div>
       </div>
 
@@ -153,7 +161,7 @@ const TrafficEetectionReport = () => {
             </tr>
           </thead>
           <tbody>
-          {table.map((item, index) => (
+            {table.map((item, index) => (
               <tr key={index} className="grid grid-cols-7">
                 <td className="border border-black p-1 text-xs text-center break-words">
                   {index + 1}
