@@ -17,10 +17,11 @@ import {
 } from "lucide-react";
 import "leaflet/dist/leaflet.css";
 import IncidentsHook from "../../hook/CriminalEffects/Incidents-hook";
+import ImagesHook from "../../hook/CriminalEffects/images-hook";
+import baseURL from "../../Api/baseURL";
 
 const createCustomIcon = (color) => {
   const size = 42;
-  // تأكد من أن اللون له قيمة صالحة
   const markerColor = color && color.trim() ? color : "#3b82f6";
 
   const svgTemplate = `<svg width="${size}" height="${size}" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -70,33 +71,40 @@ const Map = () => {
   const detailsRef = useRef(null);
 
   const [incidents] = IncidentsHook();
+  const [images] = ImagesHook(selectedIncident?.uuid, selectedIncident); // استرجاع الصور الخاصة بالحادث
+  console.log(selectedIncident?.uuid);
+  console.log(images); // طباعة الصور للتحقق من القيم
 
   useEffect(() => {
     if (incidents && incidents.data) {
-      const newMarkers = incidents.data.map((incident) => ({
-        id: incident.id,
-        position: [
-          parseFloat(incident.latitude),
-          parseFloat(incident.longitude),
-        ],
-        name: incident.typeAccident,
-        description: incident.accident_description,
-        color: incident.color || "#3b82f6",
-        date: incident.accident_date,
-        time: incident.inspection_time,
-        lat: incident.latitude,
-        long: incident.longitude,
-      }));
-      setMarkers(newMarkers);
+      const newMarkers = incidents.data
+        .map((incident) => {
+          const lat = parseFloat(incident.latitude);
+          const lng = parseFloat(incident.longitude);
 
-      console.log("Markers with colors:", newMarkers);
+          if (isNaN(lat) || isNaN(lng)) return null;
+
+          return {
+            id: incident.id,
+            uuid: incident.uuid,
+            position: [lat, lng],
+            name: incident.typeAccident,
+            description: incident.accident_description,
+            color: incident.color || "#3b82f6",
+            date: incident.accident_date,
+            time: incident.inspection_time,
+            lat: incident.latitude,
+            long: incident.longitude,
+          };
+        })
+        .filter(Boolean);
+
+      setMarkers(newMarkers);
     }
   }, [incidents]);
 
-  // تأكد من أن التفاصيل مرئية بعد تغيير الحادث المختار
   useEffect(() => {
     if (selectedIncident && detailsRef.current) {
-      // التمرير إلى قسم التفاصيل باستخدام timeout للتأكد من تحديث DOM
       setTimeout(() => {
         detailsRef.current.scrollIntoView({
           behavior: "smooth",
@@ -106,7 +114,6 @@ const Map = () => {
     }
   }, [selectedIncident]);
 
-  // مراقبة تغيير حالة ملء الشاشة
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -128,7 +135,6 @@ const Map = () => {
   };
 
   const handleMarkerClick = (incident) => {
-    console.log("تم النقر على العلامة:", incident);
     setSelectedIncident(incident);
   };
 
@@ -249,6 +255,21 @@ const Map = () => {
             ) : (
               <div className="mt-3 text-md text-gray-500 border-t pt-3 italic">
                 <p>لا يوجد وصف متاح لهذا الحادث</p>
+              </div>
+            )}
+
+            {/* عرض الصور المتعلقة بالحادث */}
+            {images && images.length > 0 && (
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                {images?.map((image, index) => (
+                  <div key={index} className="w-full h-auto">
+                    <img
+                      src={`http://192.168.100.201:8000/${image?.image}`} 
+                      alt={`صورة الحادث ${index + 1}`}
+                      className="w-[200px] h-[200px] rounded-lg shadow-md"
+                    />
+                  </div>
+                ))}
               </div>
             )}
           </div>

@@ -104,7 +104,7 @@ const App = () => {
         <Route path="/dashboard" element={<CrimeDashboard />} />
         <Route path="/register" element={<Register />} />
 
-        <Route element={<ProtectedRoute auth={isAuthenticated} />}>
+        <Route element={<ProtectedRoute auth={["user", "admin"]} />}>
           <Route path="/map" element={<Map />} />
           <Route path="/profile" element={<Profile />} />
         </Route>

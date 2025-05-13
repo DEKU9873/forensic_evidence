@@ -4,6 +4,7 @@ import {
   GET_Incidents,
   GET_ONE_Incidents,
   GET_Evidencebyincident,
+  GET_IncidentImage,
   GET_ERROR,
 } from "../type";
 // import baseURL from "../../api/baseURL";
@@ -112,6 +113,21 @@ export const getEvidencebyIncident = (id) => async (dispatch) => {
 
     dispatch({
       type: GET_Evidencebyincident,
+      payload: res,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error" + e,
+    });
+  }
+};
+export const getIncidentImage = (id) => async (dispatch) => {
+  try {
+    const res = await useGetData(`api/upload-images/${id}`);
+
+    dispatch({
+      type: GET_IncidentImage,
       payload: res,
     });
   } catch (e) {

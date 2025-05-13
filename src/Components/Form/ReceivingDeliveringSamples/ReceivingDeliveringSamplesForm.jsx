@@ -96,7 +96,7 @@ const ReceivingDeliveringSamplesForm = () => {
             </tr>
           </thead>
           <tbody>
-            {lab.map((item, index) => (
+            {lab?.map((item, index) => (
               <tr key={index}>
                 <td className="border border-black p-2 h-8">
                   {table[index]?.sampleType || "N/A"}

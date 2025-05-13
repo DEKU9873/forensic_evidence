@@ -8,6 +8,7 @@ const InspectioneHook = () => {
   useEffect(() => {
     dispatch(getAllEvidence());
   }, []);
+  
 
   const evidence = useSelector(
     (state) => state.criminalEffectsReducer.evidence

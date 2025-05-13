@@ -24,8 +24,8 @@ const IncidentsHook = () => {
   const loading = useSelector((state) => state.criminalEffectsReducer.loading);
 
   let pageCount = 0;
-  if (incidents.paginationResult)
-    pageCount = incidents.paginationResult.numberOfPages;
+  if (incidents?.paginationResult)
+    pageCount = incidents?.paginationResult.numberOfPages;
 
 
   const onPress = async (page) => {
