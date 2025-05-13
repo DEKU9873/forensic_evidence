@@ -82,7 +82,7 @@ const CrimeDashboard = () => {
   const getCrimeData = () => {
     if (!statistics || !statistics.incident_type_counts) {
       // إذا لم تكن البيانات متاحة، نعرض جميع أنواع الجرائم بقيمة صفر
-      return crimeDefinitions.map(crime => ({
+      return crimeDefinitions.map((crime) => ({
         ...crime,
         value: 0,
       }));
@@ -96,21 +96,23 @@ const CrimeDashboard = () => {
     // خريطة لتحويل أنواع الحوادث العربية إلى الأنواع المحددة في التعريفات
     const arabicToTypeMapping = {
       "جريمة قتل": "murder",
-      "انتحار": "suicide",
-      "وفاة": "die",
-      "سرقة": "theft",
+      انتحار: "suicide",
+      وفاة: "die",
+      سرقة: "theft",
       "سرقة بالإكراه": "robbery",
-      "حريق": "fire",
+      حريق: "fire",
       "انفجار إرهابي": "terror",
     };
 
     // تحديث القيم بناءً على البيانات الواردة
-    statistics.incident_type_counts.forEach(item => {
+    statistics.incident_type_counts.forEach((item) => {
       const mappedType = arabicToTypeMapping[item.typeAccident];
-      
+
       if (mappedType) {
-        const crimeIndex = resultData.findIndex(crime => crime.type === mappedType);
-        
+        const crimeIndex = resultData.findIndex(
+          (crime) => crime.type === mappedType
+        );
+
         if (crimeIndex !== -1) {
           resultData[crimeIndex].value = parseInt(item.count) || 0;
         }
@@ -128,10 +130,7 @@ const CrimeDashboard = () => {
   // كارت لعرض إحصائية واحدة
   const StatCard = ({ title, value, icon, color }) => (
     <div className="bg-white rounded-lg shadow p-4 flex items-center">
-      <div
-        className="rounded-full p-3 ml-4"
-        style={{ backgroundColor: color }}
-      >
+      <div className="rounded-full p-3 ml-4" style={{ backgroundColor: color }}>
         {icon}
       </div>
       <div className="flex-1 text-right">
@@ -198,31 +197,27 @@ const CrimeDashboard = () => {
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
-                data={crimeData.filter(item => item.value !== undefined)}
+                data={crimeData.filter((item) => item.value !== undefined)}
                 barCategoryGap={15}
                 margin={{ top: 20, right: 30, left: 30, bottom: 30 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis 
-                  dataKey="name" 
+                <XAxis
+                  dataKey="name"
                   tick={{ fontSize: 12 }}
                   angle={0}
                   textAnchor="end"
                   height={70}
                 />
-                <YAxis 
+                <YAxis
                   type="number"
-                  domain={[0, 'dataMax + 1']}
+                  domain={[0, "dataMax + 1"]}
                   allowDecimals={false}
                   width={50}
                 />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend />
-                <Bar 
-                  dataKey="value" 
-                  name="العدد"
-                  minPointSize={3}
-                >
+                <Bar dataKey="value" name="العدد" minPointSize={3}>
                   {crimeData.map((entry) => (
                     <Cell key={`cell-${entry.id}`} fill={entry.color} />
                   ))}
@@ -242,19 +237,21 @@ const CrimeDashboard = () => {
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-bold mb-4">الحادثة الأكثر</h2>
-            {crimeData.some(item => (item.value || 0) > 0) ? (
+            {crimeData.some((item) => (item.value || 0) > 0) ? (
               <p
                 className="text-xl font-bold"
                 style={{
                   color: crimeData.reduce(
-                    (max, item) => ((max.value || 0) > (item.value || 0) ? max : item),
+                    (max, item) =>
+                      (max.value || 0) > (item.value || 0) ? max : item,
                     crimeData[0]
                   ).color,
                 }}
               >
                 {
                   crimeData.reduce(
-                    (max, item) => ((max.value || 0) > (item.value || 0) ? max : item),
+                    (max, item) =>
+                      (max.value || 0) > (item.value || 0) ? max : item,
                     crimeData[0]
                   ).name
                 }
@@ -265,21 +262,29 @@ const CrimeDashboard = () => {
           </div>
           <div className="bg-white p-6 rounded-lg shadow">
             <h2 className="text-xl font-bold mb-4">الحادثة الأقل</h2>
-            {crimeData.some(item => (item.value || 0) > 0) ? (
+            {crimeData.some((item) => (item.value || 0) > 0) ? (
               <p
                 className="text-xl font-bold"
                 style={{
-                  color: crimeData.filter(item => (item.value || 0) > 0).reduce(
-                    (min, item) => ((min.value || 0) < (item.value || 0) ? min : item),
-                    crimeData.find(item => (item.value || 0) > 0) || crimeData[0]
-                  ).color,
+                  color: crimeData
+                    .filter((item) => (item.value || 0) > 0)
+                    .reduce(
+                      (min, item) =>
+                        (min.value || 0) < (item.value || 0) ? min : item,
+                      crimeData.find((item) => (item.value || 0) > 0) ||
+                        crimeData[0]
+                    ).color,
                 }}
               >
                 {
-                  crimeData.filter(item => (item.value || 0) > 0).reduce(
-                    (min, item) => ((min.value || 0) < (item.value || 0) ? min : item),
-                    crimeData.find(item => (item.value || 0) > 0) || crimeData[0]
-                  ).name
+                  crimeData
+                    .filter((item) => (item.value || 0) > 0)
+                    .reduce(
+                      (min, item) =>
+                        (min.value || 0) < (item.value || 0) ? min : item,
+                      crimeData.find((item) => (item.value || 0) > 0) ||
+                        crimeData[0]
+                    ).name
                 }
               </p>
             ) : (
@@ -295,7 +300,7 @@ const CrimeDashboard = () => {
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={crimeData.filter(item => (item.value || 0) > 0)}
+                  data={crimeData.filter((item) => (item.value || 0) > 0)}
                   cx="50%"
                   cy="50%"
                   innerRadius={60}

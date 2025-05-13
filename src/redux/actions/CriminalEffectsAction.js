@@ -9,6 +9,7 @@ import {
 } from "../type";
 // import baseURL from "../../api/baseURL";
 import { useGetData } from "../../hooks/useGetData";
+import { useUpdateData } from "../../hooks/useUpdateData";
 
 // get all Criminal Effects
 export const getAllEvidence = () => async (dispatch) => {
@@ -113,6 +114,21 @@ export const getEvidencebyIncident = (id) => async (dispatch) => {
 
     dispatch({
       type: GET_Evidencebyincident,
+      payload: res,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error" + e,
+    });
+  }
+};
+export const sendIncident = (id) => async (dispatch) => {
+  try {
+    const res = await useUpdateData(`api/incidents/${id}`);
+
+    dispatch({
+      type: GET_IncidentImage,
       payload: res,
     });
   } catch (e) {

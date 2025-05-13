@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import IncidentseDetailsHook from "../../../hook/CriminalEffects/Incidents-details-hook";
+import ImageModal from "../../ImageModal";
 const CrimeSceneForm = () => {
   const { id } = useParams();
   const [data, table] = IncidentseDetailsHook(id);
+  const [imageOpen, setImageOpen] = useState(false);
 
-
-  
-
+  const handleOpenImage = () => {
+    setImageOpen(true);
+  };
+  const handleCloseImage = () => {
+    setImageOpen(false);
+  };
 
   const handlePrint = () => {
     window.print();
@@ -128,7 +133,9 @@ const CrimeSceneForm = () => {
         <div className="bg-blue-300 p-0.5 text-center border border-black">
           الإجــــراءات المتخــــذة
         </div>
-        <div className=" p-0.5 text-right border border-black h-[60px]">{data.action_taken}</div>
+        <div className=" p-0.5 text-right border border-black h-[60px]">
+          {data.action_taken}
+        </div>
         <table className="w-full border-collapse">
           <thead>
             <tr className="grid grid-cols-7">
@@ -172,7 +179,7 @@ const CrimeSceneForm = () => {
       </div>
 
       {/* Signatures Section */}
-      <div className="absolute bottom-1 left-1 right-1">
+      <div className="my-10">
         <div className="grid grid-cols-5 gap-1 text-center ">
           <div>
             <div className="font-bold text-xs">المشتكي</div>
@@ -197,8 +204,20 @@ const CrimeSceneForm = () => {
         </div>
       </div>
 
+           <div onClick={handleOpenImage} className="flex justify-end">
+          <button
+            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
+          >
+                    عرض الصور
+
+          </button>
+        </div>
+
+    
+    
+
       {/* Print Button */}
-      <div className="flex justify-center mt-8 no-print">
+      {/* <div className="flex justify-center mt-8 no-print">
         <button
           onClick={handlePrint}
           className="px-8 py-3 bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-bold rounded-xl 
@@ -221,7 +240,8 @@ const CrimeSceneForm = () => {
           </svg>
           <span>طباعة المحضر</span>
         </button>
-      </div>
+      </div> */}
+      {imageOpen && <ImageModal id={id} onClose={handleCloseImage} />}
     </div>
   );
 };
