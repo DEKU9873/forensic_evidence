@@ -5,6 +5,7 @@ import {
   GET_ONE_Incidents,
   GET_Evidencebyincident,
   GET_IncidentImage,
+  Send_Incident,
   GET_ERROR,
 } from "../type";
 // import baseURL from "../../api/baseURL";
@@ -128,7 +129,7 @@ export const sendIncident = (id) => async (dispatch) => {
     const res = await useUpdateData(`api/incidents/${id}`);
 
     dispatch({
-      type: GET_IncidentImage,
+      type: Send_Incident,
       payload: res,
     });
   } catch (e) {

@@ -6,8 +6,9 @@ import { ToastContainer } from "react-toastify";
 
 const Register = () => {
   const [
-    firstName,
+     firstName,
     lastName,
+    fullName,
     role,
     name,
     email,
@@ -23,6 +24,7 @@ const Register = () => {
     onChangeRole,
     onChangeFirstName,
     onChangeLastName,
+    onChangeFullName,
     OnSubmit,
   ] = RegisterHook();
 
@@ -63,7 +65,27 @@ const Register = () => {
           </div>
           
           {/* First Name Field */}
-          <div>
+          <div className="col-span-2">
+            <label htmlFor="fullName" className={labelClass}>
+              الاسم 
+            </label>
+            <div className="relative">
+              <input
+                id="fullName"
+                type="text"
+                value={fullName}
+                onChange={onChangeFullName}
+                onKeyDown={handleKeyDown}
+                className={inputClass}
+                dir="rtl"
+                placeholder="الاسم "
+              />
+              <div className={iconContainerClass}>
+                <FaUserAlt className={iconClass} />
+              </div>
+            </div>
+          </div>
+          {/* <div>
             <label htmlFor="firstName" className={labelClass}>
               الاسم الاول
             </label>
@@ -82,10 +104,10 @@ const Register = () => {
                 <FaUserAlt className={iconClass} />
               </div>
             </div>
-          </div>
+          </div> */}
           
           {/* Last Name Field */}
-          <div>
+          {/* <div>
             <label htmlFor="lastName" className={labelClass}>
               الاسم الاخير
             </label>
@@ -104,7 +126,7 @@ const Register = () => {
                 <FaUserAlt className={iconClass} />
               </div>
             </div>
-          </div>
+          </div> */}
           
           {/* Role Selection */}
           <div>

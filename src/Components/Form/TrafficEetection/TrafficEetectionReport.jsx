@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import TrafficeEtectionDetailsHook from "../../../hook/TrafficEetection/traffice-etection-details-hook";
 import IncidentseDetailsHook from "../../../hook/CriminalEffects/Incidents-details-hook";
+import ImageModal from "../../ImageModal";
 const TrafficEetectionReport = () => {
   const { id } = useParams();
   const [data, table] = IncidentseDetailsHook(id);
+  const [imageOpen, setImageOpen] = useState(false);
 
-  console.log(data)
-
+  const handleOpenImage = () => {
+    setImageOpen(true);
+  };
+  const handleCloseImage = () => {
+    setImageOpen(false);
+  };
   const handlePrint = () => {
     window.print();
   };
@@ -141,7 +147,6 @@ const TrafficEetectionReport = () => {
 
       {/* Procedures Section */}
       <div className="mb-1">
-        
         <table className="w-full border-collapse">
           <thead>
             <tr className="grid grid-cols-7">
@@ -185,33 +190,39 @@ const TrafficEetectionReport = () => {
       </div>
 
       {/* Signatures Section */}
-      <div className="absolute bottom-1 left-1 right-1">
-  <div className="grid grid-cols-5 gap-1 text-center ">
-    <div>
-      <div className="font-bold text-xs">المشتكي</div>
-      <div className="border border-black h-10"></div>
-    </div>
-    <div>
-      <div className="font-bold text-xs">المصـــور</div>
-      <div className="border border-black h-10"></div>
-    </div>
-    <div>
-      <div className="font-bold text-xs">الممارس</div>
-      <div className="border border-black h-10"></div>
-    </div>
-    <div>
-      <div className="font-bold text-xs">المحقـــق</div>
-      <div className="border border-black h-10"></div>
-    </div>
-    <div>
-      <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
-      <div className="border border-black h-10"></div>
-    </div>
-  </div>
-</div>
+      <div className="my-10">
+        <div className="grid grid-cols-5 gap-1 text-center ">
+          <div>
+            <div className="font-bold text-xs">المشتكي</div>
+            <div className="border border-black h-10"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">المصـــور</div>
+            <div className="border border-black h-10"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">الممارس</div>
+            <div className="border border-black h-10"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">المحقـــق</div>
+            <div className="border border-black h-10"></div>
+          </div>
+          <div>
+            <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
+            <div className="border border-black h-10"></div>
+          </div>
+        </div>
+      </div>
+
+      <div onClick={handleOpenImage} className="flex justify-end">
+        <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+          عرض الصور
+        </button>
+      </div>
 
       {/* Print Button */}
-      <div className="flex justify-center mt-8 no-print">
+      {/* <div className="flex justify-center mt-8 no-print">
         <button
           onClick={handlePrint}
           className="px-8 py-3 bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-bold rounded-xl 
@@ -234,7 +245,9 @@ const TrafficEetectionReport = () => {
           </svg>
           <span>طباعة المحضر</span>
         </button>
-      </div>
+      </div> */}
+
+      {imageOpen && <ImageModal id={id} onClose={handleCloseImage} />}
     </div>
   );
 };

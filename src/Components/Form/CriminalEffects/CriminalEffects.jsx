@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import IncidentseDetailsHook from "../../../hook/CriminalEffects/Incidents-details-hook";
 import ImageModal from "../../ImageModal";
+import SendHook from "../../../hook/CriminalEffects/send-hook";
+import { useDispatch } from "react-redux";
 const CrimeSceneForm = () => {
+  const dispatch = useDispatch();
   const { id } = useParams();
   const [data, table] = IncidentseDetailsHook(id);
   const [imageOpen, setImageOpen] = useState(false);
+  // const [send] = SendHook();
+  //  const handleSendClick = async (id) => {
+  //   await dispatch((id));
+  //   // notify("تم ارسال التقرير", "success");
+  // };
 
   const handleOpenImage = () => {
     setImageOpen(true);

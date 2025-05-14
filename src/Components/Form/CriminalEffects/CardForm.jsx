@@ -4,9 +4,7 @@ import { Eye, FileText } from "lucide-react";
 import ActionButtons from "../../Uitily/ActionButtons";
 
 const CardForm = ({ data, viewMode = "grid" }) => {
-
   console.log(data);
-
 
   const handleDelete = (e) => {
     e.preventDefault();
@@ -15,8 +13,6 @@ const CardForm = ({ data, viewMode = "grid" }) => {
   const handleEdit = (e) => {
     e.preventDefault();
   };
-
-
 
   if (viewMode === "list") {
     return (

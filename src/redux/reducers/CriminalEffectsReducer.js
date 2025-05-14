@@ -6,6 +6,7 @@ import {
   GET_ONE_Incidents,
   GET_Evidencebyincident,
   GET_IncidentImage,
+  Send_Incident,
 } from "../type";
 
 const inital = {
@@ -55,6 +56,12 @@ const criminalEffectsReducer = (state = inital, action) => {
       return {
         ...state,
         image: action.payload,
+        loading: false,
+      };
+    case Send_Incident:
+      return {
+        ...state,
+        oneIncidents: action.payload,
         loading: false,
       };
     case GET_ERROR:

@@ -5,6 +5,7 @@ export const GET_Evidence = "GET_Evidence";
 export const GET_ONE_EVIDENCE = "GET_ONE_EVIDENCE";
 
 export const GET_Incidents = "GET_Incidents";
+export const Send_Incident = "Send_Incident";
 export const GET_ONE_Incidents = "GET_ONE_Incidents";
 export const GET_Evidencebyincident = "GET_Evidencebyincident";
 

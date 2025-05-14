@@ -58,10 +58,6 @@
 
 // export default App;
 
-
-
-
-
 import React from "react";
 import Map from "./pages/Map/map";
 import Login from "./pages/Auth/Login";
@@ -84,7 +80,7 @@ import CrimeDashboard from "./pages/Dashboard/CrimeDashboard";
 import Register from "./pages/Auth/Register";
 
 const App = () => {
-  const [isUser, isAdmin, userData, isAuthenticated] = ProtectedRouteHook();
+  // const [isUser, isAdmin, userData, isAuthenticated] = ProtectedRouteHook();
 
   return (
     <BrowserRouter>
@@ -104,7 +100,8 @@ const App = () => {
         <Route path="/dashboard" element={<CrimeDashboard />} />
         <Route path="/register" element={<Register />} />
 
-        <Route element={<ProtectedRoute auth={["user", "admin"]} />}>
+
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/map" element={<Map />} />
           <Route path="/profile" element={<Profile />} />
         </Route>

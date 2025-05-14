@@ -1,9 +1,29 @@
 import React from "react";
 import { X } from "lucide-react";
 import ImagesHook from "../hook/CriminalEffects/images-hook";
+import axios from "axios";
+import notify from "../hook/useNotification";
+import { ToastContainer } from "react-toastify";
+import baseURL from "../Api/baseURL";
 
 const ImageModal = ({ onClose, id }) => {
   const [images] = ImagesHook(id);
+
+  const handleSendClick = async () => {
+    try {
+      await baseURL.put(`/api/incidents/${id}/`, {
+        send_to_admin: true,
+      });
+      notify("تم الإرسال بنجاح!", "success");
+
+      setTimeout(() => {
+        onClose();
+      }, 2000);
+    } catch (error) {
+      console.error("حدث خطأ أثناء الإرسال:", error);
+      notify("فشل في الإرسال. حاول مرة أخرى.", "error");
+    }
+  };
 
   return (
     <div
@@ -44,14 +64,13 @@ const ImageModal = ({ onClose, id }) => {
         )}
 
         {/* Send Button */}
-        <div className="flex justify-end">
-          <button
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors"
-          >
+        <div onClick={handleSendClick} className="flex justify-end">
+          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
             إرسال
           </button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

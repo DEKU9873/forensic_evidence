@@ -10,6 +10,7 @@ const RegisterHook = () => {
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const[fullName, setFullName] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -24,6 +25,10 @@ const RegisterHook = () => {
   };
   const onChangeLastName = (e) => {
     setLastName(e.target.value);
+  };
+
+  const onChangeFullName = (e) => {
+    setFullName(e.target.value);
   };
 
   const onChangeName = (e) => {
@@ -86,8 +91,9 @@ const RegisterHook = () => {
     try {
       await dispatch(
         createNewUser({
-          first_name: firstName,
-          last_name: lastName,
+          // first_name: firstName,
+          // last_name: lastName,
+          full_name:fullName,
           username: name,
           email: email,
           phone_number: phone,
@@ -152,6 +158,7 @@ const RegisterHook = () => {
   return [
     firstName,
     lastName,
+    fullName,
     role,
     name,
     email,
@@ -167,6 +174,7 @@ const RegisterHook = () => {
     onChangeRole,
     onChangeFirstName,
     onChangeLastName,
+    onChangeFullName,
     OnSubmit,
   ];
 };
