@@ -264,7 +264,7 @@ const Map = () => {
                 {images?.map((image, index) => (
                   <div key={index} className="w-full h-auto">
                     <img
-                      src={`http://192.168.100.201:8000/${image?.image}`} 
+                      src={`http://192.168.100.201:8000${image?.image}`}
                       alt={`صورة الحادث ${index + 1}`}
                       className="w-[200px] h-[200px] rounded-lg shadow-md"
                     />

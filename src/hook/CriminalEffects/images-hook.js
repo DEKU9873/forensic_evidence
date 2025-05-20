@@ -18,6 +18,8 @@ const ImagesHook = (id, selectedIncident) => {
     } else {
         image = [];
     }
+
+    console.log('hook',image);
   
     return [image];
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BarChart,
   Bar,
@@ -13,68 +12,126 @@ import {
   Cell,
 } from "recharts";
 import "leaflet/dist/leaflet.css";
-import { GiPistolGun } from "react-icons/gi";
-import { GiSuicide } from "react-icons/gi";
-import { GiDeathSkull } from "react-icons/gi";
+import {
+  GiPistolGun,
+  GiBurningSkull,
+  GiMagnifyingGlass,
+  GiOverkill,
+  GiArson,
+  GiFireZone,
+  GiCarDoor,
+  GiFireBomb,
+  GiSuicide,
+  GiDeathSkull,
+} from "react-icons/gi";
+import { TbShieldQuestion } from "react-icons/tb";
 import { FaPeopleRobbery } from "react-icons/fa6";
-import { GiTakeMyMoney } from "react-icons/gi";
-import { HiFire } from "react-icons/hi";
 import { GiMineExplosion } from "react-icons/gi";
+import { FaLockOpen } from "react-icons/fa";
 import StatisticsHook from "../../hook/ReceivingDeliveringSamples/statistics-hook";
 
 const CrimeDashboard = () => {
   const [statistics, loading] = StatisticsHook();
 
-  // تهيئة مجموعة ثابتة من أنواع الجرائم مع الألوان والأيقونات المحددة
+
   const crimeDefinitions = [
     {
       id: 1,
-      type: "murder",
-      name: "جريمة قتل",
+      type: "killing",
+      name: "قتل",
       icon: <GiPistolGun className="w-6 h-6 text-white" />,
       color: "#ff4c4c",
     },
     {
       id: 2,
+      type: "murder associated with fire",
+      name: "قتل مقترن بحريق",
+      icon: <GiBurningSkull className="w-6 h-6 text-white" />,
+      color: "#ff4c4c",
+    },
+    {
+      id: 3,
+      type: "suspected suicide",
+      name: "أنتحار مشتبه به",
+      icon: <GiMagnifyingGlass className="w-6 h-6 text-white" />,
+      color: "#ffff54",
+    },
+    {
+      id: 4,
       type: "suicide",
-      name: "انتحار",
+      name: "أنتحار",
       icon: <GiSuicide className="w-6 h-6 text-white" />,
       color: "#ffff54",
     },
     {
-      id: 3,
-      type: "die",
-      name: "وفاة",
-      icon: <GiDeathSkull className="w-6 h-6 text-white" />,
+      id: 5,
+      type: "Suspected death",
+      name: "وفاه مشتبه بها",
+      icon: <GiOverkill className="w-6 h-6 text-white" />,
       color: "#000",
     },
     {
-      id: 4,
+      id: 6,
       type: "theft",
       name: "سرقة",
-      icon: <GiTakeMyMoney className="w-6 h-6 text-white" />,
+      icon: <FaLockOpen className="w-6 h-6 text-white" />,
       color: "#578dff",
     },
     {
-      id: 5,
-      type: "robbery",
-      name: "سرقة بالإكراه",
-      icon: <FaPeopleRobbery className="w-6 h-6 text-white" />,
-      color: "#40b07b",
-    },
-    {
-      id: 6,
-      type: "fire",
-      name: "حريق",
-      icon: <HiFire className="w-6 h-6 text-white" />,
-      color: "#FFA500",
-    },
-    {
       id: 7,
-      type: "terror",
-      name: "انفجار إرهابي",
+      type: "robbery",
+      name: "سرقة بالاكراه",
+      icon: <FaPeopleRobbery className="w-6 h-6 text-white" />,
+      color: "#578dff",
+    },
+    {
+      id: 8,
+      type: "theft coupled with fire",
+      name: "سرقة مقترنة بحريق",
+      icon: <GiArson className="w-6 h-6 text-white" />,
+      color: "#578dff",
+    },
+    {
+      id: 9,
+      type: "fire",
+      name: "حادث حريق",
+      icon: <GiFireZone className="w-6 h-6 text-white" />,
+      color: "#ff6333",
+    },
+    {
+      id: 10,
+      type: "wheel fire",
+      name: "حريق عجلة",
+      icon: <GiCarDoor className="w-6 h-6 text-white" />,
+      color: "#ff6333",
+    },
+    {
+      id: 11,
+      type: "explosion (terrorist act)",
+      name: "انفجار(عمل ارهابي)",
+      icon: <GiFireBomb className="w-6 h-6 text-white" />,
+      color: "#ffe840",
+    },
+    {
+      id: 12,
+      type: "explosion",
+      name: "انفجار",
       icon: <GiMineExplosion className="w-6 h-6 text-white" />,
-      color: "#792da4",
+      color: "#ffe840",
+    },
+    {
+      id: 13,
+      type: "Examination of the body",
+      name: "كشف على الجثة",
+      icon: <GiDeathSkull className="w-6 h-6 text-white" />,
+      color: "#4a148c",
+    },
+    {
+      id: 14,
+      type: "Other",
+      name: "أخرى",
+      icon: <TbShieldQuestion className="w-6 h-6 text-white" />,
+      color: "#984c2b",
     },
   ];
 
@@ -88,20 +145,26 @@ const CrimeDashboard = () => {
       }));
     }
 
-    console.log("Raw API data:", statistics.incident_type_counts);
 
     // إنشاء نسخة من تعريفات الجرائم للعمل عليها
     const resultData = [...crimeDefinitions];
 
     // خريطة لتحويل أنواع الحوادث العربية إلى الأنواع المحددة في التعريفات
     const arabicToTypeMapping = {
-      "جريمة قتل": "murder",
-      انتحار: "suicide",
-      وفاة: "die",
+      قتل: "killing",
+      "قتل مقترن بحريق": "murder associated with fire",
+      "أنتحار مشتبه به": "suspected suicide",
+      أنتحار: "suicide",
+      "وفاه مشتبه بها": "Suspected death",
       سرقة: "theft",
-      "سرقة بالإكراه": "robbery",
-      حريق: "fire",
-      "انفجار إرهابي": "terror",
+      "سرقة بالاكراه": "robbery",
+      "سرقة مقترنة بحريق": "theft coupled with fire",
+      "حادث حريق": "fire",
+      "حريق عجلة": "wheel fire",
+      "انفجار(عمل ارهابي)": "explosion (terrorist act)",
+      انفجار: "explosion",
+      "كشف على الجثة": "Examination of the body",
+      أخرى: "Other",
     };
 
     // تحديث القيم بناءً على البيانات الواردة
@@ -121,7 +184,6 @@ const CrimeDashboard = () => {
       }
     });
 
-    console.log("Processed data:", resultData);
     return resultData;
   };
 

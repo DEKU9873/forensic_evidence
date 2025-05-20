@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { X } from "lucide-react";
 import ImagesHook from "../hook/CriminalEffects/images-hook";
 import axios from "axios";
@@ -9,10 +9,11 @@ import baseURL from "../Api/baseURL";
 const ImageModal = ({ onClose, id }) => {
   const [images] = ImagesHook(id);
 
+
   const handleSendClick = async () => {
     try {
       await baseURL.put(`/api/incidents/${id}/`, {
-        send_to_admin: true,
+        send_to_admin: false,
       });
       notify("تم الإرسال بنجاح!", "success");
 
@@ -43,6 +44,7 @@ const ImageModal = ({ onClose, id }) => {
             <X size={20} />
           </button>
         </div>
+        
 
         {/* Images */}
         {images && images.length > 0 ? (
@@ -50,7 +52,7 @@ const ImageModal = ({ onClose, id }) => {
             {images.map((image, index) => (
               <div key={index} className="w-full">
                 <img
-                  src={`http://192.168.100.201:8000/${image?.image}`}
+                  src={`http://192.168.100.201:8000${image?.image}`}
                   alt={`صورة الحادث ${index + 1}`}
                   className="w-full h-[200px] object-cover rounded-lg shadow hover:scale-105 transition-transform duration-300"
                 />

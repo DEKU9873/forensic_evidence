@@ -1,0 +1,163 @@
+import React from 'react';
+import StatisticsHook from '../../hook/ReceivingDeliveringSamples/statistics-hook';
+import {
+  Document,
+  Packer,
+  Paragraph,
+  Table,
+  TableCell,
+  TableRow,
+  WidthType,
+  TextRun,
+  BorderStyle,
+  VerticalAlign,
+} from 'docx';
+import { saveAs } from 'file-saver';
+
+const WordReport = () => {
+  const [statistics, loading] = StatisticsHook();
+  console.log(statistics);
+
+  const generateDoc = async () => {
+    try {
+      // if (!statistics?.data || statistics.data.length === 0) {
+      //   alert("لا توجد بيانات لعرضها");
+      //   return;
+      // }
+
+      // إنشاء صفوف الجدول
+    const tableRows = [
+  // الصف الأول - رؤوس الأعمدة
+  new TableRow({
+    tableHeader: true,
+    children: [
+     
+      new TableCell({
+        children: [new Paragraph({ text: "نوع الحادث", alignment: "center" })],
+        verticalAlign: VerticalAlign.CENTER,
+        shading: { fill: "D9D9D9" },
+      }),
+      new TableCell({
+        children: [new Paragraph({ text: "المدينة الأكثر تكراراً", alignment: "center" })],
+        verticalAlign: VerticalAlign.CENTER,
+        shading: { fill: "D9D9D9" },
+      }),
+      new TableCell({
+        children: [new Paragraph({ text: "عدد الحالات", alignment: "center" })],
+        verticalAlign: VerticalAlign.CENTER,
+        shading: { fill: "D9D9D9" },
+      }),
+
+       new TableCell({
+        children: [new Paragraph({ text: "ت", alignment: "center" })],
+        verticalAlign: VerticalAlign.CENTER,
+        shading: { fill: "D9D9D9" },
+      }),
+    ],
+  }),
+
+  // الصفوف التالية - البيانات
+  ...statistics.map((item, index) =>
+    new TableRow({
+      children: [
+
+        new TableCell({
+          children: [
+            new Paragraph({
+              text: item.typeAccident || '',
+              alignment: "center",
+            }),
+          ],
+          verticalAlign: VerticalAlign.CENTER,
+        }),
+        new TableCell({
+          children: [
+            new Paragraph({
+              text: item.most_common_city || 'لا توجد',
+              alignment: "center",
+            }),
+          ],
+          verticalAlign: VerticalAlign.CENTER,
+        }),
+        new TableCell({
+          children: [
+            new Paragraph({
+              text: item.count.toString(),
+              alignment: "center",
+            }),
+          ],
+          verticalAlign: VerticalAlign.CENTER,
+        }),
+
+                new TableCell({
+          children: [
+            new Paragraph({
+              text: (index + 1).toString(),
+              alignment: "center",
+            }),
+          ],
+          verticalAlign: VerticalAlign.CENTER,
+        }),
+      ],
+    })
+  ),
+];
+
+const doc = new Document({
+  sections: [
+    {
+      properties: {},
+      children: [
+        new Paragraph({
+          children: [
+            new TextRun({
+              text: "تقرير الإحصائيات",
+              bold: true,
+              size: 28,
+              font: "Arial",
+            }),
+          ],
+          alignment: "center",
+          spacing: { after: 300 },
+          bidirectional: true,
+        }),
+        new Table({
+          rows: tableRows,
+          width: {
+            size: 100,
+            type: WidthType.PERCENTAGE,
+          },
+          borders: {
+            top: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+            bottom: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+            left: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+            right: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+            insideHorizontal: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+            insideVertical: { style: BorderStyle.SINGLE, size: 1, color: "000000" },
+          },
+        }),
+      ],
+    },
+  ],
+});
+
+
+      // إنشاء الملف وتحميله
+      const blob = await Packer.toBlob(doc);
+      saveAs(blob, "تقرير_الحوادث.docx");
+    } catch (error) {
+      console.error("خطأ في توليد الملف:", error);
+      alert("حدث خطأ أثناء إنشاء الملف.");
+    }
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <button onClick={generateDoc} disabled={loading}>
+        {loading ? "جاري التحميل..." : "تصدير إلى Word"}
+      </button>
+    </div>
+  );
+};
+
+export default WordReport;

@@ -78,6 +78,11 @@ import CarForm from "./Components/Form/CarForm";
 import ReportDownloader from "./Components/Report/ReportDownloader";
 import CrimeDashboard from "./pages/Dashboard/CrimeDashboard";
 import Register from "./pages/Auth/Register";
+// import Report from "./pages/Report/Report";
+import StatisticsDashboard from "./pages/Dashboard/Dashboer";
+import WordReport from "./pages/Report/WordReport";
+import ExcelReport from "./pages/Report/ExcelReport";
+import PdfReport from "./pages/Report/PDFReport";
 
 const App = () => {
   // const [isUser, isAdmin, userData, isAuthenticated] = ProtectedRouteHook();
@@ -96,9 +101,13 @@ const App = () => {
         <Route path="/form3/:id" element={<TrafficEetectionReport />} />
         <Route path="/form4" element={<InjuriesOnBodyForm />} />
         <Route path="/form5" element={<CarForm />} />
-        <Route path="/report" element={<ReportDownloader />} />
-        <Route path="/dashboard" element={<CrimeDashboard />} />
+        {/* <Route path="/report" element={<ReportDownloader />} /> */}
+        <Route path="/dashboard" element={<StatisticsDashboard />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/word" element={<WordReport />} />
+        <Route path="/excel" element={<ExcelReport />} />
+        <Route path="/pdf" element={<PdfReport />} />
+        {/* <Route path="/report" element={<Report />} /> */}
 
 
         <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>

@@ -11,11 +11,10 @@ const StatisticsHook = () => {
   const statistics = useSelector((state) => state.StatisticsReducer.statistics);
   const loading = useSelector((state) => state.StatisticsReducer.loading);
 
-  console.log(statistics);
 
   let statistic = [];
   if (statistics) {
-    statistic = statistics;
+    statistic = statistics?.data;
   } else {
     statistic = [];
   }
