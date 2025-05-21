@@ -8,12 +8,17 @@ import baseURL from "../Api/baseURL";
 
 const ImageModal = ({ onClose, id }) => {
   const [images] = ImagesHook(id);
+  console.log(images);
+  const [send, isSend] = useState(false);
 
+  const handleSendChange = () => {
+    isSend(!send);
+  };
 
   const handleSendClick = async () => {
     try {
       await baseURL.put(`/api/incidents/${id}/`, {
-        send_to_admin: false,
+        send_to_admin: true,
       });
       notify("تم الإرسال بنجاح!", "success");
 
@@ -44,7 +49,6 @@ const ImageModal = ({ onClose, id }) => {
             <X size={20} />
           </button>
         </div>
-        
 
         {/* Images */}
         {images && images.length > 0 ? (

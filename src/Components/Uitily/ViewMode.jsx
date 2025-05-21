@@ -24,7 +24,7 @@ const ViewMode = ({ mode, setViewMode }) => {
       >
         <List size={20} />
       </button>
-      <button
+      {/* <button
         onClick={() => setViewMode("table")}
         className={`p-2 rounded-md transition-colors ${
           mode === "table"
@@ -33,7 +33,7 @@ const ViewMode = ({ mode, setViewMode }) => {
         }`}
       >
         <TableIcon size={20} />
-      </button>
+      </button> */}
     </div>
   );
 };

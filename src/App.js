@@ -82,7 +82,7 @@ import Register from "./pages/Auth/Register";
 import StatisticsDashboard from "./pages/Dashboard/Dashboer";
 import WordReport from "./pages/Report/WordReport";
 import ExcelReport from "./pages/Report/ExcelReport";
-import PdfReport from "./pages/Report/PDFReport";
+import PDFReport from "./pages/Report/PDFReport";
 
 const App = () => {
   // const [isUser, isAdmin, userData, isAuthenticated] = ProtectedRouteHook();
@@ -106,7 +106,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/word" element={<WordReport />} />
         <Route path="/excel" element={<ExcelReport />} />
-        <Route path="/pdf" element={<PdfReport />} />
+        <Route path="/pdf" element={<PDFReport />} />
         {/* <Route path="/report" element={<Report />} /> */}
 
 

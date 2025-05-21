@@ -5,7 +5,7 @@ import WordReport from './WordReport';
 
 
 
-const DropdownReport = () => {
+const DropdownReport = ({excel}) => {
   const [selectedReport, setSelectedReport] = useState('');
 
   const handleChange = (e) => {

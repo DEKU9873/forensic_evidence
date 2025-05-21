@@ -152,10 +152,50 @@ const doc = new Document({
   };
 
   return (
-    <div style={{ padding: "20px" }}>
+   <div style={{ padding: "20px" }}>
       <button onClick={generateDoc} disabled={loading}>
         {loading ? "جاري التحميل..." : "تصدير إلى Word"}
       </button>
+
+      {/* جدول العرض في الصفحة */}
+      <table
+        style={{
+          marginTop: 20,
+          borderCollapse: "collapse",
+          width: "100%",
+          direction: "rtl",
+          textAlign: "center",
+          fontFamily: "Arial, sans-serif",
+        }}
+        border="1"
+      >
+        <thead style={{ backgroundColor: "#D9D9D9" }}>
+          <tr>
+            <th style={{ padding: "8px" }}>ت</th>
+            <th style={{ padding: "8px" }}>نوع الحادث</th>
+            <th style={{ padding: "8px" }}>المدينة الأكثر تكراراً</th>
+            <th style={{ padding: "8px" }}>عدد الحالات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {statistics && statistics.length > 0 ? (
+            statistics.map((item, index) => (
+              <tr key={index}>
+                <td style={{ padding: "8px" }}>{index + 1}</td>
+                <td style={{ padding: "8px" }}>{item.typeAccident || "-"}</td>
+                <td style={{ padding: "8px" }}>{item.most_common_city || "لا توجد"}</td>
+                <td style={{ padding: "8px" }}>{item.count}</td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4" style={{ padding: "8px" }}>
+                لا توجد بيانات لعرضها
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
