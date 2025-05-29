@@ -1,52 +1,43 @@
-import React, { useState } from 'react';
-import ExcelReport from './ExcelReport';
-import PdfReport from './PDFReport';
-import WordReport from './WordReport';
+import React, { useState } from "react";
+import ExcelReport from "./ExcelReport";
+import PdfReport from "./PDFReport";
+import WordReport from "./WordReport";
 
-
-
-const DropdownReport = ({excel}) => {
-  const [selectedReport, setSelectedReport] = useState('');
+const DropdownReport = () => {
+  const [selectedReport, setSelectedReport] = useState("");
 
   const handleChange = (e) => {
     setSelectedReport(e.target.value);
   };
 
-  // دالة لعرض المكون حسب الاختيار
   const renderReportComponent = () => {
     switch (selectedReport) {
-      case 'excel':
+      case "excel":
         return <ExcelReport />;
-      case 'word':
+      case "word":
         return <WordReport />;
-      case 'pdf':
+      case "pdf":
         return <PdfReport />;
-     
       default:
         return null;
     }
   };
 
   return (
-    <div className="p-4">
-      <label htmlFor="reportDropdown" className="block mb-2 text-sm font-medium text-gray-700">
-        اختر التقرير:
-      </label>
+    <div>
       <select
         id="reportDropdown"
-        className="w-full p-2 border border-gray-300 rounded-md"
+        className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         onChange={handleChange}
         value={selectedReport}
       >
-        <option value="">-- اختر تقريرًا --</option>
-        <option value="excel">تقرير اكسل</option>
-        <option value="word">تقرير وورد</option>
+        <option value=""> اختر نوع التقرير</option>
+        <option value="excel">تقرير Excel</option>
+        <option value="word">تقرير Word</option>
         <option value="pdf">تقرير PDF</option>
       </select>
 
-      <div className="mt-4">
-        {renderReportComponent()}
-      </div>
+      <div className="mt-4">{renderReportComponent()}</div>
     </div>
   );
 };

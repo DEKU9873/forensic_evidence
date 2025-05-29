@@ -4,7 +4,6 @@ import { Eye, FileText } from "lucide-react";
 import ActionButtons from "../../Uitily/ActionButtons";
 
 const CardForm = ({ data, viewMode = "grid" }) => {
-  console.log(data);
 
   const handleDelete = (e) => {
     e.preventDefault();

@@ -312,7 +312,7 @@ const StatisticsDashboard = () => {
   }
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen" dir="rtl">
+    <div className="p-6 bg-gray-100 min-h-screen ml-[80px]" dir="rtl">
       <h1 className="text-3xl font-bold mb-8 text-center">
         لوحة إحصائيات الجرائم
       </h1>
@@ -327,29 +327,14 @@ const StatisticsDashboard = () => {
 
         {mostCommonCrime && (
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-2">
+            <h2 className="text-xl font-semibold mb-2 text-green-600">
               الجريمة الأكثر شيوعاً
             </h2>
             <div className="flex items-center">
-              {/* <div
-                className="w-12 h-12 rounded-full mr-4 flex items-center justify-center"
-                style={{
-                  backgroundColor: getCrimeInfo(mostCommonCrime.typeAccident)
-                    .color,
-                }}
-              >
-                {getCrimeInfo(mostCommonCrime.typeAccident).icon}
-              </div> */}
               <div>
-                <p className="text-xl font-bold">
+                <p className="text-md font-bold">
                   {mostCommonCrime.typeAccident}
                 </p>
-                <p className="text-sm">عدد الحالات: {mostCommonCrime.count}</p>
-                {mostCommonCrime.most_common_city && (
-                  <p className="text-sm">
-                    المدينة الأكثر تسجيلاً: {mostCommonCrime.most_common_city}
-                  </p>
-                )}
               </div>
             </div>
           </div>
@@ -357,27 +342,12 @@ const StatisticsDashboard = () => {
 
         {leastCommonCrime && (
           <div className="bg-white p-6 rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-2">الجريمة الأقل شيوعاً</h2>
+            <h2 className="text-xl font-semibold mb-2 text-red-600">الجريمة الأقل شيوعاً</h2>
             <div className="flex items-center">
-              {/* <div
-                className="w-12 h-12 rounded-full mr-4 flex items-center justify-center"
-                style={{
-                  backgroundColor: getCrimeInfo(leastCommonCrime.typeAccident)
-                    .color,
-                }}
-              >
-                {getCrimeInfo(leastCommonCrime.typeAccident).icon}
-              </div> */}
               <div>
-                <p className="text-xl font-bold">
+                <p className="text-md font-bold">
                   {leastCommonCrime.typeAccident}
                 </p>
-                <p className="text-sm">عدد الحالات: {leastCommonCrime.count}</p>
-                {leastCommonCrime.most_common_city && (
-                  <p className="text-sm">
-                    المدينة الأكثر تسجيلاً: {leastCommonCrime.most_common_city}
-                  </p>
-                )}
               </div>
             </div>
           </div>

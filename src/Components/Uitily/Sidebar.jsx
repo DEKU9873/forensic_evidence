@@ -11,9 +11,11 @@ import {
   FaSignOutAlt,
   FaChartBar,
   FaUserPlus,
+  FaUsers,
 } from "react-icons/fa";
 import { useLocation, Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { History } from "lucide-react";
 
 const Sidebar = () => {
   const [user, setUser] = useState("");
@@ -27,28 +29,11 @@ const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // تكيف مع حجم الشاشة
-  // useEffect(() => {
-  //   const handleResize = () => {
-  //     if (window.innerWidth < 768) {
-  //       setIsOpen(false);
-  //     } else {
-  //       setIsOpen(false);
-  //     }
-  //   };
-
-  //   window.addEventListener('resize', handleResize);
-  //   handleResize();
-
-  //   return () => window.removeEventListener('resize', handleResize);
-  // }, []);
-
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
   const toggleForms = () => {
-    // فتح السايد بار إذا كانت مغلقة عند الضغط على الاستمارات
     if (!isOpen) {
       setIsOpen(true);
     }
@@ -66,18 +51,14 @@ const Sidebar = () => {
     return null;
   }
 
-  // القائمة المنسدلة للاستمارات
   const formsMenu = [
     { to: "/form2", text: "محضر كشف وإظهار الآثار الجرمية" },
     { to: "/form1", text: "إستمارة إستلام وتسليم العينات" },
     { to: "/form3", text: "محضر كشف الحرائق" },
-    // { to: "/form4", text: "مفصل ومخطط موقع الاصابة على الجثة" },
-    // { to: "/form5", text: "مخطط الكشف على عجلة" },
   ];
 
   return (
     <>
-      {/* طبقة التعتيم للشاشات الصغيرة */}
       {isOpen && window.innerWidth < 768 && (
         <div
           className="md:hidden fixed inset-0 bg-black bg-opacity-40 z-30"
@@ -85,7 +66,6 @@ const Sidebar = () => {
         />
       )}
 
-      {/* زر فتح الشريط الجانبي للشاشات الصغيرة - الآن دائماً أيقونة ساندويتش */}
       {!isOpen && (
         <button
           onClick={toggleSidebar}
@@ -95,7 +75,6 @@ const Sidebar = () => {
         </button>
       )}
 
-      {/* الشريط الجانبي الرئيسي */}
       <div
         className={`fixed top-0 left-0 h-full bg-white z-40 transition-all duration-300 ease-in-out shadow-2xl print:hidden flex flex-col
           ${
@@ -104,7 +83,6 @@ const Sidebar = () => {
               : "translate-x-full w-0 md:w-20 md:translate-x-0"
           }`}
       >
-        {/* رأس الشريط الجانبي مع زر التبديل */}
         <div className="h-16 bg-blue-600 flex items-center justify-between px-4">
           {isOpen && (
             <h1 className="text-white text-lg font-bold">الادلة الجنائية</h1>
@@ -113,12 +91,10 @@ const Sidebar = () => {
             onClick={toggleSidebar}
             className="text-white hover:bg-blue-700 p-2 rounded-md"
           >
-            {/* استخدام أيقونة ساندويتش لفتح القائمة وأيقونة إغلاق للإغلاق */}
             {isOpen ? <FaTimes /> : <FaBars />}
           </button>
         </div>
 
-        {/* قسم المستخدم */}
         <div className="p-4 border-b border-gray-200">
           {isOpen ? (
             <div className="flex flex-col items-center">
@@ -141,9 +117,7 @@ const Sidebar = () => {
           )}
         </div>
 
-        {/* قائمة التنقل */}
         <nav className="p-3 overflow-y-auto flex-grow">
-          {/* الصفحة الرئيسية */}
           <Link
             to="/home"
             className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
@@ -157,7 +131,6 @@ const Sidebar = () => {
             {isOpen && <span className="text-sm">الصفحة الرئيسية</span>}
           </Link>
 
-          {/* الملف الشخصي */}
           <Link
             to="/profile"
             className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
@@ -171,21 +144,33 @@ const Sidebar = () => {
             {isOpen && <span className="text-sm">الملف الشخصي</span>}
           </Link>
 
-          {/* إضافة مستخدمين - الحقل الجديد */}
-          <Link
+          {/* <Link
             to="/register"
             className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
               ${
-                location.pathname === "/add-users"
+                location.pathname === "/register"
                   ? "bg-blue-50 text-blue-600"
                   : "text-gray-700 hover:bg-gray-100"
               }`}
           >
             <FaUserPlus className="text-lg" />
             {isOpen && <span className="text-sm">إضافة مستخدمين</span>}
+          </Link> */}
+
+          {/* رابط عرض المستخدمين */}
+          <Link
+            to="/allusers"
+            className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
+              ${
+                location.pathname === "/users"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+          >
+            <FaUsers className="text-lg" />
+            {isOpen && <span className="text-sm">عرض المستخدمين</span>}
           </Link>
 
-          {/* الخرائط */}
           <Link
             to="/map"
             className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
@@ -199,7 +184,6 @@ const Sidebar = () => {
             {isOpen && <span className="text-sm">الخرائط</span>}
           </Link>
 
-          {/* الإحصائيات */}
           <Link
             to="/dashboard"
             className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
@@ -212,8 +196,19 @@ const Sidebar = () => {
             <FaChartBar className="text-lg" />
             {isOpen && <span className="text-sm">الإحصائيات</span>}
           </Link>
+          <Link
+            to="/logs"
+            className={`flex items-center gap-3 p-3 rounded-md mb-2 transition-all
+              ${
+                location.pathname === "/logs"
+                  ? "bg-blue-50 text-blue-600"
+                  : "text-gray-700 hover:bg-gray-100"
+              }`}
+          >
+            <History className="text-lg" />
+            {isOpen && <span className="text-sm">السجل</span>}
+          </Link>
 
-          {/* قسم الاستمارات */}
           <div className="mb-2">
             <button
               onClick={toggleForms}
@@ -236,7 +231,6 @@ const Sidebar = () => {
                 ))}
             </button>
 
-            {/* قائمة الاستمارات الفرعية */}
             {isOpen && isFormsOpen && (
               <div className="mr-4 mt-1 border-r-2 border-blue-100 pr-2">
                 {formsMenu.map((form) => (
@@ -258,7 +252,6 @@ const Sidebar = () => {
           </div>
         </nav>
 
-        {/* زر تسجيل الخروج في نهاية السايد بار */}
         <div className="mt-auto border-t border-gray-200">
           <button
             onClick={handleLogout}
@@ -270,14 +263,11 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* مساحة للمحتوى الرئيسي */}
       <main
         className={`transition-all duration-300 ${
           isOpen ? "md:mr-64" : "md:mr-20"
         }`}
-      >
-        {/* هنا يمكن وضع المحتوى الرئيسي للصفحة */}
-      </main>
+      ></main>
     </>
   );
 };

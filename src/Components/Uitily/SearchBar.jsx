@@ -10,7 +10,6 @@ const SearchBar = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    console.log("البحث عن:", word);
   };
 
   return (

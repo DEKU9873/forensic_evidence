@@ -19,7 +19,6 @@ const ImagesHook = (id, selectedIncident) => {
         image = [];
     }
 
-    console.log('hook',image);
   
     return [image];
 }

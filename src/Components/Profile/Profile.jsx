@@ -6,7 +6,7 @@ import {
   FaMapMarkerAlt,
   FaEdit,
   FaCamera,
-  FaEllipsisV
+  FaEllipsisV,
 } from "react-icons/fa";
 import Cookies from "js-cookie";
 
@@ -47,12 +47,15 @@ const Profile = () => {
                     <FaCamera size={12} />
                   </button>
                 </div>
-                
+
                 {/* User Info */}
-                <h2 className="mt-4 text-xl font-bold text-gray-800">{user.first_name} {user.last_name}</h2>
-                <p className="text-gray-500 text-sm">{user.role === "user" ? "مستخدم" : "أدمن"}</p>
-                
-                
+                <h2 className="mt-4 text-xl font-bold text-gray-800">
+                  {user.first_name} {user.last_name}
+                </h2>
+                <p className="text-gray-500 text-sm">
+                  {user.role === "user" ? "مستخدم" : "أدمن"}
+                </p>
+
                 {/* Edit Button */}
                 <button className="mt-4 w-full bg-gray-800 hover:bg-gray-900 text-white px-4 py-2 rounded-md flex items-center justify-center gap-2 transition-all">
                   <FaEdit size={14} />
@@ -61,16 +64,18 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Right Column - Contact Info */}
           <div className="w-full md:w-2/3">
             <div className="bg-white rounded-lg shadow-sm overflow-hidden">
               <div className="border-b border-gray-100">
                 <div className="flex items-center p-4">
-                  <h3 className="text-lg font-medium text-gray-800">معلومات الاتصال</h3>
+                  <h3 className="text-lg font-medium text-gray-800">
+                    معلومات الاتصال
+                  </h3>
                 </div>
               </div>
-              
+
               <div className="p-5">
                 <ul className="divide-y divide-gray-100">
                   <li className="py-4">
@@ -80,8 +85,12 @@ const Profile = () => {
                           <FaEnvelope />
                         </div>
                         <div>
-                          <div className="text-xs text-gray-500">البريد الإلكتروني</div>
-                          <div className="font-medium text-gray-800">{user.email || "user@example.com"}</div>
+                          <div className="text-xs text-gray-500">
+                            البريد الإلكتروني
+                          </div>
+                          <div className="font-medium text-gray-800">
+                            {user.email || "user@example.com"}
+                          </div>
                         </div>
                       </div>
                       <button className="text-gray-400 hover:text-gray-600">
@@ -89,7 +98,7 @@ const Profile = () => {
                       </button>
                     </div>
                   </li>
-                  
+
                   <li className="py-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
@@ -97,8 +106,12 @@ const Profile = () => {
                           <FaPhone />
                         </div>
                         <div>
-                          <div className="text-xs text-gray-500">رقم الهاتف</div>
-                          <div className="font-medium text-gray-800">{user.phone_number || "07XX XXX XXXX"}</div>
+                          <div className="text-xs text-gray-500">
+                            رقم الهاتف
+                          </div>
+                          <div className="font-medium text-gray-800">
+                            {user.phone_number || "07XX XXX XXXX"}
+                          </div>
                         </div>
                       </div>
                       <button className="text-gray-400 hover:text-gray-600">
@@ -106,7 +119,7 @@ const Profile = () => {
                       </button>
                     </div>
                   </li>
-                  
+
                   <li className="py-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
@@ -115,7 +128,9 @@ const Profile = () => {
                         </div>
                         <div>
                           <div className="text-xs text-gray-500">الموقع</div>
-                          <div className="font-medium text-gray-800">بغداد، العراق</div>
+                          <div className="font-medium text-gray-800">
+                            بغداد، العراق
+                          </div>
                         </div>
                       </div>
                       <button className="text-gray-400 hover:text-gray-600">
@@ -124,21 +139,6 @@ const Profile = () => {
                     </div>
                   </li>
                 </ul>
-              </div>
-            </div>
-            
-            {/* Additional Info Card */}
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden mt-6">
-              <div className="border-b border-gray-100">
-                <div className="flex items-center p-4">
-                  <h3 className="text-lg font-medium text-gray-800">معلومات إضافية</h3>
-                </div>
-              </div>
-              
-              <div className="p-5">
-                <div className="text-gray-500 text-sm">
-                  لم يتم إضافة معلومات إضافية بعد.
-                </div>
               </div>
             </div>
           </div>

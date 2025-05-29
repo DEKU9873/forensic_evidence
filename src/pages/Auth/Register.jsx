@@ -1,12 +1,11 @@
 import React from "react";
 import { FaUserAlt, FaLock, FaSignInAlt, FaEnvelope, FaPhone, FaIdCard } from "react-icons/fa";
-import { Link } from "react-router-dom";
 import RegisterHook from "../../hook/auth/register-hook";
 import { ToastContainer } from "react-toastify";
 
-const Register = () => {
+const Register = ({ open, close }) => {
   const [
-     firstName,
+    firstName,
     lastName,
     fullName,
     role,
@@ -39,9 +38,19 @@ const Register = () => {
   const iconContainerClass = "absolute left-4 top-1/2 transform -translate-y-1/2 flex items-center justify-center w-8 h-8 rounded-full bg-indigo-100";
   const iconClass = "text-indigo-600 text-lg";
 
+  if (!open) return null;
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200 p-4">
-      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-5xl">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto relative">
+        {/* Close Button */}
+        <button
+          onClick={close}
+          className="absolute top-2 left-2 text-red-600 font-bold text-3xl"
+        >
+          ×
+        </button>
+
         <div className="flex flex-col md:flex-row items-center mb-6">
           <img
             src="/images/logo3.jpg"
@@ -52,22 +61,21 @@ const Register = () => {
             <h2 className="text-3xl font-bold text-indigo-600">
               نظام الادلة الجنائية
             </h2>
-            <p className="text-xl font-bold text-gray-500">
-              وزراة الداخلية
-            </p>
+            <p className="text-xl font-bold text-gray-500">وزراة الداخلية</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* المعلومات الشخصية */}
           <div className="md:col-span-3">
-            <h3 className="text-xl font-bold text-indigo-600 mb-4 text-right border-r-4 border-indigo-500 pr-3">المعلومات الشخصية</h3>
+            <h3 className="text-xl font-bold text-indigo-600 mb-4 text-right border-r-4 border-indigo-500 pr-3">
+              المعلومات الشخصية
+            </h3>
           </div>
-          
-          {/* First Name Field */}
+
           <div className="col-span-2">
             <label htmlFor="fullName" className={labelClass}>
-              الاسم 
+              الاسم
             </label>
             <div className="relative">
               <input
@@ -78,65 +86,23 @@ const Register = () => {
                 onKeyDown={handleKeyDown}
                 className={inputClass}
                 dir="rtl"
-                placeholder="الاسم "
+                placeholder="الاسم"
               />
               <div className={iconContainerClass}>
                 <FaUserAlt className={iconClass} />
               </div>
             </div>
           </div>
-          {/* <div>
-            <label htmlFor="firstName" className={labelClass}>
-              الاسم الاول
-            </label>
-            <div className="relative">
-              <input
-                id="firstName"
-                type="text"
-                value={firstName}
-                onChange={onChangeFirstName}
-                onKeyDown={handleKeyDown}
-                className={inputClass}
-                dir="rtl"
-                placeholder="الاسم الاول"
-              />
-              <div className={iconContainerClass}>
-                <FaUserAlt className={iconClass} />
-              </div>
-            </div>
-          </div> */}
-          
-          {/* Last Name Field */}
-          {/* <div>
-            <label htmlFor="lastName" className={labelClass}>
-              الاسم الاخير
-            </label>
-            <div className="relative">
-              <input
-                id="lastName"
-                type="text"
-                value={lastName}
-                onChange={onChangeLastName}
-                onKeyDown={handleKeyDown}
-                className={inputClass}
-                dir="rtl"
-                placeholder="الاسم الاخير"
-              />
-              <div className={iconContainerClass}>
-                <FaUserAlt className={iconClass} />
-              </div>
-            </div>
-          </div> */}
-          
-          {/* Role Selection */}
+
+          {/* Role */}
           <div>
             <label htmlFor="role" className={labelClass}>
               المنصب
             </label>
             <div className="relative">
-              <select 
+              <select
                 id="role"
-                value={role} 
+                value={role}
                 onChange={onChangeRole}
                 className={inputClass}
                 dir="rtl"
@@ -149,13 +115,14 @@ const Register = () => {
               </div>
             </div>
           </div>
-          
+
           {/* معلومات الاتصال */}
           <div className="md:col-span-3 mt-4">
-            <h3 className="text-xl font-bold text-indigo-600 mb-4 text-right border-r-4 border-indigo-500 pr-3">معلومات الاتصال</h3>
+            <h3 className="text-xl font-bold text-indigo-600 mb-4 text-right border-r-4 border-indigo-500 pr-3">
+              معلومات الاتصال
+            </h3>
           </div>
-          
-          {/* Email Field */}
+
           <div>
             <label htmlFor="email" className={labelClass}>
               البريد الالكتروني
@@ -176,8 +143,7 @@ const Register = () => {
               </div>
             </div>
           </div>
-          
-          {/* Phone Field */}
+
           <div className="md:col-span-2">
             <label htmlFor="phone" className={labelClass}>
               رقم الجوال
@@ -198,13 +164,14 @@ const Register = () => {
               </div>
             </div>
           </div>
-          
+
           {/* معلومات الحساب */}
           <div className="md:col-span-3 mt-4">
-            <h3 className="text-xl font-bold text-indigo-600 mb-4 text-right border-r-4 border-indigo-500 pr-3">معلومات الحساب</h3>
+            <h3 className="text-xl font-bold text-indigo-600 mb-4 text-right border-r-4 border-indigo-500 pr-3">
+              معلومات الحساب
+            </h3>
           </div>
-          
-          {/* Username Field */}
+
           <div className="md:col-span-3">
             <label htmlFor="username" className={labelClass}>
               اسم المستخدم
@@ -226,7 +193,6 @@ const Register = () => {
             </div>
           </div>
 
-          {/* Password Field */}
           <div>
             <label htmlFor="password" className={labelClass}>
               كلمة المرور
@@ -247,8 +213,7 @@ const Register = () => {
               </div>
             </div>
           </div>
-          
-          {/* Confirm Password Field */}
+
           <div className="md:col-span-2">
             <label htmlFor="confirmPassword" className={labelClass}>
               تأكيد كلمة المرور
@@ -271,7 +236,7 @@ const Register = () => {
           </div>
         </div>
 
-        {/* Register Button */}
+        {/* Submit Button */}
         <button
           onClick={OnSubmit}
           className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-4 px-6 rounded-lg font-medium text-lg hover:shadow-lg hover:from-blue-600 hover:to-indigo-600 transition mt-6 flex items-center justify-center gap-2"
@@ -279,10 +244,9 @@ const Register = () => {
           <FaSignInAlt className="text-xl" />
           تسجيل مستخدم
         </button>
-        
-  
+
+        <ToastContainer />
       </div>
-      <ToastContainer />
     </div>
   );
 };

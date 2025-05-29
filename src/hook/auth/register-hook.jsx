@@ -111,7 +111,6 @@ const RegisterHook = () => {
   useEffect(() => {
     if (loading === false) {
       if (res) {
-        console.log(res);
         if (res.data && res.data.data) {
           localStorage.setItem("access", res.data.data.access_token);
           localStorage.setItem("refresh", res.data.data.refresh_token);

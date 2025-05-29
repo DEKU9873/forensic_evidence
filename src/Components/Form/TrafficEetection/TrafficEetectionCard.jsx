@@ -5,7 +5,6 @@ import ActionButtons from "../../Uitily/ActionButtons";
 
 const TrafficEetectionCard = ({ data, viewMode = "grid" }) => {
 
-  console.log(data)
   const handleDelete = (e) => {
     e.preventDefault();
   };

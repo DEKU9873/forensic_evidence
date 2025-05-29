@@ -16,7 +16,6 @@ import { saveAs } from 'file-saver';
 
 const WordReport = () => {
   const [statistics, loading] = StatisticsHook();
-  console.log(statistics);
 
   const generateDoc = async () => {
     try {

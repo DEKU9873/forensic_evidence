@@ -83,6 +83,10 @@ import StatisticsDashboard from "./pages/Dashboard/Dashboer";
 import WordReport from "./pages/Report/WordReport";
 import ExcelReport from "./pages/Report/ExcelReport";
 import PDFReport from "./pages/Report/PDFReport";
+import UserTablePage from "./pages/Auth/UserTablePage";
+import Logs from "./pages/LogsPage";
+import PrivateRoute from "./Components/Uitily/PrivateRoute";
+
 
 const App = () => {
   // const [isUser, isAdmin, userData, isAuthenticated] = ProtectedRouteHook();
@@ -93,26 +97,33 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/form1" element={<ReceivingDeliveringSamplesFormPage />} />
-        <Route path="/form1/:id" element={<ReceivingDeliveringSamplesForm />} />
-        <Route path="/form2" element={<CriminalEffectsPage />} />
-        <Route path="/form2/:id" element={<CriminalEffects />} />
-        <Route path="/form3" element={<TrafficEetectionReportPage />} />
-        <Route path="/form3/:id" element={<TrafficEetectionReport />} />
-        <Route path="/form4" element={<InjuriesOnBodyForm />} />
-        <Route path="/form5" element={<CarForm />} />
-        {/* <Route path="/report" element={<ReportDownloader />} /> */}
-        <Route path="/dashboard" element={<StatisticsDashboard />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/word" element={<WordReport />} />
-        <Route path="/excel" element={<ExcelReport />} />
-        <Route path="/pdf" element={<PDFReport />} />
-        {/* <Route path="/report" element={<Report />} /> */}
+        <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+          <Route
+            path="/form1"
+            element={<ReceivingDeliveringSamplesFormPage />}
+          />
+          <Route
+            path="/form1/:id"
+            element={<ReceivingDeliveringSamplesForm />}
+          />
+          <Route path="/form2" element={<CriminalEffectsPage />} />
+          <Route path="/form2/:id" element={<CriminalEffects />} />
+          <Route path="/form3" element={<TrafficEetectionReportPage />} />
+          <Route path="/form3/:id" element={<TrafficEetectionReport />} />
+          <Route path="/form4" element={<InjuriesOnBodyForm />} />
+          <Route path="/form5" element={<CarForm />} />
+          {/* <Route path="/report" element={<ReportDownloader />} /> */}
+          <Route path="/dashboard" element={<StatisticsDashboard />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/word" element={<WordReport />} />
+          <Route path="/excel" element={<ExcelReport />} />
+          <Route path="/pdf" element={<PDFReport />} />
+          {/* <Route path="/report" element={<Report />} /> */}
 
-
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
           <Route path="/map" element={<Map />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/allusers" element={<UserTablePage />} />
+          <Route path="/logs" element={<Logs />} />
         </Route>
       </Routes>
     </BrowserRouter>

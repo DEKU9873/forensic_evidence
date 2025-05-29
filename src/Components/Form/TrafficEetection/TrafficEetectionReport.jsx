@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import TrafficeEtectionDetailsHook from "../../../hook/TrafficEetection/traffice-etection-details-hook";
 import IncidentseDetailsHook from "../../../hook/CriminalEffects/Incidents-details-hook";
 import ImageModal from "../../ImageModal";
+import GetComplaint from "../../../hook/CriminalEffects/get-complaint";
 const TrafficEetectionReport = () => {
   const { id } = useParams();
   const [data, table] = IncidentseDetailsHook(id);
   const [imageOpen, setImageOpen] = useState(false);
+  const [complaint] = GetComplaint(id);
 
   const handleOpenImage = () => {
     setImageOpen(true);
@@ -191,27 +193,17 @@ const TrafficEetectionReport = () => {
 
       {/* Signatures Section */}
       <div className="my-10">
-        <div className="grid grid-cols-5 gap-1 text-center ">
-          <div>
-            <div className="font-bold text-xs">المشتكي</div>
-            <div className="border border-black h-10"></div>
-          </div>
-          <div>
-            <div className="font-bold text-xs">المصـــور</div>
-            <div className="border border-black h-10"></div>
-          </div>
-          <div>
-            <div className="font-bold text-xs">الممارس</div>
-            <div className="border border-black h-10"></div>
-          </div>
-          <div>
-            <div className="font-bold text-xs">المحقـــق</div>
-            <div className="border border-black h-10"></div>
-          </div>
-          <div>
-            <div className="font-bold text-xs">رئيــس هيئـة الكشـف</div>
-            <div className="border border-black h-10"></div>
-          </div>
+        <div className="flex w-full text-center">
+          {complaint &&
+            complaint.map((item, index) => (
+              <div key={index} className="flex-1 px-2">
+                <div className="font-bold text-xs mb-2">{item.position}</div>
+                <div className="border border-black h-20 flex flex-col items-center justify-center">
+                  <h4>{item.rank}</h4>
+                  <h4>{item.name}</h4>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
 

@@ -5,7 +5,6 @@ const useUpdateDataWithImage = async (url, parmas) => {
     headers: { "Content-Type": "multipart/form-data" },
   };
   const res = await baseURL.put(url, parmas, config);
-  console.log(res.status);
   return res;
 };
 

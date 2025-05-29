@@ -8,7 +8,6 @@ import baseURL from "../Api/baseURL";
 
 const ImageModal = ({ onClose, id }) => {
   const [images] = ImagesHook(id);
-  console.log(images);
   const [send, isSend] = useState(false);
 
   const handleSendChange = () => {

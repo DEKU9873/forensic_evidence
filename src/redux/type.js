@@ -1,5 +1,7 @@
 export const CREATE_NEW_USER = "CREATE_NEW_USER";
 export const LOGIN_USER = "LOGIN_USER";
+export const GET_ALL_USERS = "GET_ALL_USERS";
+export const Toggle_Activity = "Toggle_Activity";
 
 export const GET_Evidence = "GET_Evidence";
 export const GET_ONE_EVIDENCE = "GET_ONE_EVIDENCE";
@@ -18,5 +20,9 @@ export const GET_ONE_Fire_Form = "GET_ONE_Fire_Form";
 export const GET_Statistics = "GET_Statistics";
 
 export const GET_IncidentImage = "GET_IncidentImage";
+
+export const GET_Complaint = "GET_Complaint";
+
+export const GET_LOG = "GET_LOG";
 
 export const GET_ERROR = "GET_ERROR";

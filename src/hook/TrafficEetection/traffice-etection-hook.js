@@ -20,7 +20,6 @@ const TrafficeEtectionHook = () => {
     // When press pagination
     const getPage = (page) => {
       dispatch(getAllFireFormPage(page, 9));
-      console.log(page);
     };
   
     return [fire, loading, pageCount, getPage];

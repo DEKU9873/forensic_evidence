@@ -4,6 +4,7 @@ import criminalEffectsReducer from "./CriminalEffectsReducer";
 import receivingDeliveringSamplesReducer from "./ReceivingDeliveringSamplesReducer";
 import TrafficEetectionReducer from "./TrafficEetectionReducer";
 import StatisticsReducer from "./StatisticsReducer";
+import LogReducer from "./LogReducer";
 
 export default combineReducers({
   authReducer: authReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
   receivingDeliveringSamplesReducer: receivingDeliveringSamplesReducer,
   TrafficEetectionReducer: TrafficEetectionReducer,
   StatisticsReducer: StatisticsReducer,
+  LogReducer: LogReducer,
 });

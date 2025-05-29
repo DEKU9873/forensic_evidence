@@ -72,8 +72,7 @@ const Map = () => {
 
   const [incidents] = IncidentsHook();
   const [images] = ImagesHook(selectedIncident?.uuid, selectedIncident); // استرجاع الصور الخاصة بالحادث
-  console.log(selectedIncident?.uuid);
-  console.log(images); // طباعة الصور للتحقق من القيم
+
 
   useEffect(() => {
     if (incidents && incidents.data) {

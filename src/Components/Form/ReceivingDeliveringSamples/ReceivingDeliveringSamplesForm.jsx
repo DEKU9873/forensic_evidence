@@ -8,7 +8,6 @@ const ReceivingDeliveringSamplesForm = () => {
   const [lab] = SampleDetailsHook(id);
   const [data, table] = IncidentseDetailsHook(id);
 
-  console.log(lab);
 
   const handlePrint = () => {
     window.print();

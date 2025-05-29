@@ -5,6 +5,7 @@ import {
   GET_ONE_Incidents,
   GET_Evidencebyincident,
   GET_IncidentImage,
+  GET_Complaint,
   Send_Incident,
   GET_ERROR,
 } from "../type";
@@ -145,6 +146,21 @@ export const getIncidentImage = (id) => async (dispatch) => {
 
     dispatch({
       type: GET_IncidentImage,
+      payload: res,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: "Error" + e,
+    });
+  }
+};
+export const getComplaint = (id) => async (dispatch) => {
+  try {
+    const res = await useGetData(`api/complaint/${id}`);
+
+    dispatch({
+      type: GET_Complaint,
       payload: res,
     });
   } catch (e) {
