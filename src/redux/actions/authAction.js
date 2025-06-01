@@ -1,6 +1,13 @@
-import { CREATE_NEW_USER, LOGIN_USER, GET_ALL_USERS, GET_ERROR, Toggle_Activity } from "../type";
-import { useInsertData  } from "../../hooks/useInsertData";
-import {useGetData } from "../../hooks/useGetData";
+import {
+  CREATE_NEW_USER,
+  LOGIN_USER,
+  GET_ALL_USERS,
+  GET_ERROR,
+  Toggle_Activity,
+  UPDATE_USER,
+} from "../type";
+import { useInsertData } from "../../hooks/useInsertData";
+import { useGetData } from "../../hooks/useGetData";
 import useDeleteData from "../../hooks/useDeleteData";
 import { useUpdateData } from "../../hooks/useUpdateData";
 
@@ -58,7 +65,7 @@ export const deleteUser = (id) => async (dispatch) => {
   try {
     const response = await useDeleteData(`/account/users/${id}/`);
     dispatch({
-      type: GET_ALL_USERS, 
+      type: GET_ALL_USERS,
       payload: response,
       loading: true,
     });
@@ -70,6 +77,21 @@ export const deleteUser = (id) => async (dispatch) => {
   }
 };
 
+export const updateUser = (id, data) => async (dispatch) => {
+  try {
+    const response = await useUpdateData(`/account/users/${id}/`, data);
+    dispatch({
+      type: UPDATE_USER,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: e.response,
+    });
+  }
+};
 
 export const toggleActivity = (id) => async (dispatch) => {
   try {
@@ -86,5 +108,3 @@ export const toggleActivity = (id) => async (dispatch) => {
     });
   }
 };
-
-

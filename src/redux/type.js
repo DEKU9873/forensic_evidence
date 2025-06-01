@@ -2,6 +2,7 @@ export const CREATE_NEW_USER = "CREATE_NEW_USER";
 export const LOGIN_USER = "LOGIN_USER";
 export const GET_ALL_USERS = "GET_ALL_USERS";
 export const Toggle_Activity = "Toggle_Activity";
+export const UPDATE_USER = "UPDATE_USER";
 
 export const GET_Evidence = "GET_Evidence";
 export const GET_ONE_EVIDENCE = "GET_ONE_EVIDENCE";

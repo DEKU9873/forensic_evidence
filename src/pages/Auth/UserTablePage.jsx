@@ -18,15 +18,20 @@ import { ToastContainer } from "react-toastify";
 import DeleteModal from "../../Components/modal/DeleteModal";
 import { deleteUser, getAllUsers } from "../../redux/actions/authAction";
 import baseURL from "../../Api/baseURL";
+import UpdateRegister from "./UpdateRegister";
 
 export default function UserTablePage() {
   const dispatch = useDispatch();
 
+  
+
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterRole, setFilterRole] = useState("all");
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isUpdateRegisterOpen, setIsUpdateRegisterOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDeleteClick = (id) => {
@@ -100,9 +105,17 @@ export default function UserTablePage() {
   const handleClos = () => {
     setIsRegisterOpen(!isRegisterOpen);
   };
+  const handleUpdateClos = () => {
+    setIsUpdateRegisterOpen(!isUpdateRegisterOpen);
+    setSelectedUser(null);
+  };
 
   const handleAddUser = () => {
     setIsRegisterOpen(!isRegisterOpen);
+  };
+  const handleUpdateUser = (user) => {
+    setSelectedUser(user);
+    setIsUpdateRegisterOpen(!isUpdateRegisterOpen);
   };
 
   const handleEditUser = (user) => {
@@ -317,7 +330,7 @@ export default function UserTablePage() {
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-2">
                           <button
-                            onClick={() => handleEditUser(user)}
+                            onClick={() => handleUpdateUser(user)}
                             className="p-2 text-blue-600 hover:text-white hover:bg-blue-600 rounded-lg transition-all duration-200"
                             title="تعديل المستخدم"
                           >
@@ -361,11 +374,13 @@ export default function UserTablePage() {
             </table>
           </div>
         </div>
-
-        <ToastContainer/>
+        <ToastContainer />
       </div>
 
       {isRegisterOpen && <Register open={isRegisterOpen} close={handleClos} />}
+      {isUpdateRegisterOpen && selectedUser && (
+        <UpdateRegister open={isUpdateRegisterOpen} close={handleUpdateClos} user={selectedUser} />
+      )}
 
       {isDeleteModalOpen && (
         <DeleteModal
