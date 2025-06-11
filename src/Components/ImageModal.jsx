@@ -55,7 +55,7 @@ const ImageModal = ({ onClose, id }) => {
             {images.map((image, index) => (
               <div key={index} className="w-full">
                 <img
-                  src={`http://192.168.100.201:8000${image?.image}`}
+                  src={`https://fornisc-e-backnd.onrender.com${image?.image}`}
                   alt={`صورة الحادث ${index + 1}`}
                   className="w-full h-[200px] object-cover rounded-lg shadow hover:scale-105 transition-transform duration-300"
                 />
